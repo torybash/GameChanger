@@ -1,0 +1,310 @@
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (1/20) **
+Controller initialization time: 1 ms.
+Result (1->win; 0->lose):1, Score:69.0, timesteps:570
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:532
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:64.0, timesteps:515
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:59.0, timesteps:468
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:70.0, timesteps:500
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:68.0, timesteps:671
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:568
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:68.0, timesteps:443
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:60.0, timesteps:518
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:557
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:59.0, timesteps:587
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:72.0, timesteps:524
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:515
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:68.0, timesteps:579
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:78.0, timesteps:602
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:74.0, timesteps:760
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:66.0, timesteps:601
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:74.0, timesteps:512
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:76.0, timesteps:655
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:66.0, timesteps:572
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:67.0, timesteps:502
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:57.0, timesteps:572
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:69.0, timesteps:628
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:68.0, timesteps:640
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:76.0, timesteps:588
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:606
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:73.0, timesteps:901
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:58.0, timesteps:648
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:62.0, timesteps:417
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:70.0, timesteps:701
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:65.0, timesteps:689
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:64.0, timesteps:658
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:75.0, timesteps:615
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:68.0, timesteps:536
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:69.0, timesteps:459
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:642
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:66.0, timesteps:616
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:75.0, timesteps:717
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:70.0, timesteps:490
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl1.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:470
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:62.0, timesteps:528
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:62.0, timesteps:621
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:468
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:69.0, timesteps:676
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:62.0, timesteps:629
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:76.0, timesteps:621
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:75.0, timesteps:661
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:625
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:67.0, timesteps:487
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:69.0, timesteps:597
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:62.0, timesteps:840
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:66.0, timesteps:547
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:693
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:67.0, timesteps:514
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:61.0, timesteps:569
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:68.0, timesteps:870
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:66.0, timesteps:490
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:64.0, timesteps:561
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:618
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl2.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:647
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:725
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:452
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:517
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:501
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:511
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:664
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:579
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:530
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:604
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:599
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:637
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:732
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:43.0, timesteps:587
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:588
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:535
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:628
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:571
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:42.0, timesteps:649
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:467
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl3.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:40.0, timesteps:756
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:54.0, timesteps:561
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:58.0, timesteps:533
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:583
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:53.0, timesteps:551
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:66.0, timesteps:605
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:65.0, timesteps:565
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:61.0, timesteps:822
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:62.0, timesteps:668
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:61.0, timesteps:632
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:63.0, timesteps:568
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:64.0, timesteps:593
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:64.0, timesteps:655
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:65.0, timesteps:592
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:60.0, timesteps:558
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:57.0, timesteps:544
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:58.0, timesteps:505
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:57.0, timesteps:623
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:59.0, timesteps:707
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:61.0, timesteps:621
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl4.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:61.0, timesteps:710
+ *** Results in game examples/gridphysics/aliens.txt *** 
+ min = 40.0
+ max = 78.0
+ ave = 60.72
+ sd  = 11.495348202774487
+ se  = 1.1495348202774487
+ sum  = 6072.0
+ sumsq  = 381774.0
+ n   = 100
+ *********

@@ -1,0 +1,310 @@
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:275
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:132
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:275
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:5.0, timesteps:121
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:3.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:5.0, timesteps:121
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:3.0, timesteps:121
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:5.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:16.0, timesteps:161
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:7.0, timesteps:143
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:11.0, timesteps:154
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:7.0, timesteps:154
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:16.0, timesteps:196
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:3.0, timesteps:99
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl1.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:7.0, timesteps:154
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:162
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:260
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:195
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:196
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:153
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:95
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:195
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:168
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:113
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:197
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:265
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:101
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:191
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:117
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl2.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:250
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:231
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:192
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:143
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:155
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:185
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:159
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:231
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:165
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:165
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:129
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:231
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:231
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl3.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (1/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (2/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (3/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:132
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (4/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (5/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:67
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (6/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (7/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (8/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (9/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (10/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (11/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (12/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (13/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (14/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:2.0, timesteps:285
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (15/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (16/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (17/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:75
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (18/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:74
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (19/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:110
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl4.txt (20/20) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:110
+ *** Results in game examples/gridphysics/missilecommand.txt *** 
+ min = -3.0
+ max = 16.0
+ ave = 0.38
+ sd  = 3.41055995284047
+ se  = 0.341055995284047
+ sum  = 38.0
+ sumsq  = 1166.0
+ n   = 100
+ *********

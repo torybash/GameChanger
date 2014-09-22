@@ -1,0 +1,418 @@
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:58.0, timesteps:729
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:77.0, timesteps:675
+ ** Playing game examples/gridphysics/aliens.txt, level examples/gridphysics/aliens_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:73.0, timesteps:617
+ *** Results in game examples/gridphysics/aliens.txt *** 
+ min = 58.0
+ max = 77.0
+ ave = 69.33333333333333
+ sd  = 10.016652800877843
+ se  = 5.783117190965842
+ sum  = 208.0
+ sumsq  = 14622.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/boulderdash.txt, level examples/gridphysics/boulderdash_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/boulderdash.txt, level examples/gridphysics/boulderdash_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/boulderdash.txt, level examples/gridphysics/boulderdash_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ *** Results in game examples/gridphysics/boulderdash.txt *** 
+ min = 0.0
+ max = 0.0
+ ave = 0.0
+ sd  = 0.0
+ se  = 0.0
+ sum  = 0.0
+ sumsq  = 0.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/butterflies.txt, level examples/gridphysics/butterflies_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:30.0, timesteps:171
+ ** Playing game examples/gridphysics/butterflies.txt, level examples/gridphysics/butterflies_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:20.0, timesteps:170
+ ** Playing game examples/gridphysics/butterflies.txt, level examples/gridphysics/butterflies_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:22.0, timesteps:171
+ *** Results in game examples/gridphysics/butterflies.txt *** 
+ min = 20.0
+ max = 30.0
+ ave = 24.0
+ sd  = 5.291502622129181
+ se  = 3.0550504633038935
+ sum  = 72.0
+ sumsq  = 1784.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/chase.txt, level examples/gridphysics/chase_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:5.0, timesteps:2000
+ ** Playing game examples/gridphysics/chase.txt, level examples/gridphysics/chase_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:3.0, timesteps:2000
+ ** Playing game examples/gridphysics/chase.txt, level examples/gridphysics/chase_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:2.0, timesteps:803
+ *** Results in game examples/gridphysics/chase.txt *** 
+ min = 2.0
+ max = 5.0
+ ave = 3.3333333333333335
+ sd  = 1.5275252316519463
+ se  = 0.8819171036881968
+ sum  = 10.0
+ sumsq  = 38.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/frogs.txt, level examples/gridphysics/frogs_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/frogs.txt, level examples/gridphysics/frogs_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/frogs.txt, level examples/gridphysics/frogs_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ *** Results in game examples/gridphysics/frogs.txt *** 
+ min = 0.0
+ max = 0.0
+ ave = 0.0
+ sd  = 0.0
+ se  = 0.0
+ sum  = 0.0
+ sumsq  = 0.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:5.0, timesteps:111
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:2.0, timesteps:209
+ ** Playing game examples/gridphysics/missilecommand.txt, level examples/gridphysics/missilecommand_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:5.0, timesteps:110
+ *** Results in game examples/gridphysics/missilecommand.txt *** 
+ min = 2.0
+ max = 5.0
+ ave = 4.0
+ sd  = 1.7320508075688772
+ se  = 1.0
+ sum  = 12.0
+ sumsq  = 54.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/portals.txt, level examples/gridphysics/portals_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:529
+ ** Playing game examples/gridphysics/portals.txt, level examples/gridphysics/portals_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:337
+ ** Playing game examples/gridphysics/portals.txt, level examples/gridphysics/portals_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:1043
+ *** Results in game examples/gridphysics/portals.txt *** 
+ min = 0.0
+ max = 1.0
+ ave = 0.3333333333333333
+ sd  = 0.5773502691896258
+ se  = 0.33333333333333337
+ sum  = 1.0
+ sumsq  = 1.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/sokoban.txt, level examples/gridphysics/sokoban_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/sokoban.txt, level examples/gridphysics/sokoban_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:1.0, timesteps:2000
+ ** Playing game examples/gridphysics/sokoban.txt, level examples/gridphysics/sokoban_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ *** Results in game examples/gridphysics/sokoban.txt *** 
+ min = 0.0
+ max = 1.0
+ ave = 0.3333333333333333
+ sd  = 0.5773502691896258
+ se  = 0.33333333333333337
+ sum  = 1.0
+ sumsq  = 1.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/survivezombies.txt, level examples/gridphysics/survivezombies_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:13.0, timesteps:515
+ ** Playing game examples/gridphysics/survivezombies.txt, level examples/gridphysics/survivezombies_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:32.0, timesteps:1000
+ ** Playing game examples/gridphysics/survivezombies.txt, level examples/gridphysics/survivezombies_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:27.0, timesteps:1000
+ *** Results in game examples/gridphysics/survivezombies.txt *** 
+ min = 13.0
+ max = 32.0
+ ave = 24.0
+ sd  = 9.848857801796104
+ se  = 5.686240703077327
+ sum  = 72.0
+ sumsq  = 1922.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/zelda.txt, level examples/gridphysics/zelda_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:8.0, timesteps:352
+ ** Playing game examples/gridphysics/zelda.txt, level examples/gridphysics/zelda_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:59
+ ** Playing game examples/gridphysics/zelda.txt, level examples/gridphysics/zelda_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:8.0, timesteps:1049
+ *** Results in game examples/gridphysics/zelda.txt *** 
+ min = -1.0
+ max = 8.0
+ ave = 5.0
+ sd  = 5.196152422706632
+ se  = 3.0000000000000004
+ sum  = 15.0
+ sumsq  = 129.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/camelRace.txt, level examples/gridphysics/camelRace_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:78
+ ** Playing game examples/gridphysics/camelRace.txt, level examples/gridphysics/camelRace_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:78
+ ** Playing game examples/gridphysics/camelRace.txt, level examples/gridphysics/camelRace_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-1.0, timesteps:78
+ *** Results in game examples/gridphysics/camelRace.txt *** 
+ min = -1.0
+ max = -1.0
+ ave = -1.0
+ sd  = 0.0
+ se  = 0.0
+ sum  = -3.0
+ sumsq  = 3.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/digdug.txt, level examples/gridphysics/digdug_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:4.0, timesteps:2000
+ ** Playing game examples/gridphysics/digdug.txt, level examples/gridphysics/digdug_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:4.0, timesteps:2000
+ ** Playing game examples/gridphysics/digdug.txt, level examples/gridphysics/digdug_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:4.0, timesteps:2000
+ *** Results in game examples/gridphysics/digdug.txt *** 
+ min = 4.0
+ max = 4.0
+ ave = 4.0
+ sd  = 0.0
+ se  = 0.0
+ sum  = 12.0
+ sumsq  = 48.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/firestorms.txt, level examples/gridphysics/firestorms_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/firestorms.txt, level examples/gridphysics/firestorms_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/firestorms.txt, level examples/gridphysics/firestorms_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ *** Results in game examples/gridphysics/firestorms.txt *** 
+ min = 0.0
+ max = 0.0
+ ave = 0.0
+ sd  = 0.0
+ se  = 0.0
+ sum  = 0.0
+ sumsq  = 0.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/infection.txt, level examples/gridphysics/infection_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:12.0, timesteps:887
+ ** Playing game examples/gridphysics/infection.txt, level examples/gridphysics/infection_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:9.0, timesteps:987
+ ** Playing game examples/gridphysics/infection.txt, level examples/gridphysics/infection_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:1.0, timesteps:1041
+ *** Results in game examples/gridphysics/infection.txt *** 
+ min = 1.0
+ max = 12.0
+ ave = 7.333333333333333
+ sd  = 5.686240703077328
+ se  = 3.282952600598702
+ sum  = 22.0
+ sumsq  = 226.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/firecaster.txt, level examples/gridphysics/firecaster_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:16.0, timesteps:494
+ ** Playing game examples/gridphysics/firecaster.txt, level examples/gridphysics/firecaster_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:16.0, timesteps:2000
+ ** Playing game examples/gridphysics/firecaster.txt, level examples/gridphysics/firecaster_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:10.0, timesteps:2000
+ *** Results in game examples/gridphysics/firecaster.txt *** 
+ min = 10.0
+ max = 16.0
+ ave = 14.0
+ sd  = 3.4641016151377544
+ se  = 2.0
+ sum  = 42.0
+ sumsq  = 612.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/overload.txt, level examples/gridphysics/overload_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:20.0, timesteps:970
+ ** Playing game examples/gridphysics/overload.txt, level examples/gridphysics/overload_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:17.0, timesteps:2000
+ ** Playing game examples/gridphysics/overload.txt, level examples/gridphysics/overload_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:21.0, timesteps:1428
+ *** Results in game examples/gridphysics/overload.txt *** 
+ min = 17.0
+ max = 21.0
+ ave = 19.333333333333332
+ sd  = 2.081665999466142
+ se  = 1.2018504251546684
+ sum  = 58.0
+ sumsq  = 1130.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/pacman.txt, level examples/gridphysics/pacman_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:14.0, timesteps:539
+ ** Playing game examples/gridphysics/pacman.txt, level examples/gridphysics/pacman_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:14.0, timesteps:1103
+ ** Playing game examples/gridphysics/pacman.txt, level examples/gridphysics/pacman_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:15.0, timesteps:1052
+ *** Results in game examples/gridphysics/pacman.txt *** 
+ min = 14.0
+ max = 15.0
+ ave = 14.333333333333334
+ sd  = 0.5773502691896093
+ se  = 0.3333333333333238
+ sum  = 43.0
+ sumsq  = 617.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/seaquest.txt, level examples/gridphysics/seaquest_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:53.0, timesteps:989
+ ** Playing game examples/gridphysics/seaquest.txt, level examples/gridphysics/seaquest_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:25.0, timesteps:573
+ ** Playing game examples/gridphysics/seaquest.txt, level examples/gridphysics/seaquest_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:11.0, timesteps:339
+ *** Results in game examples/gridphysics/seaquest.txt *** 
+ min = 11.0
+ max = 53.0
+ ave = 29.666666666666668
+ sd  = 21.385353243127252
+ se  = 12.346839451634755
+ sum  = 89.0
+ sumsq  = 3555.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/whackamole.txt, level examples/gridphysics/whackamole_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-3.0, timesteps:38
+ ** Playing game examples/gridphysics/whackamole.txt, level examples/gridphysics/whackamole_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:13.0, timesteps:500
+ ** Playing game examples/gridphysics/whackamole.txt, level examples/gridphysics/whackamole_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:-2.0, timesteps:110
+ *** Results in game examples/gridphysics/whackamole.txt *** 
+ min = -3.0
+ max = 13.0
+ ave = 2.6666666666666665
+ sd  = 8.962886439832502
+ se  = 5.174724898753342
+ sum  = 8.0
+ sumsq  = 182.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/eggomania.txt, level examples/gridphysics/eggomania_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:115
+ ** Playing game examples/gridphysics/eggomania.txt, level examples/gridphysics/eggomania_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:1.0, timesteps:175
+ ** Playing game examples/gridphysics/eggomania.txt, level examples/gridphysics/eggomania_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:1.0, timesteps:175
+ *** Results in game examples/gridphysics/eggomania.txt *** 
+ min = 0.0
+ max = 1.0
+ ave = 0.6666666666666666
+ sd  = 0.5773502691896258
+ se  = 0.33333333333333337
+ sum  = 2.0
+ sumsq  = 2.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/bait.txt, level examples/gridphysics/bait_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/bait.txt, level examples/gridphysics/bait_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):0, Score:0.0, timesteps:2000
+ ** Playing game examples/gridphysics/bait.txt, level examples/gridphysics/bait_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:5.0, timesteps:367
+ *** Results in game examples/gridphysics/bait.txt *** 
+ min = 0.0
+ max = 5.0
+ ave = 1.6666666666666667
+ sd  = 2.8867513459481287
+ se  = 1.6666666666666667
+ sum  = 5.0
+ sumsq  = 25.0
+ n   = 3
+ *********
+ ** Playing game examples/gridphysics/solarfox.txt, level examples/gridphysics/solarfox_lvl0.txt (1/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:32.0, timesteps:235
+ ** Playing game examples/gridphysics/solarfox.txt, level examples/gridphysics/solarfox_lvl0.txt (2/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:32.0, timesteps:511
+ ** Playing game examples/gridphysics/solarfox.txt, level examples/gridphysics/solarfox_lvl0.txt (3/3) **
+Controller initialization time: 0 ms.
+Result (1->win; 0->lose):1, Score:32.0, timesteps:435
+ *** Results in game examples/gridphysics/solarfox.txt *** 
+ min = 32.0
+ max = 32.0
+ ave = 32.0
+ sd  = 0.0
+ se  = 0.0
+ sum  = 96.0
+ sumsq  = 3072.0
+ n   = 3
+ *********
