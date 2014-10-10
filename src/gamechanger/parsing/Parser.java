@@ -11,17 +11,17 @@ import core.content.SpriteContent;
 import core.content.TerminationContent;
 
 public class Parser {
-	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-	ArrayList<Interaction> interacts = new ArrayList<Interaction>();
-	ArrayList<LevelMapping> mappings = new ArrayList<LevelMapping>();
-	ArrayList<Termination> terms= new ArrayList<Termination>();
+	static ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+	static ArrayList<Interaction> interacts = new ArrayList<Interaction>();
+	static ArrayList<LevelMapping> mappings = new ArrayList<LevelMapping>();
+	static ArrayList<Termination> terms= new ArrayList<Termination>();
 	
 	public Parser(){}
 	
-	public int currentSet;
+	public static int currentSet;
 	
-	public ArrayList[] readGameOutput(String gamedesc_file) {
-	
+	public static ArrayList[] readGameOutput(String gamedesc_file) {
+		sprites.clear();interacts.clear();mappings.clear();terms.clear();
 		
 		String[] desc_lines = new IO().readFile(gamedesc_file);
 		
@@ -33,7 +33,42 @@ public class Parser {
             {
                 if(n.content.identifier.equals("SpriteSet"))
                 {
-                    parseSpriteSet(n.children, 0);
+                    parseSpriteSet(n.children, 0, null);
+                }
+                else if(n.content.identifier.equals("InteractionSet"))
+                {
+                    parseInteractionSet(n.children);
+                }
+                else if(n.content.identifier.equals("LevelMapping"))
+                {
+                    parseLevelMapping(n.children);
+                }else if(n.content.identifier.equals("TerminationSet"))
+                {
+                    parseTerminationSet(n.children);
+                }
+            }
+            
+        }
+        
+        return new ArrayList[]{sprites, interacts, mappings, terms};
+        
+	}
+	
+	
+	public static ArrayList[] readGameOutputString(String gamedesc) {
+		sprites.clear();interacts.clear();mappings.clear();terms.clear();
+		
+		String[] desc_lines = gamedesc.split("\\n");
+		
+        if(desc_lines != null)
+        {        	
+            Node rootNode = indentTreeParser(desc_lines);
+            
+            for(Node n : rootNode.children)
+            {
+                if(n.content.identifier.equals("SpriteSet"))
+                {
+                    parseSpriteSet(n.children, 0, null);
                 }
                 else if(n.content.identifier.equals("InteractionSet"))
                 {
@@ -54,17 +89,19 @@ public class Parser {
         
 	}
 
+
 	
-	private void parseSpriteSet(ArrayList<Node> nodes, int depth){
+	private static void parseSpriteSet(ArrayList<Node> nodes, int depth, Sprite parent){
 		
 		for(Node n : nodes){
     		SpriteContent sc = (SpriteContent) n.content;
     		
     		Sprite sp = new Sprite();
 			sp.identifier = sc.identifier;
-			sp.referenceClass = sc.referenceClass;
+			sp.referenceClass = sc.referenceClass == null ? "" : sc.referenceClass;
 			sp.parameters = sc.parameters;
 			sp.depth = depth;
+			sp.parent = parent;
 
 			sprites.add(sp);
     		
@@ -72,13 +109,13 @@ public class Parser {
     		
     		if (n.children.size() > 0){
     			int newDepth = depth + 1;
-    			parseSpriteSet(n.children, newDepth);
+    			parseSpriteSet(n.children, newDepth, sp);
     		}
 		}
 		
 	}
 	
-	private void parseInteractionSet(ArrayList<Node> nodes){
+	private static void parseInteractionSet(ArrayList<Node> nodes){
 		for(Node n : nodes){
 			InteractionContent ic = (InteractionContent) n.content;
 			
@@ -93,9 +130,10 @@ public class Parser {
 		
 	}
 	
-	private void parseLevelMapping(ArrayList<Node> nodes){
+	private static void parseLevelMapping(ArrayList<Node> nodes){
 		for(Node n : nodes){
 			MappingContent mc = (MappingContent) n.content;
+			
 			
 			LevelMapping lm = new LevelMapping();
 			lm.charID = mc.charId;
@@ -105,7 +143,7 @@ public class Parser {
 		}
 	}
 	
-	private void parseTerminationSet(ArrayList<Node> nodes){
+	private static void parseTerminationSet(ArrayList<Node> nodes){
 		for(Node n : nodes){
 			TerminationContent tc = (TerminationContent) n.content;
 			
@@ -127,7 +165,7 @@ public class Parser {
 	
 	
 	
-    private Node indentTreeParser(String[] lines)
+    private static Node indentTreeParser(String[] lines)
     {
         //By default, let's make tab as four spaces
         String tabTemplate = "    ";
@@ -161,7 +199,7 @@ public class Parser {
     }
     
     
-    private void updateSet(String line)
+    private static void updateSet(String line)
     {
         if(line.equalsIgnoreCase("SpriteSet"))
             currentSet = Types.VGDL_SPRITE_SET;

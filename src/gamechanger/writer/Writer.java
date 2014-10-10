@@ -8,7 +8,7 @@ import gamechanger.parsing.Termination;
 import java.util.ArrayList;
 
 public class Writer {
-	public void writeGameOutput(ArrayList[] elements){
+	public static String writeGameOutput(ArrayList[] elements){
 		
 		
 		ArrayList<Sprite> sprites = elements[0];
@@ -40,7 +40,7 @@ public class Writer {
 		}
 		
 		
-		System.out.println(result);
+		return result;
 		
 		
 
