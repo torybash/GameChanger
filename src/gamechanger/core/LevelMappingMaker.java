@@ -13,7 +13,7 @@ public class LevelMappingMaker {
 
 	static Random r = new Random();
 	
-	static double haveMappingChance = 0.7;
+	static double haveMappingChance = 0.9;
 	public static void makeMapping(ArrayList<LevelMapping> mappings, ArrayList<Sprite> sprites) {
 		
 		int c = 36;
@@ -56,8 +56,8 @@ public class LevelMappingMaker {
 		mappings.add(avatarMapping);
 		
 		for (LevelMapping mapping : mappings) {
-			int amount = GameChanger.range(1, 28);
-			amount = 1 + (amount * amount)/100; // 1 - 8
+			int amount = GameChanger.range(1, 50);
+			amount = 1 + (amount * amount * amount * amount)/1000000; // 1 - 8
 			int amountPut = 0;
 			if (mapping.charID == "A".charAt(0)) amount = 1;
 			

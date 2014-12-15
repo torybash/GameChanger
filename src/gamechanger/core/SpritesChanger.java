@@ -1,8 +1,11 @@
 package gamechanger.core;
 
+import gamechanger.parsing.Interaction;
 import gamechanger.parsing.Sprite;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -22,10 +25,11 @@ public class SpritesChanger {
 			
 		possibeSpriteParameters.put("Flicker",			new String[]{"img", "singleton", "limit"});
 		possibeSpriteParameters.put("Immovable", 		new String[]{"img", "singleton"});
+		possibeSpriteParameters.put("Door", 			new String[]{"img", "singleton"});
 		possibeSpriteParameters.put("OrientedFlicker", 	new String[]{"img", "singleton", "orientation", "limit"});
 		possibeSpriteParameters.put("Passive", 			new String[]{"img", "singleton"});
 		possibeSpriteParameters.put("Missile",	 		new String[]{"img", "singleton", "cooldown", "speed", "orientation"});
-		possibeSpriteParameters.put("RandomMissile", 	new String[]{"img", "singleton", "cooldown", "speed", "orientation"});
+		possibeSpriteParameters.put("RandomMissile", 	new String[]{"img", "singleton", "cooldown", "speed"});
 		possibeSpriteParameters.put("AlternateChaser", 	new String[]{"img", "singleton", "cooldown", "speed", "stype1", "stype2", "fleeing"});
 		possibeSpriteParameters.put("Chaser", 			new String[]{"img", "singleton", "cooldown", "speed", "stype", "fleeing"});
 		possibeSpriteParameters.put("Fleeing", 			new String[]{"img", "singleton", "cooldown", "speed", "stype", "fleeing"});
@@ -40,32 +44,69 @@ public class SpritesChanger {
 	
 	
 	
+	//Changes chances
+	static double chanceToMutateSpriteClass = 0.25;
+	static double chanceToMutateSpriteParameters = 0.0;
 	
-	static double chanceToMutateSpriteClass = 0.15;
-	static double chanceToMutateSpriteParameters = 0.3;
+	//Parameter chances
+	static double singletonChance = 0.1;
+	static double cooldownChance = 0.25;
+	static double speedChance = 0.1;
+	static double ammoChance = 0.15;
+	static double probChance = 0.8;
+	static double totalChance = 0.2;
+	static double fleeingChance = 0.3;
+	static double spreadprobChance = 0.3;
+	
+	
 	static void changeSprites(ArrayList<Sprite> sprites, int amountSprites){
 		
-		//Remove interactions
-		//TODO
+		GameChanger.setAvatar(sprites);
+		
+		//Remove existing sprites
+		int spritesToRemove = sprites.size() - amountSprites;
+		if (spritesToRemove > 0){
+			Integer[] spriteIndices = new Integer[spritesToRemove];
+			for (int i = 0; i < spriteIndices.length; i++) {
+				 int idx = GameChanger.range(0, sprites.size()-1);
+				 
+				 boolean valid = true;
+				 for (int j = 0; j < spriteIndices.length; j++) {
+					 if (spriteIndices[j] == null) continue;
+					 if (idx == spriteIndices[j]) valid = false;
+				 }
+				 if (valid) spriteIndices[i] = idx;
+				 else i--;
+			}
+			Arrays.sort(spriteIndices, Collections.reverseOrder());
+			for (int i = 0; i < spriteIndices.length; i++) {
+				sprites.remove((int)spriteIndices[i]);
+			}
+		}
 		
 		
 		//Change existing sprites
+		int changes = 0;
 		for (Sprite sprite : sprites) {
-			if (chanceToMutateSpriteClass > r.nextDouble()){ 
+			if (sprite.identifier.equals("wall")) continue;
+			if (chanceToMutateSpriteClass > r.nextDouble() || (changes == 0 && sprite == sprites.get(sprites.size()-1))){ 
 				if (sprite.referenceClass.length() > 0){
 					sprite.referenceClass = getNewSpriteClass(sprite, sprites);
 					sprite.parameters = getNewSpriteParameters(sprite, sprites);
+					changes++;
 				}else{
 					sprite.parameters = getNewSpriteParameters(sprite, sprites);
+					changes++;
 				}
 			}else if (chanceToMutateSpriteParameters > r.nextDouble()){
 				sprite.parameters = getNewSpriteParameters(sprite, sprites);
+				changes++;
 			}
 		}
 		
 		
 		//Add new sprites
-		boolean addedAvatar = GameChanger.haveAvatar(sprites);
+		boolean addedAvatar = GameChanger.setAvatar(sprites);
 		int spritesToMake = amountSprites - sprites.size();
 		Sprite[] newSprites = new Sprite[spritesToMake];
 		for (int i = 0; i < spritesToMake; i++) {
@@ -103,14 +144,7 @@ public class SpritesChanger {
 
 
 	
-	static double singletonChance = 0.1;
-	static double cooldownChance = 0.25;
-	static double speedChance = 0.1;
-	static double ammoChance = 0.15;
-	static double probChance = 0.8;
-	static double totalChance = 0.2;
-	static double fleeingChance = 0.3;
-	static double spreadprobChance = 0.3;
+
 	
 	private static HashMap<String, String> getNewSpriteParameters(Sprite sprite, ArrayList<Sprite> sprites) {
 		HashMap<String, String> parameters = new HashMap<String, String>();
@@ -127,7 +161,7 @@ public class SpritesChanger {
 		
 		String[] possibleParames = possibeSpriteParameters.get(spriteClass);
 		String spriteId = "";
-				
+		
 		for (int i = 0; i < possibleParames.length; i++) {
 			String paramType = possibleParames[i];
 			switch (paramType) {
@@ -160,7 +194,7 @@ public class SpritesChanger {
 				break;
 			case "stype":
 				spriteId = "";
-				while (spriteId.length() == 0 || spriteId.equals(sprite.identifier)){
+				while (spriteId.length() == 0 || spriteId.equals(sprite.identifier) || isChildOfSprite(sprite, spriteId, sprites)){
 					if (sprite.referenceClass.equals("Chaser") || sprite.referenceClass.equals("Fleeing") || sprite.referenceClass.equals("Portal")){
 						spriteId = GameChanger.getRandomSprite(sprites);
 					}else{ //SpawnPoints, bombers, spreaders and shootavatars/flakavatars
@@ -233,6 +267,23 @@ public class SpritesChanger {
 		}
 		
 		return parameters;
+	}
+
+
+
+	private static boolean isChildOfSprite(Sprite sprite, String otherSpriteId, ArrayList<Sprite> sprites) {
+		
+		for (Sprite other : sprites) {
+			if (other.identifier.equals(otherSpriteId) && other.parent != null){
+				if (other.parent.identifier.equals(sprite.identifier)){
+					return true;
+				}else if (other.parent.parent != null && other.parent.parent.identifier.equals(sprite.identifier)){
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
 

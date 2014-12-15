@@ -45,16 +45,21 @@ public class InteractionsChanger {
 		possibleFunctionParameters.put("wrapAround", new String[]{"scoreChange"});
 	}
 	
+	//Change chances
+	static double chanceToMutateSprite1 = 0.33f; //and everthing else
+	static double chanceToMutateSprite2 = 0.0f; //and effect+paramers
+	static double chanceToMutateEffect = 0.0f; //and parameters
+	static double chanceToMutateParameters = 0.0f;
+	
+	//Parameter chances
+	static double chanceToHaveScoreChange = 0.3f;
+	
 	static void changeInteractions(ArrayList<Sprite> sprites, ArrayList<Interaction> interacts, int amountInteractions) {
 		int currAmount = interacts.size();
-		float chanceToHaveScoreChange = 0.3f;
-		float chanceToMutateSprite1 = 0.1f; //and everthing else
-		float chanceToMutateSprite2 = 0.2f; //and effect+paramers
-		float chanceToMutateEffect = 0.4f; //and parameters
-		float chanceToMutateParameters = 0.8f;
+
 		
 		//Sprite set checks
-		GameChanger.haveAvatar(sprites);
+		GameChanger.setAvatar(sprites);
 		GameChanger.loadResourceSprites(sprites);
 		
 		//Remove interactions
@@ -73,7 +78,7 @@ public class InteractionsChanger {
 			}
 			Arrays.sort(interactIndices, Collections.reverseOrder());
 			for (int i = 0; i < interactIndices.length; i++) {
-				Interaction inter = interacts.remove((int)interactIndices[i]);
+				interacts.remove((int)interactIndices[i]);
 			}
 		}
 		
@@ -89,7 +94,7 @@ public class InteractionsChanger {
 				
 				//change function and parameters
 				inter.function = getNewFunction(inter.sprite1, inter.sprite2, sprites);
-				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites, chanceToHaveScoreChange);
+				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites);
 				changes++;
 			}else if (chanceToMutateSprite2 > r.nextFloat()){ 
 				//change sprite 2
@@ -97,16 +102,16 @@ public class InteractionsChanger {
 				
 				//change function and parameters
 				inter.function = getNewFunction(inter.sprite1, inter.sprite2, sprites);
-				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites, chanceToHaveScoreChange);
+				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites);
 				changes++;
 			}else if (chanceToMutateEffect > r.nextFloat()){ 
 				//change function and parameters
 				inter.function = getNewFunction(inter.sprite1, inter.sprite2, sprites);
-				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites, chanceToHaveScoreChange);
+				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites);
 				changes++;
 			}else if (chanceToMutateParameters > r.nextFloat()){ 
 				//change paramters
-				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites, chanceToHaveScoreChange);
+				inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites);
 				changes++;
 			}
 		}
@@ -118,7 +123,7 @@ public class InteractionsChanger {
 			inter.sprite1 = GameChanger.getRandomSprite(sprites);
 			inter.sprite2 = getNewSprite2(inter.sprite1, sprites);
 			inter.function = getNewFunction(inter.sprite1, inter.sprite2, sprites);
-			inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites, chanceToHaveScoreChange);
+			inter.parameters = getNewParameters(inter.sprite1, inter.sprite2, inter.function, sprites);
 			interacts.add(inter);
 		}
 			
@@ -179,7 +184,7 @@ public class InteractionsChanger {
 
 
 
-	private static HashMap<String,String> getNewParameters(String sprite1, String sprite2, String func, ArrayList<Sprite> sprites, float chanceToHaveScoreChange){
+	private static HashMap<String,String> getNewParameters(String sprite1, String sprite2, String func, ArrayList<Sprite> sprites){
 		HashMap<String,String> result = new HashMap<String,String>();
 		String[] possibleParams = possibleFunctionParameters.get(func);
 		
@@ -189,7 +194,7 @@ public class InteractionsChanger {
 			switch (paramType) {
 			case "scoreChange":
 				if (r.nextFloat() > chanceToHaveScoreChange) continue;
-				int scoreChange = GameChanger.range(-1, 2);
+				int scoreChange = GameChanger.range(-5, 10); //GameChanger.range(-1, 2);
 				if (scoreChange == 0) continue;
 				result.put(paramType, ""+scoreChange);
 				break;
@@ -222,11 +227,11 @@ public class InteractionsChanger {
 				result.put(paramType, resourceId);
 				break;
 			case "limit":
-				int limit = isNullResourceSpawnEffect ? 0 : GameChanger.range(0, 10);
+				int limit = isNullResourceSpawnEffect ? 0 : GameChanger.range(0, 15); //GameChanger.range(0, 10);
 				result.put(paramType, ""+limit);
 				break;
 			case "value":
-				int value = GameChanger.range(-2, 2);
+				int value = GameChanger.range(-5, 5); //GameChanger.range(-2, 2);
 				result.put(paramType, ""+value);
 				break;
 			default:

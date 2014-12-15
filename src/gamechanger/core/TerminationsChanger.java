@@ -4,6 +4,8 @@ import gamechanger.parsing.Sprite;
 import gamechanger.parsing.Termination;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -18,12 +20,35 @@ public class TerminationsChanger {
 	static {
 		possibeTerminationParameters.put("SpriteCounter", new String[]{"stype", "limit", "win"});
 		possibeTerminationParameters.put("MultiSpriteCounter", new String[]{"stype1", "stype2", "limit", "win"});
+		possibeTerminationParameters.put("Timeout", new String[]{"limit", "win"});
 	}
 	
+	//Change chances
+	static double changeTerminationClassChance = 0.25;
+	static double changeTerminationParametersChance = 0.0;
 	
-	static double changeTerminationClassChance = 0.2;
-	static double changeTerminationParametersChance = 0.4;
 	static void changeTerminations(ArrayList<Sprite> sprites, ArrayList<Termination> terms, int amountTerminations) {
+		
+		//Remove existing terminations
+		int termsToRemove = terms.size() - amountTerminations;
+		if (termsToRemove > 0){
+			Integer[] termsIndices = new Integer[termsToRemove];
+			for (int i = 0; i < termsIndices.length; i++) {
+				 int idx = GameChanger.range(0, terms.size()-1);
+				 
+				 boolean valid = true;
+				 for (int j = 0; j < termsIndices.length; j++) {
+					 if (termsIndices[j] == null) continue;
+					 if (idx == termsIndices[j]) valid = false;
+				 }
+				 if (valid) termsIndices[i] = idx;
+				 else i--;
+			}
+			Arrays.sort(termsIndices, Collections.reverseOrder());
+			for (int i = 0; i < termsIndices.length; i++) {
+				terms.remove((int)termsIndices[i]);
+			}
+		}
 		
 		//Change existing terminations
 		for (Termination term : terms) {
@@ -55,7 +80,7 @@ public class TerminationsChanger {
 		boolean existTermination = false;
 		if (haveType2Chance <= r.nextDouble() && term.term.equals("MultiSpriteCounter")){
 			existTermination = true;
-		};
+		}
 		
 		for (int i = 0; i < possibleParams.length; i++) {
 			String paramType = possibleParams[i];
@@ -80,10 +105,14 @@ public class TerminationsChanger {
 				}
 				break;
 			case "limit":
-				if (existTermination){
-					result.put(paramType,"1"); // win/lose when a certain sprite exists
+				if (term.term.equals("Timeout")){
+					result.put(paramType, ""+GameChanger.range(500, 2000));
 				}else{
-					result.put(paramType,"0"); // win/lose when all of certain sprite type are removed
+					if (existTermination){
+						result.put(paramType,"1"); // win/lose when a certain sprite exists
+					}else{
+						result.put(paramType,"0"); // win/lose when all of certain sprite type are removed
+					}
 				}
 				
 				break;

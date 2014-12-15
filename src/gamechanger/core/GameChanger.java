@@ -46,7 +46,7 @@ public class GameChanger {
 	//	NoisyRotatingFlippingAvatar.class, OrientedAvatar.class,
 	//	RotatingFlippingAvatar.class,ShootAvatar.class, VerticalAvatar.class};
 	
-	//ONLY CONTAINS SPRITES WITH CORRECT IMPLEMENTATION (-AimedAvatar.class, AimedFlakAvatar.class, InertialAvatar.class, MarioAvatar.class, 
+	//ONLY CONTAINS AVATAR SPRITES WITH IMPLEMENTATION (-AimedAvatar.class, AimedFlakAvatar.class, InertialAvatar.class, MarioAvatar.class, 
 	//NoisyRotatingFlippingAvatar.class, RotatingFlippingAvatar.class, VerticalAvatar.class
 	static final Class [] possibleAvatarClass = {FlakAvatar.class, HorizontalAvatar.class, MovingAvatar.class,
 	OrientedAvatar.class, ShootAvatar.class};
@@ -58,7 +58,7 @@ public class GameChanger {
 	//Fleeing.class, RandomAltChaser.class, RandomInertial.class, RandomNPC.class,
 	//Bomber.class, Portal.class, SpawnPoint.class, SpriteProducer.class, Resource.class, Spreader.class};
 	
-	//ONLY CONTAINS SPRITES WITH CORRECT IMPLEMENTATION (-Conveyor.class, Door.class, ErraticMissile.class, Walker.class,
+	//ONLY CONTAINS SPRITES WITH IMPLEMENTATION (-Conveyor.class, Door.class, ErraticMissile.class, Walker.class,
 	//WalkerJumper.class, RandomInertial.class, SpriteProducer.class
 	static final Class[] possibleSpriteClasses = {Flicker.class,
 	Immovable.class, OrientedFlicker.class, Passive.class, 
@@ -67,18 +67,16 @@ public class GameChanger {
 	Bomber.class, Portal.class, SpawnPoint.class, Resource.class, Spreader.class};
 	
 	
-	
-
-	
-	
-	
-	
 	private static Random r = new Random();
-	static boolean haveAvatar = false;
-	static String avatarName = "avatar";
+	public static boolean haveAvatar = false;
+	public static String avatarName = "avatar";
 	static ArrayList<Sprite> resourceSprites = new ArrayList<Sprite>();
 	
-		
+	
+	/**
+	 * Mutate a VGDL game description. 
+	 * @return Mutated game description
+	 */
 	public static String changeGame(String game_desc, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
 		haveAvatar = false;
 		avatarName = "avatar";
@@ -90,14 +88,23 @@ public class GameChanger {
 		ArrayList<Interaction> interacts = elements[1];
 		ArrayList<LevelMapping> mappings = elements[2];
 		ArrayList<Termination> terms = elements[3];
+		
+		//change values to allow removal/creation of sprites/interactions/terms
+		int amountSprites = sprites.size(); // + range(-1,2); 
+		int amountInteractions = interacts.size(); // + range(-2,2); 
+		int amountTerminations = terms.size();
 				
-		if (changeSprites) SpritesChanger.changeSprites(sprites, sprites.size());
-		if (changeInteractions) InteractionsChanger.changeInteractions(sprites, interacts, interacts.size());
-		if (changeTerminations) TerminationsChanger.changeTerminations(sprites, terms, terms.size());
+		if (changeSprites) SpritesChanger.changeSprites(sprites, amountSprites);
+		if (changeInteractions) InteractionsChanger.changeInteractions(sprites, interacts, amountInteractions);
+		if (changeTerminations) TerminationsChanger.changeTerminations(sprites, terms, amountTerminations);
 			
 		return Writer.writeGameOutput(elements);
 	}
 	
+	/**
+	 * Generate a VGDL game description
+	 * @return A VGDL game description
+	 */
 	public static String makeGame(){
 		haveAvatar = false;
 		avatarName = "avatar";
@@ -114,13 +121,9 @@ public class GameChanger {
 		elements[2] = mappings;
 		elements[3] = terms;
 		
-		int amountSprites = range(3,25);
-		int amountInteractions = range(3,25);
+		int amountSprites = range(3,15);
+		int amountInteractions = range(3,15);
 		int amountTerminations = range(1,2);
-		
-//		int amountSprites = range(3,10);
-//		int amountInteractions = range(3,10);
-//		int amountTerminations = range(1,2);
 		
 		SpritesChanger.changeSprites(sprites, amountSprites);
 		InteractionsChanger.changeInteractions(sprites, interacts, amountInteractions);
@@ -131,28 +134,15 @@ public class GameChanger {
 	}
 	
 	public static String makeLevel(String game_desc){
-		
 		ArrayList[] elements = Parser.readGameOutputString(game_desc);
 		ArrayList<LevelMapping> mappings = elements[2];
 		String level = LevelMappingMaker.makeLevel(mappings);
-				
-		
 
-		
-//		System.out.println("----------");
-//		for (LevelMapping levelMapping : mappings) {
-//			System.out.println("Levelmapping Char: " +levelMapping.charID + " > " + levelMapping.references);
-//		}
-//		System.out.println("game_desc:");
-//		System.out.println(game_desc);
-//		System.out.println("----------");
-//		System.out.println("----------");
-//		System.out.println(level);
 		return level;
 	}
 	
 
-	static boolean haveAvatar(ArrayList<Sprite> sprites) {
+	public static boolean setAvatar(ArrayList<Sprite> sprites) {
 		for (Sprite s: sprites) {
 			for (int i = 0; i < possibleAvatarClass.length; i++) {
 				String className = possibleAvatarClass[i].getSimpleName();
@@ -220,9 +210,9 @@ public class GameChanger {
 		return false;
 	}
 	
-	/**both value included
+	/**Random int. Both values included
 	 */
-	static int range(int from, int to){
+	public static int range(int from, int to){
 		if (from > to) throw new IllegalArgumentException("To value can't be smaller than from");		
 		int result = r.nextInt(to-from+1) + from;
 		return result;

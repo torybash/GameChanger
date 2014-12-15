@@ -1,6 +1,11 @@
-/bin
-/generatedgames
-/generatedgames BACKUP
-/mutatedgames
-/mutatedgames BACKUP
-/gamedata
+gamedata/**
+bin/**
+generatedgames/**
+generatedgames 5k test/**
+generatedgames BACKUP/**
+levelgen/**
+mutatedgames/**
+mutatedgames BACKUP/**
+mutatedgames PUZZLEBACKUP/**
+puzzlegamedata/**
+sprites/**

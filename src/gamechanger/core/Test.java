@@ -9,42 +9,30 @@ import java.io.UnsupportedEncodingException;
 
 public class Test {
 
-	
 	public static void main(String[] args) {
 		
-				
-//		System.out.println(GameChanger.makeGame());
-//
-//		
-//		System.out.println(GameChanger.changeGame("../gvgai/examples/gridphysics/" + "bait" + ".txt", true, true, true));
-		
-		
-		
-//		String gameTitle = "infection";
-//		String gamePath = "../gvgai/examples/gridphysics/" + gameTitle + ".txt";
-		
-//        String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
-//                "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
-//                "camelRace", "digdug", "firestorms", "infection", "firecaster",
-//                "overload", "pacman", "seaquest", "whackamole", "eggomania"};
-        
         String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
                 "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
                 "camelRace", "digdug", "firestorms", "infection", "firecaster",
-                "overload", "pacman", "seaquest", "whackamole", "eggomania",
-                "bait", "boloadventures", "bombuzal", "brainman", "chipschallenge",
-                "modality", "painter", "realsokoban", "thecitadel", "zenpuzzle"};
+                "overload", "pacman", "seaquest", "whackamole", "eggomania"};
+        
+//        String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
+//                "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
+//                "camelRace", "digdug", "firestorms", "infection", "firecaster",
+//                "overload", "pacman", "seaquest", "whackamole", "eggomania",
+//                "bait", "boloadventures", "bombuzal", "brainman", "chipschallenge",
+//                "modality", "painter", "realsokoban", "thecitadel", "zenpuzzle"};
 		
 //        games = new String[]{"seaquest"};
         
         
         //1. Make a lot mutated games
-//        int mutationAmount = 100;
+//        int mutationAmount = 10;
 //		for (int i = 0; i < games.length; i++) {
 //			String gamePath = "../gvgai/examples/gridphysics/" + games[i] + ".txt";
 //			
 //			for (int j = 0; j < mutationAmount; j++) {
-//				String new_desc = GameChanger.changeGame(gamePath, true, false, false);
+//				String new_desc = GameChanger.changeGame(gamePath, false, true, false);
 //				String path = "mutatedgames/" + games[i] + "_mutation_" + j + ".txt";
 //				
 //				PrintWriter writer = null;
@@ -61,9 +49,6 @@ public class Test {
 //				writer.flush();
 //				writer.print(new_desc);
 //				writer.close();
-//				
-//				
-//				
 //			}
 //		}
 
