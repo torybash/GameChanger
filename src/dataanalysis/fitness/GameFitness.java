@@ -1,4 +1,4 @@
-package datanalysis.core;
+package dataanalysis.fitness;
 
 public class GameFitness implements Comparable{
 

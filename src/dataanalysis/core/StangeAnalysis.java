@@ -1,4 +1,4 @@
-package datanalysis.core;
+package dataanalysis.core;
 
 import java.util.ArrayList;
 

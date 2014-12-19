@@ -1,11 +1,11 @@
-package datanalysis.core;
+package dataanalysis.tools;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
+
+import dataanalysis.controller.Controller;
+import dataanalysis.core.GameData;
 
 
 public class ExtractGameData {
@@ -85,12 +85,12 @@ public class ExtractGameData {
 		}
 	}
 		
-	public static ArrayList<GameData[]> extractGameDatas(String[] dataFolders, boolean readActionFiles) {
-		int n = dataFolders.length;
+	public static ArrayList<GameData[]> extractGameDatas(Controller[] controllers, boolean readActionFiles) {
+		int n = controllers.length;
 		ArrayList<GameData>[] gameDatas = new ArrayList[n];
 		for (int c = 0; c < n; c++) {
-			System.out.println("-------EXTRACTING FOR CONTROLLER: " + dataFolders[c]);
-			gameDatas[c] = extractData(dataFolders[c] +"/", readActionFiles);
+			System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name);
+			gameDatas[c] = extractData(controllers[c].dataFolder +"/", readActionFiles);
 		}
 		ArrayList<GameData[]> result = new ArrayList<GameData[]>();
 		for (int g = 0; g < gameDatas[0].size(); g++) {
@@ -103,22 +103,22 @@ public class ExtractGameData {
 		return result;
 	}
 	
-	public static ArrayList<GameData[]> extractMutatedGameDatas(String[] dataFolders, int numberMutations, boolean readActionFiles) {
+	public static ArrayList<GameData[]> extractMutatedGameDatas(Controller[] controllers, int numberMutations, boolean readActionFiles) {
 		ArrayList<GameData>[][] datas = new ArrayList[numberMutations][];
 		ArrayList<GameData[]> result = new ArrayList<GameData[]>();
 		for (int m = 0; m < numberMutations; m++) { //for each mutation
-			ArrayList<GameData>[] gameDatas = new ArrayList[dataFolders.length];
-			for (int c = 0; c < dataFolders.length; c++) {	//for each controller
-				System.out.println("-------EXTRACTING FOR CONTROLLER: " + dataFolders[c] + " - MUTATION: " + m);
-				gameDatas[c] = extractData(dataFolders[c] + m +"/", readActionFiles);
+			ArrayList<GameData>[] gameDatas = new ArrayList[controllers.length];
+			for (int c = 0; c < controllers.length; c++) {	//for each controller
+				System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name + " - MUTATION: " + m);
+				gameDatas[c] = extractData(controllers[c].dataFolder + m +"/", readActionFiles);
 			}
 			datas[m] = gameDatas;
 		}
 		
 		for (int m = 0; m < numberMutations; m++) {
 			for (int g = 0; g < datas[0][0].size(); g++) {
-				GameData[] list = new GameData[dataFolders.length];
-				for (int c = 0; c < dataFolders.length; c++) { //for each controller
+				GameData[] list = new GameData[controllers.length];
+				for (int c = 0; c < controllers.length; c++) { //for each controller
 					list[c] = datas[m][c].get(g);
 				}
 				result.add(list);

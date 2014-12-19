@@ -9,3 +9,4 @@ mutatedgames BACKUP/**
 mutatedgames PUZZLEBACKUP/**
 puzzlegamedata/**
 sprites/**
+*.dat

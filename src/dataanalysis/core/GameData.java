@@ -1,4 +1,4 @@
-package datanalysis.core;
+package dataanalysis.core;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +34,10 @@ public class GameData {
 					levelValues[i].put(dataTypeObj.toString(), -1f);
 				}
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			
 		}
 	}
 
@@ -86,64 +83,6 @@ public class GameData {
 			currLP.actionSeq.add(line);
 		}
 	}
-	
-//	public void calculateDataForGame(){
-//		float min = Float.POSITIVE_INFINITY;
-//		float max = Float.NEGATIVE_INFINITY;
-//		float ave = 0;
-//		float sd = 0;
-//		float se = 0;
-//		float sum = 0;
-//		float sumsq = 0;
-//		float wrate = 0;
-//		float avtic = 0;
-//		float sdtic = 0;
-//		
-//		float[] scoreArray = new float[levelsPlayed.size()];
-//		
-//		int count = 0;
-//		
-//		for (int i = 0; i < levelsPlayed.size(); i++) {
-//			LevelPlay lp = levelsPlayed.get(i);
-//			float score = lp.score;
-//			if (score < min) min = score;
-//			if (score > max) max = score;
-//			sum += score;
-//			sumsq += score * score;
-//			
-//			scoreArray[i] = lp.score;
-//			
-//			wrate += lp.won;
-//			
-//			count++;
-//		}
-//		
-//		Arrays.sort(scoreArray);
-//		float median;
-//		if (scoreArray.length % 2 == 0)
-//		    median = ((float)scoreArray[scoreArray.length/2] + (float)scoreArray[scoreArray.length/2 - 1])/2;
-//		else
-//		    median = (float) scoreArray[scoreArray.length/2];
-//		
-//		ave = sum / (float)count;
-//		double num = sumsq - (count * ave * ave);
-//        if (num < 0) {
-//            // avoids tiny negative numbers possible through imprecision
-//            num = 0;
-//        }
-//        sd = (float) Math.sqrt(num / (count - 1));
-//        se =   sd / (float)Math.sqrt(count);
-//		
-//        wrate /= count;
-//        
-//		gameValues.put(DataTypes.MIN, min);
-//		gameValues.put(DataTypes.MAX, max);
-//		gameValues.put(DataTypes.AVE, ave);
-//		gameValues.put(DataTypes.MEDI, median);
-//		gameValues.put(DataTypes.SD, sd);
-//		gameValues.put(DataTypes.SE, se);
-//		gameValues.put(DataTypes.WRATE, wrate);
-//	}
 	
 	
 	public void calculateDataForLevel(int levelNr){
@@ -196,7 +135,6 @@ public class GameData {
 	}
 
 	public void calculateActionEntropy() {
-		
 		int amountOfActionTypes = Utility.getAmountOfActionsInGame(gameTitle);
 
 //		System.out.println("Current game: "+gameTitle);

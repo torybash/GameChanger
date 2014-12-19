@@ -1,11 +1,7 @@
 package util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.Random;
 
-import datanalysis.core.GameData;
 
 public class Utility {
 
@@ -14,20 +10,26 @@ public class Utility {
 	}
 
 	public static double relDiff(double d1, double d2){		
-		double max = Math.max(d1, d2);
-		if (max == 0) return 0;		
-		double result = Math.abs(d1-d2)/max;
-		if (result > 1) result = 1;
-		else if (result < -1) result = -1;
+		double division = Math.max(Math.abs(d1), Math.abs(d2));
+		double result = 0;
+		if (d1 > d2){
+			result = Math.abs(d1-d2)/division;
+		}else if (d1 < d2){
+			result = -Math.abs(d1-d2)/division;
+		}
+		if (result > 1) result = 1; if (result < -1) result = -1;
 		return result;
 	}
 	
-	public static float relDiff(float f1, float f2){	
-		float max = Math.max(f1, f2);
-		if (max == 0) return 0;		
-		float result = Math.abs(f1-f2)/max;
-		if (result > 1) result = 1;
-		else if (result < -1) result = -1;
+	public static float relDiff(float f1, float f2){
+		float division = Math.max(Math.abs(f1), Math.abs(f2));
+		float result = 0;
+		if (f1 > f2){
+			result = Math.abs(f1-f2)/division;
+		}else if (f1 < f2){
+			result = -Math.abs(f1-f2)/division;
+		}
+		if (result > 1) result = 1; if (result < -1) result = -1;
 		return result;
 	}
 	
@@ -81,5 +83,48 @@ public class Utility {
 //				return -1;
 //			}
 //		}
+	}
+
+	public static double divDiff(double d1, double d2) {
+		double result = 0;
+		boolean differentSign = (d1 >= 0 ? (d2 >= 0 ? false : true) : (d2 < 0 ? true : false));
+//		if (Math.abs(d1) > Math.abs(d2)){
+//			result = 1-Math.abs(d2)/Math.abs(d1);
+//			if (d1 < 0) result *= -1;
+//		}else if (Math.abs(d1) < Math.abs(d2)){
+//			result = Math.abs(d1)/Math.abs(d2) - 1;
+//			if (d2 < 0) result *= -1;
+//		}
+//		
+//		
+		
+		result = d2/d1;
+		
+		 System.out.println("intermediate result: " + result + ", differentSign: " + differentSign);
+
+		if (result > 1) result = 1; if (result < -1) result = -1;
+			
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		Random r = new Random();
+		for (int i = 0; i < 100; i++) {
+			
+			double d1 = r.nextDouble() * 2 - 1;
+			double d2 = r.nextDouble() * 2 - 1;
+			
+			
+			System.out.println("d1: " + d1 + ", d2: " + d2 + ", val: " + divDiff(d1,d2));
+			System.out.println();
+		}
+		
+		
+		for (int i = -5; i < 5; i++) {
+			for (int j = -5; j < 5; j++) {
+				System.out.println("d1: " + i + ", d2: " + j + ", val: " + divDiff(i,j));
+				System.out.println();
+			}
+		}
 	}
 }

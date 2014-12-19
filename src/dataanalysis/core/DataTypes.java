@@ -1,4 +1,4 @@
-package datanalysis.core;
+package dataanalysis.core;
 
 public class DataTypes {
 
