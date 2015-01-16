@@ -1,5 +1,7 @@
 package gamechanger.parsing;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import ontology.Types;
@@ -210,5 +212,24 @@ public class Parser {
         if(line.equalsIgnoreCase("TerminationSet"))
             currentSet = Types.VGDL_TERMINATION_SET;
     }
+
+
+	public static String getGameDescFromPath(String gamePath) {
+       String gameDesc = "";
+        try{
+            BufferedReader in = new BufferedReader(new FileReader(gamePath));
+            String line = null;
+            while ((line = in.readLine()) != null) {
+            	gameDesc += line + "\n";
+            }
+            in.close();
+        }catch(Exception e)
+        {
+            System.out.println("Error reading the file " + gamePath + ": " + e.toString());
+            e.printStackTrace();
+            return null;
+        }
+        return gameDesc;
+    	}
 	
 }

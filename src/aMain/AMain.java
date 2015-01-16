@@ -33,19 +33,38 @@ public class AMain {
 		//*********************************
 		//******25 P.T./800 TICKS TEST*****
 		//*********************************
-//		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
-//		gda.analyzeGameDifference(controllers, false);
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
+//		gda.analyzeGameDifference(controllers, false, true);
+//		gda.analyzeAllGamesAverage(controllers, true);
+//		fa.analyzeFitness(controllers, false);
+		
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
+//		gda.analyzeGameDifference(controllers, false, true);
+//		gda.analyzeAllGamesAverage(controllers, true);
+//		fa.analyzeFitness(controllers, false);
+		
+		
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed_genlvls");
+//		gda.analyzeGameDifference(controllers, false, true );
 //		gda.analyzeAllGamesAverage(controllers, false);
 //		fa.analyzeFitness(controllers, false);
 		
 		//*********************************
 		//**********2K TICKS TEST**********
 		//*********************************
-//		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "2000ticks_all");
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "2000ticks_all");
 //		gda.analyzeGameDifference(controllers, false);
 //		gda.analyzeAllGamesAverage(controllers, false);
+	
 //		fa.analyzeFitness(controllers, false);
 
+
+		
+//		controllers = new Controller[]{dontDieController};
+//		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "50t10pt_gengames");
+//		gda.analyzeAllGamesAverage(controllers, false);
+//		gda.analyzeGameDifference(controllers, false, false);
+		
 		
 		//*********************************
 		//**********200 TICKS TEST*********
@@ -53,7 +72,7 @@ public class AMain {
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "200ticks_all");
 //		gda.analyzeGameDifference(controllers, false);
 //		gda.analyzeAllGamesAverage(controllers, false);
-		fa.analyzeFitness(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 		
 		
 //		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "200ticks_all2");
@@ -66,18 +85,25 @@ public class AMain {
 //		gda.analyzeAllMutationsAverage(controllers, 20, false);
 //		fa.analyzeMutationsFitness(controllers, 20, false);
 		
-		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "200ticks_gengames");
+//		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "200ticks_gengames");
 //		gda.analyzeGameDifference(controllers, false);
 //		gda.analyzeAllGamesAverage(controllers, false);
-		fa.analyzeFitness(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 		
 		/*Fitness feauture weights evolution:*/
 		Controller[] goodDataControllers = ControllerHelper.copyControllers(controllers);
 		Controller[] badDataControllers = ControllerHelper.copyControllers(controllers);
-		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "200ticks_all");
-		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "200ticks_gengames");
+//		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed");
+//		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
+//		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "200t10pt_designed");
+//		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "200t10pt_gengames");
+		
+		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed_genlvls");
+		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
+		
 //		fa.evolveFitnessWeights(goodDataControllers, badDataControllers, false);
 		
+//		fa.printFeautureData(goodDataControllers, badDataControllers);
 		
 //		cmaes.evolveFitnessWeights(goodDataControllers, badDataControllers);
 		

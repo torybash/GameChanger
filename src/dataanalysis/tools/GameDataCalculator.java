@@ -27,10 +27,10 @@ public class GameDataCalculator {
 			if (gameDatas.get(g)[0].gameTitle.contains("camelRace") 
 					|| gameDatas.get(g)[0].gameTitle.contains("sokoban")
 //					|| gameDatas.get(g)[0].gameTitle.contains("chase")
-					|| gameDatas.get(g)[0].gameTitle.contains("firestorms")
-					|| gameDatas.get(g)[0].gameTitle.contains("infection")
-					|| gameDatas.get(g)[0].gameTitle.contains("firecaster")
-					|| gameDatas.get(g)[0].gameTitle.contains("butterflies")
+//					|| gameDatas.get(g)[0].gameTitle.contains("firestorms")
+//					|| gameDatas.get(g)[0].gameTitle.contains("infection")
+//					|| gameDatas.get(g)[0].gameTitle.contains("firecaster")
+//					|| gameDatas.get(g)[0].gameTitle.contains("butterflies")
 				)
 				continue;
 			

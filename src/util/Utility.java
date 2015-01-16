@@ -34,7 +34,7 @@ public class Utility {
 	}
 	
 	public static int getAmountOfActionsInGame(String gameTitle) {
-		return 0;
+		return 5;
 		
 //		String gameDesc = "";
 //		
@@ -106,25 +106,5 @@ public class Utility {
 			
 		return result;
 	}
-	
-	public static void main(String[] args) {
-		Random r = new Random();
-		for (int i = 0; i < 100; i++) {
-			
-			double d1 = r.nextDouble() * 2 - 1;
-			double d2 = r.nextDouble() * 2 - 1;
-			
-			
-			System.out.println("d1: " + d1 + ", d2: " + d2 + ", val: " + divDiff(d1,d2));
-			System.out.println();
-		}
-		
-		
-		for (int i = -5; i < 5; i++) {
-			for (int j = -5; j < 5; j++) {
-				System.out.println("d1: " + i + ", d2: " + j + ", val: " + divDiff(i,j));
-				System.out.println();
-			}
-		}
-	}
+
 }

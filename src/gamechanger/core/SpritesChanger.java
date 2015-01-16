@@ -60,9 +60,7 @@ public class SpritesChanger {
 	
 	
 	static void changeSprites(ArrayList<Sprite> sprites, int amountSprites){
-		
-		GameChanger.setAvatar(sprites);
-		
+				
 		//Remove existing sprites
 		int spritesToRemove = sprites.size() - amountSprites;
 		if (spritesToRemove > 0){
@@ -106,7 +104,7 @@ public class SpritesChanger {
 		
 		
 		//Add new sprites
-		boolean addedAvatar = GameChanger.setAvatar(sprites);
+		boolean addedAvatar = GameChanger.haveAvatar;
 		int spritesToMake = amountSprites - sprites.size();
 		Sprite[] newSprites = new Sprite[spritesToMake];
 		for (int i = 0; i < spritesToMake; i++) {

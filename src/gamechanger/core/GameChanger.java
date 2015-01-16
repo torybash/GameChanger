@@ -7,14 +7,8 @@ import gamechanger.parsing.Sprite;
 import gamechanger.parsing.Termination;
 import gamechanger.writer.Writer;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Random;
-
-import javax.management.RuntimeErrorException;
 
 import ontology.avatar.FlakAvatar;
 import ontology.avatar.HorizontalAvatar;
@@ -69,7 +63,7 @@ public class GameChanger {
 	
 	private static Random r = new Random();
 	public static boolean haveAvatar = false;
-	public static String avatarName = "avatar";
+	public static ArrayList<String> avatarNames;
 	static ArrayList<Sprite> resourceSprites = new ArrayList<Sprite>();
 	
 	
@@ -78,8 +72,6 @@ public class GameChanger {
 	 * @return Mutated game description
 	 */
 	public static String changeGame(String game_desc, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
-		haveAvatar = false;
-		avatarName = "avatar";
 		resourceSprites.clear();
 		
 		ArrayList[] elements = Parser.readGameOutput(game_desc);
@@ -88,6 +80,8 @@ public class GameChanger {
 		ArrayList<Interaction> interacts = elements[1];
 		ArrayList<LevelMapping> mappings = elements[2];
 		ArrayList<Termination> terms = elements[3];
+		
+		setAvatar(sprites);
 		
 		//change values to allow removal/creation of sprites/interactions/terms
 		int amountSprites = sprites.size(); // + range(-1,2); 
@@ -106,14 +100,14 @@ public class GameChanger {
 	 * @return A VGDL game description
 	 */
 	public static String makeGame(){
-		haveAvatar = false;
-		avatarName = "avatar";
 		resourceSprites.clear();
 		
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		ArrayList<Interaction> interacts = new ArrayList<Interaction>();
 		ArrayList<LevelMapping> mappings = new ArrayList<LevelMapping>();
 		ArrayList<Termination> terms = new ArrayList<Termination>();
+		
+		setAvatar(sprites);
 		
 		ArrayList[] elements = new ArrayList[4];
 		elements[0] = sprites;
@@ -135,6 +129,9 @@ public class GameChanger {
 	
 	public static String makeLevel(String game_desc){
 		ArrayList[] elements = Parser.readGameOutputString(game_desc);
+		ArrayList<Sprite> sprites = elements[0];
+		setAvatar(sprites);
+		if (avatarNames.size() == 0) avatarNames.add("avatar");
 		ArrayList<LevelMapping> mappings = elements[2];
 		String level = LevelMappingMaker.makeLevel(mappings);
 
@@ -143,17 +140,24 @@ public class GameChanger {
 	
 
 	public static boolean setAvatar(ArrayList<Sprite> sprites) {
+		avatarNames = new ArrayList<String>();
+		haveAvatar = false;
 		for (Sprite s: sprites) {
 			for (int i = 0; i < possibleAvatarClass.length; i++) {
 				String className = possibleAvatarClass[i].getSimpleName();
-				if (s.referenceClass.equals(className)){
-					avatarName = s.identifier;
+				if (s.referenceClass.equals(className) ||
+					(s.parent != null && s.parent.referenceClass.equals(className)) ||
+					(s.parent != null && s.parent.parent != null && s.parent.parent.referenceClass.equals(className))
+					){
+					
+					avatarNames.add(s.identifier);
 					haveAvatar = true;
-					return true;
 				}
+				
 			}
 		}
-		return false;
+		if (avatarNames.size() == 0) avatarNames.add("avatar");
+		return haveAvatar;
 	}
 
 	static void loadResourceSprites(ArrayList<Sprite> sprites) {
@@ -192,11 +196,14 @@ public class GameChanger {
 	}  
 	
 	static boolean isSpriteAvatar(String spriteId, ArrayList<Sprite> sprites){
-		if (spriteId.equals(avatarName)) return true;
-		for (Sprite s: sprites) {
-			if (s.identifier.equals(spriteId)){
-				if (s.parent != null && s.parent.identifier.equals(avatarName)) return true;
-				if (s.parent != null && s.parent.parent != null && s.parent.parent.identifier.equals(avatarName)) return true;
+		for (String avaName: avatarNames) {
+			if (spriteId.equals(avaName)) return true;
+		
+			for (Sprite s: sprites) {
+				if (s.identifier.equals(spriteId)){
+					if (s.parent != null && s.parent.identifier.equals(avaName)) return true;
+					if (s.parent != null && s.parent.parent != null && s.parent.parent.identifier.equals(avaName)) return true;
+				}
 			}
 		}
 		return false;

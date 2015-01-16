@@ -87,14 +87,14 @@ public class TerminationsChanger {
 			switch (paramType) {
 			case "stype":
 				if (!win && loseTerminationIsWithAvatarChance > r.nextDouble()){
-					result.put(paramType, GameChanger.avatarName);
+					result.put(paramType, GameChanger.avatarNames.get(0));
 				}else{
 					result.put(paramType, GameChanger.getRandomSprite(sprites));
 				}
 				break;
 			case "stype1":
 				if (!win && !existTermination && loseTerminationIsWithAvatarChance > r.nextDouble()){
-					result.put(paramType, GameChanger.avatarName);
+					result.put(paramType, GameChanger.avatarNames.get(0));
 				}else{
 					result.put(paramType, GameChanger.getRandomSprite(sprites));
 				}

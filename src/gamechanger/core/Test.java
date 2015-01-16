@@ -1,8 +1,8 @@
 package gamechanger.core;
 
-import java.io.FileNotFoundException;
+import gamechanger.parsing.Parser;
+
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 
 
 
@@ -81,6 +81,32 @@ public class Test {
 			writer.print(level_desc);
 			writer.close();
 		}
-		
+	
+        
+        //3. Generate levels for designed games
+//        int amountGenLvls = 5;
+//		for (int i = 0; i < games.length; i++) {
+//			String gamePath = "../gvgai/examples/gridphysics/" + games[i] + ".txt";
+//			
+//			String gameDesc = Parser.getGameDescFromPath(gamePath);
+//			
+//			
+//			for (int j = 0; j < amountGenLvls; j++) {
+//				String level_desc = GameChanger.makeLevel(gameDesc);
+//				
+//				String path = "levelgen/" + games[i] + "_genlvl" + j + ".txt";
+//				
+//				PrintWriter writer = null;
+//				try {
+//					writer = new PrintWriter(path, "UTF-8");
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				writer.flush();
+//				writer.print(level_desc);
+//				writer.close();
+//			}
+//		}
+        
 	}
 }

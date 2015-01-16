@@ -38,7 +38,11 @@ public class CMAEvolStrat {
 		cma.setDimension(36); // overwrite some loaded properties
 		cma.setInitialX(0.05); // in each dimension, also setTypicalX can be used
 		cma.setInitialStandardDeviation(0.2); // also a mandatory setting 
-//		cma.options.stopFitness = -1e14;       // optional setting
+		
+		
+//		System.out.println("cma.parameters.getDamps(): " + cma.parameters.getDamps());
+		
+		//		cma.options.stopFitness = -1e14;       // optional setting
 
 		// initialize cma and get fitness array to fill in later
 		double[] fitness = cma.init();  // new double[cma.parameters.getPopulationSize()];
@@ -61,20 +65,24 @@ public class CMAEvolStrat {
 				boolean allValuesBelowOne = false;
 				while (!allValuesBelowOne){
 					allValuesBelowOne = true;
-					for (int j = 0; j < pop.length; j++) {
-						if (Math.abs(pop[i][j]) > 1){
-							cma.resampleSingle(i);
-							allValuesBelowOne = false;
-							break;
-						}
+					for (int j = 0; j < pop[i].length; j++) {
+						if (pop[i][j] > 1) pop[i][j] = 1;
+						if (pop[i][j] < -1) pop[i][j] = -1;
+						
+//						if (Math.abs(pop[i][j]) > 1){
+//							cma.resampleSingle(i);
+//							allValuesBelowOne = false;
+//							break;
+//						}
 					}
 				}
-				
+//				System.out.println(Arrays.toString(pop[i]));
 				
 				
                 // compute fitness/objective value	
 //				fitness[i] = fitfun.valueOf(pop[i]); // fitfun.valueOf() is to be minimized
-				fitness[i] = goodGameAverages.size() * badGameAverages.size() - calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
+				fitness[i] = - calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
+//				fitness[i] = goodGameAverages.size() * badGameAverages.size() - calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
 //				fitness[i] = calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
 			}
 			cma.updateDistribution(fitness);         // pass fitness array to update search distribution

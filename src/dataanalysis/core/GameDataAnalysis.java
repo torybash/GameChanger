@@ -56,12 +56,13 @@ public class GameDataAnalysis {
 	}
 	
 		
-	public void analyzeGameDifference(Controller[] controllers, boolean readActionFiles){
+	public void analyzeGameDifference(Controller[] controllers, boolean readActionFiles, boolean acceptAll){
 		int n = controllers.length;
 		//Extract data from data folders
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, readActionFiles);		
-		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
+		if (!acceptAll) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 
+		//Print game idxs:
 //		String line = "{";
 //		for (GameData[] gds : gameDatas) {
 //			line += gds[0].gameTitle.split("_")[2].split(" ")[0] + ", ";
@@ -70,18 +71,17 @@ public class GameDataAnalysis {
 //		System.out.println(line);
 		
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
-		
 		for (GameData[] aveGameDatas : gameAverages) {
 			printGameDatas(aveGameDatas, controllers);
 		}
 	}
 	
 
-	public void analyzeMutationDifference(Controller[] controllers, int numberMutations, boolean readActionFiles){
+	public void analyzeMutationDifference(Controller[] controllers, int numberMutations, boolean readActionFiles, boolean acceptAll){
 		int n = controllers.length;
 		//Extract data from data folders
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractMutatedGameDatas(controllers, numberMutations, readActionFiles);
-		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
+		if (!acceptAll) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		

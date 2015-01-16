@@ -10,3 +10,4 @@ mutatedgames PUZZLEBACKUP/**
 puzzlegamedata/**
 sprites/**
 *.dat
+*.class

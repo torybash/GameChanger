@@ -24,25 +24,29 @@ public class FitnessCalculator {
 
 	
 	public static GameFitness calculateGameFitness(GameData[] gds, Controller[] controllers, boolean matrixApproach) {		
-		GameFitness gf = new GameFitness();
-		gf.gameTitle = gds[0].gameTitle;
+		GameFitness gf =  calculateFitness(gds, controllers);
 		
-		if (!matrixApproach){
-//			gf.fitness = calculateFitness(gds, controllers);
-			
-			gf.fitness = calculateFitnessUsingCtrlTypeMatrix(gds, controllers);
-		}else{
-			gf.fitness = calculateFitnessUsingMatrix(gds);
-		}
 		return gf;
 	}
 
-	private static float calculateFitnessUsingCtrlTypeMatrix(GameData[] gds, Controller[] controllers) {
+	private static GameFitness calculateFitness(GameData[] gds, Controller[] controllers) {
+		GameFitness gf = new GameFitness(gds[0].gameTitle);
+
+		
 		int dataTypeCount = FeatureDataType.class.getEnumConstants().length;
 		int ctrlTypeCount = ControllerType.class.getEnumConstants().length;
 		
-		float fitness = 0;
-		double parameterCount = ctrlTypeCount * ctrlTypeCount * dataTypeCount;
+		double fitness = 0;
+		int parameterCount = 0;
+		for (int c1 = 0; c1 < ctrlTypeCount; c1++) {
+			for (int c2 = 0; c2 < ctrlTypeCount; c2++) {
+				if (c1 >= c2) continue;
+				parameterCount += dataTypeCount;
+			}
+		}
+		
+		double[] fitnessVals = new double[parameterCount];
+		
 		
 		double[][] highestValues = new double[ctrlTypeCount][];
 		for (int i = 0; i < ctrlTypeCount; i++){
@@ -63,6 +67,7 @@ public class FitnessCalculator {
 		
 		if (VERBOSE) System.out.println(gds[0].gameTitle);
 		
+		int cnt = 0;
 		for (int ct1 = 0; ct1 < ctrlTypeCount; ct1++) {
 			for (int ct2 = 0; ct2 < ctrlTypeCount; ct2++) {				
 				if (ct1 >= ct2) continue;
@@ -70,24 +75,49 @@ public class FitnessCalculator {
 				
 				for (int t = 0; t < dataTypeCount; t++) {
 					FeatureDataType typ = FeatureDataType.values()[t];
-					double score = Utility.relDiff(highestValues[ct1][t], highestValues[ct2][t]);
+					double score = Utility.relDiff(highestValues[ct1][t], highestValues[ct2][t]); // / 2.0 + 0.5;
 //					double score = Utility.divDiff(highestValues[ct1][t], highestValues[ct2][t]);
-					
+					fitnessVals[cnt++] = score;
 					fitness += score * ctrlmatrix_feature_weights[ct1][ct2][t];		
 					
 					
 					if (VERBOSE) System.out.println(ControllerType.values()[ct1] + " > " + ControllerType.values()[ct2] + ", DataType: " + typ + ", relDiff: " + score + 
-							", Highest val 1: " + highestValues[ct1][t] + ", Highest val 2: " + highestValues[ct2][t]);
+							", Highest val 1: " + highestValues[ct1][t] + ", Highest val 2: " + highestValues[ct2][t] + ", ctrlmatrix_feature_weights[ct1][ct2][t]: " + ctrlmatrix_feature_weights[ct1][ct2][t]);
 				}
-				
-				
-				
 			}
 		}
+		if (VERBOSE) System.out.println("---Total fitness:\t" + fitness);
+		if (VERBOSE) System.out.println("parameterCount: " + parameterCount);
+		
+		
 		
 		fitness /= parameterCount;
 		
-		return fitness;
+		gf.fitness = fitness;
+		gf.fitnessVals = fitnessVals;
+		
+		return gf;
+	}
+
+	private static void makeCSV(double[] fitnessVals) {
+		int dataTypeCount = FeatureDataType.class.getEnumConstants().length;
+		int ctrlTypeCount = ControllerType.class.getEnumConstants().length;
+		
+		String topString = "";
+		String mainString = "";
+		
+		int cnt = 0;
+		
+		for (int ct1 = 0; ct1 < ctrlTypeCount; ct1++) {
+			for (int ct2 = 0; ct2 < ctrlTypeCount; ct2++) {				
+				if (ct1 >= ct2) continue;
+				for (int t = 0; t < dataTypeCount; t++) {
+					mainString += fitnessVals[cnt++] + ",";
+				}
+			}
+		}
+		
+		System.out.println(mainString);
 	}
 
 	private static float calculateFitnessUsingMatrix(GameData[] gds) {
@@ -116,6 +146,23 @@ public class FitnessCalculator {
 		return fitnessValues;
 	}
 
+	public static double[] matrixWeightsToArray(double[][][] matrixWeights){
+		double[] result = new double[ControllerType.class.getEnumConstants().length * FeatureDataType.class.getEnumConstants().length *FeatureDataType.class.getEnumConstants().length];
+		int count = 0;
+		
+		for (int c1 = 0; c1 < matrixWeights.length; c1++) {
+			for (int c2 = 0; c2 < matrixWeights[c1].length; c2++) {
+				if (c1 >= c2) continue;
+				for (int t = 0; t < matrixWeights[c1][c2].length; t++) {
+					result[++count] = matrixWeights[c1][c2][t];
+				}
+			}
+		}		
+		
+		return result;
+	}
+	
+	
 //	public static float calculateFitness(GameData[] gds, Controller[] controllers) {
 //		float fitness = INITIAL_FITNESS;
 //		float[] fitnessValues = new float[FitnessType.class.getEnumConstants().length];
@@ -302,30 +349,9 @@ public class FitnessCalculator {
 		TICKS,
 		ACTEN,
 	}
-
-
-	public static void setWeights(double[] featureWeights) {
-		if (featureWeights == null){
-			feature_weights = new double[FitnessType.class.getEnumConstants().length];
-			for (int i = 0; i < FitnessType.class.getEnumConstants().length; i++) {
-				feature_weights[i] = 1f;
-			}
-		}else{
-			feature_weights = featureWeights.clone();
-		}
-		
-	}
-	
-	public static void setMatrixWeights(double[][][] matrixFeatureWeights, int n){
-		
-		if (matrixFeatureWeights == null){
-		}else{
-			matrix_feature_weights = matrixFeatureWeights;
-		}
-	}
 	
 	
-	public static void setCtrlMatrixWeights(double[] featureWeights){
+	public static void setWeights(double[] featureWeights){
 		int count = 0;
 		if (ctrlmatrix_feature_weights == null){
 			ctrlmatrix_feature_weights = new double[ControllerType.class.getEnumConstants().length][][];

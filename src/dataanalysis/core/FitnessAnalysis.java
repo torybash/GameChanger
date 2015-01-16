@@ -1,5 +1,6 @@
 package dataanalysis.core;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +21,8 @@ public class FitnessAnalysis {
 
 //	double[] test_feature_weights = new double[]{0.18008472296270414, -0.09748455015065097, -0.02398953515878227, -0.03975886486770416, 0.09117258290828545, -0.08603872942732953, 0.23909855672682728, 0.9894440716269293, -1.0, 0.06408592081641204, 0.272783987527952, 0.2522656205318279, 0.7555901663856714, 0.28636469712234935, 0.8482326435437321, -0.3648640460665813, -0.3668461846841874, -1.0};
 
+	double[] init_feature_weights = new double[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+	
 	double[] test_feature_weights = new double[]{0.18008472296270414, -0.09748455015065097, -0.02398953515878227, -0.03975886486770416, 0.09117258290828545, -0.08603872942732953, 0.23909855672682728, 0.9894440716269293, -1.0, 0.06408592081641204, 0.272783987527952, 0.2522656205318279, 0.7555901663856714, 0.28636469712234935, 0.8482326435437321, -0.3648640460665813, -0.3668461846841874, -1.0};
 	
 	//goal: combination
@@ -34,10 +37,8 @@ public class FitnessAnalysis {
 		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
-//		FitnessCalculator.setWeights(null);
-//		FitnessCalculator.setWeights(test_feature_weights);
-//		FitnessCalculator.setMatrixWeights(null, controllers.length);
-		FitnessCalculator.setCtrlMatrixWeights(test_feature_weights3);
+
+		FitnessCalculator.setWeights(init_feature_weights);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, matrixApproach);
 		
 		Collections.sort(fitnessValues);
@@ -55,8 +56,7 @@ public class FitnessAnalysis {
 		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
-		FitnessCalculator.setWeights(test_feature_weights);
-		FitnessCalculator.setMatrixWeights(null, controllers.length);
+		FitnessCalculator.setWeights(init_feature_weights);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameAverages, controllers, matrixApproach);
 		
 		Collections.sort(fitnessValues);
@@ -79,7 +79,7 @@ public class FitnessAnalysis {
 		ArrayList<GameData[]> badGameAverages = GameDataCalculator.getAverageForEachGame(badGameDatas);
 		
 		Random r = new Random();
-		final int iterations = 1000, mutations = 1000, survivors = 100;
+		final int iterations = 10000, mutations = 100, survivors = 5;
 		boolean keep_survivors = true;
 		double mutate_factor_sd = 0.1;
 		double[][][][] ctrlMatrixWeightList = new double[mutations][][][];
@@ -139,6 +139,7 @@ public class FitnessAnalysis {
 						System.out.println(ControllerType.values()[c1] + ">" + ControllerType.values()[c2] + ", " +Arrays.toString(ctrlSurvivedMatrixWeightList[s][c1][c2]));
 					}
 				}
+				System.out.println(Arrays.toString(FitnessCalculator.matrixWeightsToArray(ctrlSurvivedMatrixWeightList[s])));
 				
 				Collections.sort(gtbFitnessList.get(s).goodFitnessValues);
 				Collections.sort(gtbFitnessList.get(s).badFitnessValues);
@@ -158,7 +159,9 @@ public class FitnessAnalysis {
 							if (c1 >= c2) continue;
 							newWeights[c1][c2] = new double[dataTypCnt];
 							for (int t = 0; t < dataTypCnt; t++) {
-								double newVal = ctrlSurvivedMatrixWeightList[m/survivors][c1][c2][t] + ((r.nextGaussian() * mutate_factor_sd));
+//								System.out.println("m: " + m + ", surv: "+ survivors + ". reuslt " + m/(mutations/survivors));
+//								System.out.println("c1 " + c1 + " c2: "+ c2  +", t: " + t);
+								double newVal = ctrlSurvivedMatrixWeightList[m/(mutations/survivors)][c1][c2][t] + ((r.nextGaussian() * mutate_factor_sd));
 								if (newVal > 1) newVal = 1; if (newVal < -1) newVal = -1;
 								newWeights[c1][c2][t] = newVal;
 							}
@@ -170,6 +173,70 @@ public class FitnessAnalysis {
 				}
 			}
 		}
+	}
+
+
+
+
+	public void printFeautureData(Controller[] designedDataControllers, Controller[] generatedDataControllers) {
+		int n = designedDataControllers.length;
+		ArrayList<GameData[]> designedGameDatas = ExtractGameData.extractGameDatas(designedDataControllers, false);
+		ArrayList<GameData[]> generatedGameDatas = ExtractGameData.extractGameDatas(generatedDataControllers, false);
+		
+		designedGameDatas = GameDataCalculator.getAcceptedGames(designedGameDatas);
+		generatedGameDatas = GameDataCalculator.getAcceptedGames(generatedGameDatas);
+		
+		ArrayList<GameData[]> designedGameAverages = GameDataCalculator.getAverageForEachGame(designedGameDatas);
+		ArrayList<GameData[]> generatedGameAverages = GameDataCalculator.getAverageForEachGame(generatedGameDatas);
+		
+		FitnessCalculator.setWeights(init_feature_weights);
+		ArrayList<GameFitness> designedFitnessValues = FitnessCalculator.getFitnessForEachGame(designedGameAverages, designedDataControllers, false);
+		ArrayList<GameFitness> generatedFitnessValues = FitnessCalculator.getFitnessForEachGame(generatedGameAverages, generatedDataControllers, false);
+		
+		
+		int ctrlTypCnt = ControllerType.class.getEnumConstants().length;
+		int dataTypCnt = FeatureDataType.class.getEnumConstants().length;
+		
+		String topString = "";
+		for (int c1 = 0; c1 < ctrlTypCnt; c1++) {
+			for (int c2 = 0; c2 < ctrlTypCnt; c2++) {
+				if (c1 >= c2) continue;
+				for (int t = 0; t < dataTypCnt; t++) {
+					topString += ControllerType.values()[c1] + ">" + ControllerType.values()[c2] + "::" + FeatureDataType.values()[t] + ",";
+				}
+			}
+		}
+		topString += "class";
+				
+		String gameStrings = "";
+		for (GameFitness gameFitness : designedFitnessValues) {
+			for (int i = 0; i < gameFitness.fitnessVals.length; i++) {
+				gameStrings += gameFitness.fitnessVals[i] + ",";
+			}
+			gameStrings += "designed\n";
+		}
+		
+		for (GameFitness gameFitness : generatedFitnessValues) {
+			for (int i = 0; i < gameFitness.fitnessVals.length; i++) {
+				gameStrings += gameFitness.fitnessVals[i] + ",";
+			}
+			gameStrings += "generated\n";
+		}
+		
+		String dataFileName = "feature_data_";
+		dataFileName += designedDataControllers[0].dataFolder.replaceFirst("(?!\\d)t(?=\\d)", ",").replaceAll("[a-zA-Z/_]*", "");
+		dataFileName += " (" + generatedFitnessValues.get(0).fitnessVals.length + ")" + ".csv";
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(dataFileName, "UTF-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		writer.flush();
+		writer.print(topString + "\n" + gameStrings);
+		writer.close();
+		
+		System.out.println("Written CSV file: " + dataFileName + " to disk. Amount of games: Designed=" + designedFitnessValues.size() + ", generated=" + generatedFitnessValues.size() );
 	}
 
 

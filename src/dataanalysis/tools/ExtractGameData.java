@@ -13,7 +13,7 @@ public class ExtractGameData {
 	
 	private static ArrayList<GameData> extractData(String data, boolean actionFiles){
 		ArrayList<GameData> gds = new ArrayList<GameData>();
-		
+		System.out.println(data);
 		String gameDataFile = data  + "gamedata.txt";;
 			
 		BufferedReader br;
@@ -50,9 +50,11 @@ public class ExtractGameData {
 						if (levelNr != lastLevelNr || tryNr != lastTryNr){
 							lastLevelNr = levelNr;
 							lastTryNr = tryNr;
-//							System.out.println("-----reading actions for game " + gameNumber + ", level: " + levelNr + " try: " + tryNr);
 							if (actionFiles){
-								readActionFile(data, currGD, gameNumber, levelNr, tryNr-1);
+//								System.out.println("-----reading actions for game " + gameNumber + ", level: " + levelNr + " try: " + tryNr);
+//								System.out.println(currGD.gameTitle.split("_")[2]);
+//								gameNumber = Integer.parseInt(currGD.gameTitle.split("_")[2]);
+								readActionFile(data, currGD, Integer.parseInt(currGD.gameTitle.split("_")[2]), levelNr, tryNr-1);
 							}
 							
 						}
@@ -87,6 +89,7 @@ public class ExtractGameData {
 		
 	public static ArrayList<GameData[]> extractGameDatas(Controller[] controllers, boolean readActionFiles) {
 		int n = controllers.length;
+		System.out.println(n);
 		ArrayList<GameData>[] gameDatas = new ArrayList[n];
 		for (int c = 0; c < n; c++) {
 			System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name);

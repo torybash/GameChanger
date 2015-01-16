@@ -134,9 +134,10 @@ public class InteractionsChanger {
 	
 	static String getNewSprite2(String sprite1, ArrayList<Sprite> sprites){
 		String result = "";
-		while (result.length() < 1 || (result.equals(GameChanger.avatarName) && sprite1.equals(GameChanger.avatarName))){
-			int idx = GameChanger.range(0, sprites.size());
+		while (result.length() < 1 || (result.equals(GameChanger.avatarNames.get(0)) && sprite1.equals(GameChanger.avatarNames.get(0)))){
+			int idx = GameChanger.range(0, sprites.size() + 1);
 			if (idx == sprites.size()) result = "EOS";
+			else if (idx == sprites.size() + 1) result = "wall";
 			else result = sprites.get(idx).identifier;
 		}
 		return result;

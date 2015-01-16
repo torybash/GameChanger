@@ -21,7 +21,7 @@ public class GameData {
 	public HashMap<String, Float> gameValues = new HashMap<String, Float>();
 	public HashMap<String, Float>[] levelValues = new HashMap[5]; //values for each individual level (usually 5 levels exists)
 	
-	Pattern patternGame = Pattern.compile(" \\*\\* Playing game [a-zA-Z0-9/\\.]+/([a-zA-Z0-9_]+)\\.txt, level [a-zA-Z0-9/\\.]+/[a-zA-Z0-9_]+_lvl([0-9]*).txt \\(([0-9]+)/[0-9]+\\) \\*\\*");
+	Pattern patternGame = Pattern.compile(" \\*\\* Playing game [a-zA-Z0-9/\\.]+/([a-zA-Z0-9_]+)\\.txt, level [a-zA-Z0-9/\\.]+/[a-zA-Z0-9_]+_[a-z]*([0-9]*).txt \\(([0-9]+)/[0-9]+\\) \\*\\*");
 	Pattern patternResult = Pattern.compile("Result \\(1->win; 0->lose\\):([-]?[0-1]+), Score:([-]?[0-9]+\\.[0-9]+), timesteps:([0-9]+)");
 	
 	public GameData(){
