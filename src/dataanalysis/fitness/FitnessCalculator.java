@@ -89,13 +89,11 @@ public class FitnessCalculator {
 		if (VERBOSE) System.out.println("---Total fitness:\t" + fitness);
 		if (VERBOSE) System.out.println("parameterCount: " + parameterCount);
 		
-		
-		
 		fitness /= parameterCount;
 		
 		gf.fitness = fitness;
 		gf.fitnessVals = fitnessVals;
-		
+		                
 		return gf;
 	}
 
@@ -147,19 +145,19 @@ public class FitnessCalculator {
 	}
 
 	public static double[] matrixWeightsToArray(double[][][] matrixWeights){
-		double[] result = new double[ControllerType.class.getEnumConstants().length * FeatureDataType.class.getEnumConstants().length *FeatureDataType.class.getEnumConstants().length];
-		int count = 0;
-		
-		for (int c1 = 0; c1 < matrixWeights.length; c1++) {
-			for (int c2 = 0; c2 < matrixWeights[c1].length; c2++) {
-				if (c1 >= c2) continue;
-				for (int t = 0; t < matrixWeights[c1][c2].length; t++) {
-					result[++count] = matrixWeights[c1][c2][t];
-				}
-			}
-		}		
-		
-		return result;
+            ArrayList<Double> list = new ArrayList<Double>();
+
+            for (int c1 = 0; c1 < matrixWeights.length; c1++) {
+                    for (int c2 = 0; c2 < matrixWeights[c1].length; c2++) {
+                            if (c1 >= c2) continue;
+                            for (int t = 0; t < matrixWeights[c1][c2].length; t++) {
+                                list.add(matrixWeights[c1][c2][t]);
+                            }
+                    }
+            }
+            double[] result = new double[list.size()];
+            for (int i = 0; i < list.size(); i++) result[i] = list.get(i);
+            return result;
 	}
 	
 	

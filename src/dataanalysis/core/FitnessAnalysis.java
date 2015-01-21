@@ -31,14 +31,20 @@ public class FitnessAnalysis {
 	//goal: g > 0.0, b < 0.0
 	double[] test_feature_weights3 = new double[]{0.48655461712085846, -0.5285149978566213, 0.14288898117091275, 0.38957784614686136, 0.6130830673372448, -0.5181310014606579, -0.11815744932772326, 0.7861076983560249, 0.44577767439907745, 0.024884598359517944, 0.06021405860045709, 0.6957870293303161, -0.546547957815543, -0.7556928393394774, 0.4059670258950569, 0.30411438540342595, 0.09633296422249477, 0.40220011081093215, 0.02724960652472521, -0.3639732323715164, 1.248285511552112, -0.9038779047856457, -0.8069696427362683, -0.930678833843134, 0.29442191642534643, -1.1691335037344424, -0.047748732956500325, -0.9465040407996107, 0.45404920001925453, 0.6582986052986441, 0.6420409379659263, -0.6994402934604916, -0.1680840123583704, -0.2942018651106353, -0.8834644041770893, 1.3007468599755987};
 
+        
+    double[] test_feature_weights4 = new double[]{-1.0, -1.0, 1.0, 0.4197096563424653, 1.0, 0.977760356601113, -1.0, -0.7607187651654225, -0.019461817156662176, -0.22457540735359527, 1.0, 0.9459583856032282, 0.9677229752084824, -1.0, 0.28555396141287276, 0.42234143348903236, 1.0, 0.9636667610698653, 1.0, 1.0, 0.39445240839345597, 0.6311755044535656, 1.0, 1.0, 0.714386945966264, -1.0, -0.4960971069190489, -1.0, -1.0, 0.91255090218011, -0.41105802822060516, -1.0, -1.0, -0.0266739240720498, -1.0, 0.6732985424496798};
 	
+    
+    double[] test_feature_weights5 = new double[]{0.47122818299548697, -0.9999999999995856, -0.5196610836789665, -0.7272536340536335, 0.9999999999752031, 0.999999999994899, 0.8135234263787241, -0.9999999999984274, 0.9999999995093256, 0.9999999999956907, 0.999999790201857, -0.9999999999990212, 0.999999999843373, -0.0663177365011005, 0.9999999999957074, 0.9999999999988536, 0.9999999999985438, 0.9999999997543857, 0.999999999998833, -0.451767986905702, 0.9999999999871393, -0.5105294422740858, 0.9999999999955425, -0.7337195181897531, 0.9113339228315717, 0.9049283100190848, -0.849047263967509, -0.9986800058334577, 0.9999999999477512, 0.9999999999487784, 0.1813094245690538, -0.9999999999976864, -0.9999999994577699, -0.9999999998096374, -0.999999999980716, 0.4788647059631101};
+
+    
 	public void analyzeFitness(Controller[] controllers, boolean matrixApproach) {
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
 		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
 
-		FitnessCalculator.setWeights(init_feature_weights);
+		FitnessCalculator.setWeights(test_feature_weights5);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, matrixApproach);
 		
 		Collections.sort(fitnessValues);
@@ -79,7 +85,7 @@ public class FitnessAnalysis {
 		ArrayList<GameData[]> badGameAverages = GameDataCalculator.getAverageForEachGame(badGameDatas);
 		
 		Random r = new Random();
-		final int iterations = 10000, mutations = 100, survivors = 5;
+		final int iterations = 100000, mutations = 100, survivors = 10;
 		boolean keep_survivors = true;
 		double mutate_factor_sd = 0.1;
 		double[][][][] ctrlMatrixWeightList = new double[mutations][][][];
@@ -144,7 +150,7 @@ public class FitnessAnalysis {
 				Collections.sort(gtbFitnessList.get(s).goodFitnessValues);
 				Collections.sort(gtbFitnessList.get(s).badFitnessValues);
 				for (int j2 = 0; j2 < gtbFitnessList.get(s).goodFitnessValues.size(); j2++) {
-					System.out.println(gtbFitnessList.get(s).goodFitnessValues.get(j2).gameTitle + ": "+ gtbFitnessList.get(s).goodFitnessValues.get(j2).fitness*100 + ", Best bad game fitness: " + gtbFitnessList.get(s).badFitnessValues.get(j2).gameTitle + ": "+gtbFitnessList.get(s).badFitnessValues.get(j2).fitness*100);
+					System.out.println(gtbFitnessList.get(s).goodFitnessValues.get(j2).gameTitle + ": "+ gtbFitnessList.get(s).goodFitnessValues.get(j2).fitness + ", Best bad game fitness: " + gtbFitnessList.get(s).badFitnessValues.get(j2).gameTitle + ": "+gtbFitnessList.get(s).badFitnessValues.get(j2).fitness);
 				}
 			}
 			

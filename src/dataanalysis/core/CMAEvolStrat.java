@@ -66,14 +66,14 @@ public class CMAEvolStrat {
 				while (!allValuesBelowOne){
 					allValuesBelowOne = true;
 					for (int j = 0; j < pop[i].length; j++) {
-						if (pop[i][j] > 1) pop[i][j] = 1;
-						if (pop[i][j] < -1) pop[i][j] = -1;
+//						if (pop[i][j] > 1) pop[i][j] = 1;
+//						if (pop[i][j] < -1) pop[i][j] = -1;
 						
-//						if (Math.abs(pop[i][j]) > 1){
-//							cma.resampleSingle(i);
-//							allValuesBelowOne = false;
-//							break;
-//						}
+						if (Math.abs(pop[i][j]) > 1){
+							cma.resampleSingle(i);
+							allValuesBelowOne = false;
+							break;
+						}
 					}
 				}
 //				System.out.println(Arrays.toString(pop[i]));
