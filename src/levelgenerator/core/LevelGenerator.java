@@ -57,6 +57,12 @@ public class LevelGenerator {
 		origOut = System.out;
 	}
 	
+        public LevelGenerator(String gameTitle, String gameFolder){
+		this.gameTitle = gameTitle;
+                this.gameFolder = gameFolder;
+		origOut = System.out;
+	}
+	
 
 		
 	

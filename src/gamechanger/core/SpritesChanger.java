@@ -131,11 +131,11 @@ public class SpritesChanger {
 		String newClass = "";
 		
 		if (GameChanger.isSpriteAvatar(sprite.identifier, sprites)){
-			int idx = GameChanger.range(0, GameChanger.possibleAvatarClass.length-1);
-			newClass = GameChanger.possibleAvatarClass[idx].getSimpleName();
+			int idx = GameChanger.range(0, GameChanger.avatarClasses.length-1);
+			newClass = GameChanger.avatarClasses[idx].getSimpleName();
 		}else{
-			int idx = GameChanger.range(0, GameChanger.possibleSpriteClasses.length-1);
-			newClass = GameChanger.possibleSpriteClasses[idx].getSimpleName();
+			int idx = GameChanger.range(0, GameChanger.spriteClasses.length-1);
+			newClass = GameChanger.spriteClasses[idx].getSimpleName();
 		}		
 		return newClass;
 	}

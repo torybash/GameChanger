@@ -42,7 +42,7 @@ public class GameChanger {
 	
 	//ONLY CONTAINS AVATAR SPRITES WITH IMPLEMENTATION (-AimedAvatar.class, AimedFlakAvatar.class, InertialAvatar.class, MarioAvatar.class, 
 	//NoisyRotatingFlippingAvatar.class, RotatingFlippingAvatar.class, VerticalAvatar.class
-	static final Class [] possibleAvatarClass = {FlakAvatar.class, HorizontalAvatar.class, MovingAvatar.class,
+	static final Class [] possibleAvatarClasses = {FlakAvatar.class, HorizontalAvatar.class, MovingAvatar.class,
 	OrientedAvatar.class, ShootAvatar.class};
 	
 	//private static final Class[] possibleSpriteClasses = {Conveyor.class, Door.class, Flicker.class,
@@ -55,10 +55,15 @@ public class GameChanger {
 	//ONLY CONTAINS SPRITES WITH IMPLEMENTATION (-Conveyor.class, Door.class, ErraticMissile.class, Walker.class,
 	//WalkerJumper.class, RandomInertial.class, SpriteProducer.class
 	static final Class[] possibleSpriteClasses = {Flicker.class,
-	Immovable.class, OrientedFlicker.class, Passive.class, 
-	Missile.class, RandomMissile.class, AlternateChaser.class, Chaser.class,
-	Fleeing.class, RandomAltChaser.class, RandomNPC.class,
-	Bomber.class, Portal.class, SpawnPoint.class, Resource.class, Spreader.class};
+            Immovable.class, OrientedFlicker.class, Passive.class, 
+            Missile.class, RandomMissile.class, AlternateChaser.class, Chaser.class,
+            Fleeing.class, RandomAltChaser.class, RandomNPC.class,
+            Bomber.class, Portal.class, SpawnPoint.class, Resource.class, Spreader.class};
+        
+        static final Class[] possiblePuzzleSpriteClasses = {Flicker.class,
+            Immovable.class, OrientedFlicker.class, Passive.class, 
+            Portal.class, Resource.class, Spreader.class};
+        static final Class [] possiblePuzzleAvatarClasses = {MovingAvatar.class, OrientedAvatar.class};
 	
 	
 	private static Random r = new Random();
@@ -66,6 +71,8 @@ public class GameChanger {
 	public static ArrayList<String> avatarNames;
 	static ArrayList<Sprite> resourceSprites = new ArrayList<Sprite>();
 	
+        static Class[] avatarClasses = null;
+        static Class[] spriteClasses = null;
 	
 	/**
 	 * Mutate a VGDL game description. 
@@ -74,6 +81,9 @@ public class GameChanger {
 	public static String changeGame(String game_desc, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
 		resourceSprites.clear();
 		
+                avatarClasses = possibleAvatarClasses;
+                spriteClasses = possibleSpriteClasses;
+                
 		ArrayList[] elements = Parser.readGameOutput(game_desc);
 		
 		ArrayList<Sprite> sprites = elements[0];
@@ -101,7 +111,11 @@ public class GameChanger {
 	 */
 	public static String makeGame(){
 		resourceSprites.clear();
-		
+                
+                
+                if (avatarClasses == null)avatarClasses = possibleAvatarClasses;
+                if (spriteClasses == null)spriteClasses = possibleSpriteClasses;
+                
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		ArrayList<Interaction> interacts = new ArrayList<Interaction>();
 		ArrayList<LevelMapping> mappings = new ArrayList<LevelMapping>();
@@ -115,8 +129,8 @@ public class GameChanger {
 		elements[2] = mappings;
 		elements[3] = terms;
 		
-		int amountSprites = range(3,15);
-		int amountInteractions = range(3,15);
+		int amountSprites = range(3,8);
+		int amountInteractions = range(3,10);
 		int amountTerminations = range(1,2);
 		
 		SpritesChanger.changeSprites(sprites, amountSprites);
@@ -126,6 +140,13 @@ public class GameChanger {
 		
 		return Writer.writeGameOutput(elements);
 	}
+        
+        
+        public static String makePuzzleGame(){
+            avatarClasses = possiblePuzzleAvatarClasses;
+            spriteClasses = possiblePuzzleSpriteClasses;
+            return makeGame();
+        }
 	
 	public static String makeLevel(String game_desc){
 		ArrayList[] elements = Parser.readGameOutputString(game_desc);
@@ -143,17 +164,25 @@ public class GameChanger {
 		avatarNames = new ArrayList<String>();
 		haveAvatar = false;
 		for (Sprite s: sprites) {
-			for (int i = 0; i < possibleAvatarClass.length; i++) {
-				String className = possibleAvatarClass[i].getSimpleName();
+//<<<<<<< Updated upstream
+			for (int i = 0; i < avatarClasses.length; i++) {
+				String className = avatarClasses[i].getSimpleName();
 				if (s.referenceClass.equals(className) ||
 					(s.parent != null && s.parent.referenceClass.equals(className)) ||
 					(s.parent != null && s.parent.parent != null && s.parent.parent.referenceClass.equals(className))
 					){
 					
 					avatarNames.add(s.identifier);
-					haveAvatar = true;
+                                        haveAvatar = true;
+//=======
+//			for (int i = 0; i < avatarClasses.length; i++) {
+//				String className = avatarClasses[i].getSimpleName();
+//				if (s.referenceClass.equals(className)){
+//					avatarName = s.identifier;
+////>>>>>>> Stashed changes
+//					haveAvatar = true;
 				}
-				
+//				
 			}
 		}
 		if (avatarNames.size() == 0) avatarNames.add("avatar");

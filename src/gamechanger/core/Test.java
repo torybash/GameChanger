@@ -3,13 +3,15 @@ package gamechanger.core;
 import gamechanger.parsing.Parser;
 
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import levelgenerator.core.LevelGenerator;
 
 
 
 
 public class Test {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		
         String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
                 "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
@@ -108,5 +110,24 @@ public class Test {
 //			}
 //		}
         
-	}
+
+            
+        //4. Make a puzzle game, and evolve a level
+//        boolean gameIsGood = false;
+//        while(!gameIsGood){
+//            String new_desc = GameChanger.makePuzzleGame();
+//            System.out.println(new_desc);
+//            
+//            
+//            
+//            LevelGenerator lg = new LevelGenerator(new_desc);
+//            lg.generateLevel(8, 8, null);
+//            
+//        }
+
+    }
+        
+        
+
+ 
 }

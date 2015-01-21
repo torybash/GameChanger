@@ -11,3 +11,6 @@ puzzlegamedata/**
 sprites/**
 *.dat
 *.class
+/nbbuild/
+/nbproject/
+build.xml
