@@ -74,6 +74,8 @@ public class GameDataAnalysis {
 		for (GameData[] aveGameDatas : gameAverages) {
 			printGameDatas(aveGameDatas, controllers);
 		}
+                
+                
 	}
 	
 
@@ -89,6 +91,23 @@ public class GameDataAnalysis {
 			printGameDatas(aveGameDatas, controllers);
 		}
 	}
+        
+        
+        
+    public void analyzeGoodToBad(Controller[] ctrlGameDatas1, Controller[] ctrlGameDatas2) {
+        ArrayList<GameData[]> gameDatas1 = ExtractGameData.extractGameDatas(ctrlGameDatas1, false);
+        ArrayList<GameData[]> gameDatas2 = ExtractGameData.extractGameDatas(ctrlGameDatas2, false);
+        
+        ArrayList<GameData[]> acceptedGameDatas1 = GameDataCalculator.getAcceptedGames(gameDatas1);
+        ArrayList<GameData[]> acceptedGameDatas2 = GameDataCalculator.getAcceptedGames(gameDatas2);
+        
+        GameDataCalculator.getGoodToBadValues(acceptedGameDatas1, acceptedGameDatas2);
+        
+        
+        //Compare average gamedatas:
+//        printGameDatas(aveGameDatas, controllers);
+    }
+        
 
 	private void printGameDatas(GameData[] gds, Controller[] controllers) {
 		int n = gds.length;
@@ -149,6 +168,10 @@ public class GameDataAnalysis {
 		for (int c = 0; c < n; c++) System.out.println(valLines[c]);
 		System.out.println();
 	}
+
+
+
+
 
 
 }

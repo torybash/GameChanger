@@ -15,6 +15,8 @@ public class GameDataCalculator {
 	private static final int LOWEST_TICKS_ALLOWED = 10;
 	private static final int MAX_ABS_SCORE = 10000;
 	
+        static boolean scoresEqual = true;
+	static float lastScore = 0;
 	
 	public static ArrayList<GameData[]> getAcceptedGames(ArrayList<GameData[]> gameDatas) {
 		int n = gameDatas.get(0).length;
@@ -26,11 +28,11 @@ public class GameDataCalculator {
 		for (int g = 0; g < gameDatas.size(); g++) { //for each game		
 			if (gameDatas.get(g)[0].gameTitle.contains("camelRace") 
 					|| gameDatas.get(g)[0].gameTitle.contains("sokoban")
-//					|| gameDatas.get(g)[0].gameTitle.contains("chase")
-//					|| gameDatas.get(g)[0].gameTitle.contains("firestorms")
-//					|| gameDatas.get(g)[0].gameTitle.contains("infection")
-//					|| gameDatas.get(g)[0].gameTitle.contains("firecaster")
-//					|| gameDatas.get(g)[0].gameTitle.contains("butterflies")
+					|| gameDatas.get(g)[0].gameTitle.contains("chase")
+					|| gameDatas.get(g)[0].gameTitle.contains("firestorms")
+					|| gameDatas.get(g)[0].gameTitle.contains("infection")
+					|| gameDatas.get(g)[0].gameTitle.contains("firecaster")
+					|| gameDatas.get(g)[0].gameTitle.contains("butterflies")
 				)
 				continue;
 			
@@ -308,9 +310,46 @@ public class GameDataCalculator {
 		return aveGameDatas;
 	}
 	
+        
+        
+    public static void getGoodToBadValues(ArrayList<GameData[]> acceptedGameDatas1, ArrayList<GameData[]> acceptedGameDatas2) {
+        
+        float[] values1 = getGoodToBadDistribution(acceptedGameDatas1);
+        float[] values2 = getGoodToBadDistribution(acceptedGameDatas2);
+        
+        
+        System.out.println("------THE FIRST------");
+        for (int i = 0; i < values1.length; i++) {
+            System.out.println(values1[i]);
+        }
+        
+        System.out.println("------THE SECOND------");
+        for (int i = 0; i < values2.length; i++) {
+            System.out.println(values2[i]);
+        }
+    }
 
-	static boolean scoresEqual = true;
-	static float lastScore = 0;
+    
+    private static float[] getGoodToBadDistribution(ArrayList<GameData[]> gameDatas){
+        float[] values = new float[gameDatas.size() * gameDatas.get(0)[0].levelsPlayed.size()];
+        int c = 0;
+        for (GameData[] gds : gameDatas) {
+            GameData goodCtrlGameData = gds[0];
+            GameData badCtrlGameData = gds[gds.length-2];
+            
+            
+            for (int l = 0; l < goodCtrlGameData.levelsPlayed.size(); l++) {
+                LevelPlay goodCtrlLp = goodCtrlGameData.levelsPlayed.get(l);
+                LevelPlay badCtrlLp = badCtrlGameData.levelsPlayed.get(l);
+                
+                System.out.println("goodCtrlLp.score, badCtrlLp.score: " + goodCtrlLp.score +", " + badCtrlLp.score + ", Utility.relDiff(goodCtrlLp.score, badCtrlLp.score): " + Utility.relDiff(goodCtrlLp.score, badCtrlLp.score));
+                
+                values[c++] = Utility.relDiff(goodCtrlLp.score, badCtrlLp.score);
+            }
+        }
+        return values;
+    }
+
 	private static  boolean allScoresEqual(ArrayList<LevelPlay> levelsPlayed, int ctrlIdx, int n) {
 		if (ctrlIdx == 0) scoresEqual = true;
 		else if (!scoresEqual) return false;
@@ -353,4 +392,6 @@ public class GameDataCalculator {
 		}
 		return false;
 	}
+
+
 }

@@ -4,6 +4,7 @@ import dataanalysis.controller.Controller;
 import dataanalysis.controller.ControllerHelper;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.core.CMAEvolStrat;
+//import dataanalysis.core.CMAEvolStrat;
 import dataanalysis.core.FitnessAnalysis;
 import dataanalysis.core.GameDataAnalysis;
 
@@ -35,13 +36,15 @@ public class AMain {
 		//*********************************
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
 //		gda.analyzeGameDifference(controllers, false, true);
-//		gda.analyzeAllGamesAverage(controllers, true);
-//		fa.analyzeFitness(controllers, false);
+//		gda.analyzeAllGamesAverage(controllers, false);
+		fa.analyzeFitness(controllers, false);
+
+                        
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
 //		gda.analyzeGameDifference(controllers, false, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
-//		fa.analyzeFitness(controllers, false);
+		fa.analyzeFitness(controllers, false);
 		
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed_genlvls");
@@ -49,6 +52,15 @@ public class AMain {
 //		gda.analyzeAllGamesAverage(controllers, false);
 //		fa.analyzeFitness(controllers, false);
 		
+                
+                
+        Controller[] goodDataControllers = ControllerHelper.copyControllers(controllers);
+		Controller[] badDataControllers = ControllerHelper.copyControllers(controllers);
+        ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed");
+		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
+                
+//                gda.analyzeGoodToBad(goodDataControllers, badDataControllers);
+                
 		//*********************************
 		//**********2K TICKS TEST**********
 		//*********************************
@@ -91,15 +103,15 @@ public class AMain {
 //		fa.analyzeFitness(controllers, false);
 		
 		/*Fitness feauture weights evolution:*/
-		Controller[] goodDataControllers = ControllerHelper.copyControllers(controllers);
-		Controller[] badDataControllers = ControllerHelper.copyControllers(controllers);
-//		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed");
-//		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
+//		Controller[] goodDataControllers = ControllerHelper.copyControllers(controllers);
+//		Controller[] badDataControllers = ControllerHelper.copyControllers(controllers);
+		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed");
+		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
 //		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "200t10pt_designed");
 //		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "200t10pt_gengames");
 		
-		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed_genlvls");
-		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
+//		ControllerHelper.setControllerDataFolders(goodDataControllers, dataFolder, "800t25pt_designed_genlvls");
+//		ControllerHelper.setControllerDataFolders(badDataControllers, dataFolder, "800t25pt_gengames");
 		
 //		fa.evolveFitnessWeights(goodDataControllers, badDataControllers, false);
 		
