@@ -1,4 +1,4 @@
-package levelgenerator.core;
+package levelgenerator.map;
 
 public class Mapping {
 	public char charID;
@@ -11,10 +11,13 @@ public class Mapping {
 		this.isSingleton = isSingleton;
 		
 		if (charID == "w".charAt(0)) isWall = true;
-		if (charID == "A".charAt(0)) isAvatar = true;
+		if (charID == "A".charAt(0)){
+			isAvatar = true;
+			isSingleton = true;
+		}
 	}
 	
 	public String toString() {
-		return "Mapping: " + charID + " isSingleton: " + isSingleton + ", isWall: " + isWall + ", isAvatar: " + isAvatar;
+		return "{Mapping: " + charID + " isSingleton: " + isSingleton + ", isWall: " + isWall + ", isAvatar: " + isAvatar +"}";
 	}
 }

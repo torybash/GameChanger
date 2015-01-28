@@ -20,7 +20,13 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import core.ArcadeMachine;
+import levelgenerator.map.LevelMap;
+import levelgenerator.map.Mapping;
+
+import fastVGDL.core.game.Game;
+import fastVGDL.core.game.GamePlayer;
+import fastVGDL.core.game.results.GameResults;
+import java.util.Arrays;
 
 public class LevelGenerator {
 	
@@ -37,203 +43,294 @@ public class LevelGenerator {
 	
 	PrintStream origOut;
 	
-	public static void main(String[] args) {
-		LevelGenerator lg = new LevelGenerator("realsokoban");	
-		lg.groundChar = ".".charAt(0);
-		lg.makeWall = true;
-		lg.generateLevel(8, 7, null);
-		
-//		lg.generateLevel(8, 7, lg.getCharMap(	"wwwwwwww\n"+
-//												"w.w....w\n"+
-//												"w.w.w*.w\n"+
-//												"ww.*A..w\n"+
-//												"w...Owww\n"+
-//												"wO*...Ow\n"+
-//												"wwwwwwww"));
-	}
+	
+	
+	final int iterations = 1000;
+	final int mutations = 100;
+	final int mutationsSurvive = 20;
 	
 	public LevelGenerator(String gameTitle){
 		this.gameTitle = gameTitle;
 		origOut = System.out;
 	}
 	
-        public LevelGenerator(String gameTitle, String gameFolder){
+    public LevelGenerator(String gameTitle, String gameFolder){
 		this.gameTitle = gameTitle;
-                this.gameFolder = gameFolder;
+        this.gameFolder = gameFolder;
 		origOut = System.out;
 	}
 	
-
-		
-	
-	public void generateLevel(int width, int height, char[][] initMap){	
+    
+    
+    public void generateLevel(int width, int height, LevelMap initMap){
 		System.out.println("Generating level for game: " + gameTitle);
-		
-		
-		boolean addLastGameInfosToNewIterations = true;
-		
+
 		String gameDescPath = gameFolder + gameTitle + ".txt";
-		
-		int iterations = 100;
-		int mutations = 1000;
-		int mutationsSurvive = 4;
-				
 		ArrayList[] gameElements = Parser.readGameOutput(gameDescPath);
-		
 		ArrayList<Sprite> sprites = gameElements[0];
 		ArrayList<LevelMapping> levelMappings = gameElements[2];
-		
 		ArrayList<Mapping> mappings = getMappings(sprites, levelMappings);
-		
+    	
+		GameChanger.setSpriteClasses();
 		GameChanger.setAvatar(sprites);
 		
-		char[][] levelMap = initMap;
-		if (levelMap == null){
-			levelMap = makeLevel(mappings, width, height);
+		LevelMap levelMap = initMap;
+		if (levelMap.map == null){
+			levelMap.map = makeLevel(mappings, width, height);
+			levelMap.calculateSpriteMappings(mappings);
 		}
 		
-		char[][][] mutatedLevelMaps = new char[mutations + mutationsSurvive][][];
-		char[][][] surivedMutatedLevelMaps = new char[mutationsSurvive][][];
+		System.out.println(getLevelString(levelMap.map));
 		
-		//Initialize with slightly mutated levels
-		for (int j = 0; j < mutations + mutationsSurvive; j++) {
-			int amountChangedSprites = 1, amountRemoves = 0, amountNewWall = 0, amountNewSprites = 0;
-			mutatedLevelMaps[j] = mutateLevel(levelMap, mappings, amountRemoves, amountChangedSprites, amountNewWall, amountNewSprites);
+		LevelMap[] levelMaps = new LevelMap[mutations];
+		
+		//Initialise with mutated levels
+		for (int m = 0; m < mutations; m++) {
+			char[][] mutatedMap = mutateLevel(levelMap, mappings);
+			levelMaps[m] = new LevelMap(mutatedMap);
+			
+			System.out.println(getLevelString(levelMaps[m].map));
+//			int amountChangedSprites = 5, amountRemoves = 2, amountNewWall = 2, amountNewSprites = 2;
+//			levelMaps[m] = mutateLevel(levelMap, mappings, amountRemoves, amountChangedSprites, amountNewWall, amountNewSprites);
 		}
-
-
-		GameInfo bestGameInfo = null;
-		GameInfo[] lastGameInfos = new GameInfo[mutationsSurvive];
+		
+		
+		
+		
+		GameInfo[] lastGameInfos = new GameInfo[mutations];
 		for (int i = 0; i < iterations; i++) {
 			
-			
-			if (i>0){ //Dont check for survived games in 1st iteration
-				for (int j = 0; j < mutationsSurvive; j++) { //for each mutation that survived last iteration, generate (=mutations/mutationsSurvive) new mutations
-					int amountNewMutations = mutations/mutationsSurvive;
-										
-					//Get game data
-					GameInfo gi = lastGameInfos[j];
+			//Mutating games
+			if (i>0){ //Don't do in 1st iteration
+				
+				for (int m = 0; m < mutations; m++) {
+					LevelMap newMap = new LevelMap();
 					
-					//Mutate game accordingly a number of times
-					for (int k = 0; k < amountNewMutations; k++) {
-						int amountChangedSprites = 0, amountRemoves = 0, amountMoves = 0, amountNewSprites = 0;
-//						if (gi.won < 0){
-//							amountRemoves += 1;
-//							amountChangedSprites += 1;
-//						}else{
-//							if (gi.actionCount < 100){
-//								amountRemoves += 1;
-//								amountMoves += 1;
-//								amountNewSprites += 1;
-//							}
-//							amountChangedSprites += 1;
-//						}
-						amountRemoves += 1;
-//						amountChangedSprites += 1;
-						amountNewSprites += 1;
-//						int paramToChange = range(0,4);
-//						if (paramToChange==0) amountRemoves += 1;
-//						else if (paramToChange==1) amountChangedSprites += 1;
-//						else if (paramToChange==2) amountMoves += 1;
-//						else if (paramToChange==3) amountNewSprites += 1;
-						
-						while (r.nextDouble() < 0.5){
-							amountRemoves += 1;
-//							amountChangedSprites += 1;
-							amountNewSprites += 1;
-							int paramToChange = range(0,6);
-							if (paramToChange==0) amountRemoves += 1;
-							else if (paramToChange==1) amountChangedSprites += 1;
-							else if (paramToChange==2) amountMoves += 1;
-							else if (paramToChange==3) amountNewSprites += 1;
-						}
-						
-						char[][] newLevelMap = mutateLevel(surivedMutatedLevelMaps[j], mappings, amountRemoves, amountChangedSprites, amountMoves, amountNewSprites);
-						mutatedLevelMaps[j * amountNewMutations + k] = newLevelMap;
-					}
-					mutatedLevelMaps[mutations + j] = gi.levelMap;
+					if (m > mutationsSurvive){
+                                            if (r.nextFloat() > 0.25){
+						int idx = r.nextInt(mutationsSurvive);
+						newMap.map = mutateLevel(lastGameInfos[idx].levelMap, mappings);	
+                                            }else if (r.nextFloat() > 0.65){
+                                                int idx1 = r.nextInt(mutationsSurvive);
+                                                int idx2 = r.nextInt(mutations);
+                                                while (idx2 == idx1) idx2 = r.nextInt(mutations);
+                                                newMap.map = crossOverLevel(lastGameInfos[idx1].levelMap, lastGameInfos[idx2].levelMap, mappings);
+                                            }else{
+                                                newMap.map = makeLevel(mappings, width, height);	//new level
+                                            }
+                                        }else{
+                                            newMap.map = lastGameInfos[m].levelMap.map;
+//                                            if (r.nextFloat() > 0.50){
+//						newMap.map = mutateLevel(newMap, mappings);	
+//                                            }
+                                        }
+					levelMaps[m] = newMap;
 				}
+				
+//				for (int j = 0; j < mutationsSurvive; j++) { //for each mutation that survived last iteration, generate (=mutations/mutationsSurvive) new mutations
+//					int amountNewMutations = mutations/mutationsSurvive;
+//										
+//					//Get game data
+//					GameInfo gi = lastGameInfos[j];
+//					
+//					//Mutate game accordingly a number of times
+////					for (int k = 0; k < amountNewMutations; k++) {
+////						int amountChangedSprites = 0, amountRemoves = 0, amountMoves = 0, amountNewSprites = 0;
+////						
+////						char[][] newLevelMap = mutateLevel(surivedMutatedLevelMaps[j], mappings, amountRemoves, amountChangedSprites, amountMoves, amountNewSprites);
+////						mutatedLevelMaps[j * amountNewMutations + k] = newLevelMap;
+////					}
+////					mutatedLevelMaps[mutations + j] = gi.levelMap;
+//				}
 			}
 
+			
+			//Play through all levels
 			System.out.println("Finished mutating games ");
-			//Only let some games survive
-//			ArrayList<GameInfo> gameInfos = new ArrayList<GameInfo>();
-	        
-	        
-	        int mutatedGameCount = mutations;
-	        if (addLastGameInfosToNewIterations){
-	        	mutatedGameCount += mutationsSurvive;
-//	        	mutatedGameCount += 1; //only take the best one mutation from last iteration
-	        }
 	        
 	        Comparator<GameInfo> comparator = new GameInfoComparator();
-	        PriorityQueue<GameInfo> gameInfos = new PriorityQueue<GameInfo>(mutatedGameCount, comparator);
-
+	        PriorityQueue<GameInfo> gameInfos = new PriorityQueue<GameInfo>(mutations, comparator);
 	        
-			for (int j = 0; j < mutatedGameCount; j++) {	
-				//Save map as .txt-file as it is now
-				String lvlString = getLevelString(mutatedLevelMaps[j]);
-				String lvlPath = saveCurrentLevel(lvlString);
-				
-				String actionFilePath = outputFolder + "actions.txt";
-
-				//Play map as it is now, and store output in file
-		        try {
-					System.setOut(new PrintStream(new FileOutputStream(outputFolder + "gamedata.txt")));
-		 		} catch (FileNotFoundException e) {
-		 			e.printStackTrace();
-		 		}
-				ArcadeMachine.runOneGame(gameDescPath, lvlPath, false, "controllers.puzzleSolverPlus.Agent", actionFilePath, r.nextInt());
-				System.setOut(origOut);
-				
-				//Get game data
-				GameInfo gi = new GameInfo(outputFolder, mutatedLevelMaps[j]);
+	        for (int m = 0; m < mutations; m++) {
+				GameInfo gi = playGameGetData(gameDescPath, levelMaps[m]);
 				gameInfos.add(gi);
 				
-				System.out.println("Got gameInfo: + " + j + ", won: " + gi.won + " , timesteps: " + gi.timesteps + " , score: " + gi.score + " , action count: " + gi.actionCount);
-				System.out.println(getLevelString(gi.levelMap));
+//				System.out.println("Got gameInfo: + " + m + ", won: " + gi.won + " , timesteps: " + gi.timesteps + " , score: " + gi.score + " , action count: " + gi.actionCount);
+//				System.out.println(getLevelString(gi.levelMap.map));
 			}
 			
-			GameInfo[] gameInfoList = null;
-	        for (int k = 0; k < mutationsSurvive; k++) {
-	        	GameInfo gi = null;
-//	        	if (k < mutationsSurvive/2){
-		        	gi = gameInfos.remove();
-//	        	}else{
-//	        		if (gameInfoList == null) gameInfoList = gameInfos.toArray(new GameInfo[mutatedGameCount -  mutationsSurvive/2]);
-//	        		int idx = range(0, mutatedGameCount -  mutationsSurvive/2 - 1);
-//	        		gi = gameInfoList[idx];
-//	        	}
-	        	surivedMutatedLevelMaps[k] = gi.levelMap;
-	        	lastGameInfos[k] = gi;
-	        	if (k==0) bestGameInfo = gi;
+	        for (int m = 0; m < mutations; m++) {
+	        	GameInfo gi = gameInfos.poll();
+	        	lastGameInfos[m] = gi;
+//	        	surivedMutatedLevelMaps[s] = gi.levelMap;
+//	        	lastGameInfos[s] = gi;
 	        }
 
-			
-//			System.out.println("GameInfo, won: " + gi.won + " , timesteps: " + gi.timesteps + " , score: " + gi.score);
-//			System.out.println("Mutating game with parameters, amountRemoves: " +  amountRemoves + ", amountChangedSprites: " +amountChangedSprites + ", amountNewWall: " + amountNewWall + ", amountNewSprites: " +amountNewSprites);
-//			levelMap = mutateLevel(levelMap, mappings, amountRemoves, amountChangedSprites, amountNewWall, amountNewSprites);
-//			
-			
+		
 	        System.out.println("---------------------------");
 			System.out.println("Loop end - iteration: " + i);
 			System.out.println("---------------------------");
-			for (int j = 0; j < lastGameInfos.length; j++) {
+			for (int j = 0; j < 3; j++) {
 				System.out.println("Survived GameInfo " + j + ", won: " + lastGameInfos[j].won + " , timesteps: " + lastGameInfos[j].timesteps + " , score: " + lastGameInfos[j].score + " , action count: " + lastGameInfos[j].actionCount);
-				System.out.println(getLevelString(lastGameInfos[j].levelMap));
+				System.out.println(getLevelString(lastGameInfos[j].levelMap.map));
 			}
 			System.out.println("---------------------------");
 			System.out.println("---------------------------");
 			
 		}
+    }
+    
+
 		
+	private char[][] crossOverLevel(LevelMap levelMap, LevelMap levelMap2, ArrayList<Mapping> mappings) {
 		
-		String lvlString = getLevelString(bestGameInfo.levelMap);
-		saveCurrentLevel(lvlString);
+//		System.out.println("CROSSOVER");
+//		System.out.println(getLevelString(levelMap.map));
+//		System.out.println("++++++++++");
+//		System.out.println(getLevelString(levelMap2.map));
 		
+		char[][] newLevel = new char[levelMap.map.length][];
+		for (int i = 0; i < newLevel.length; i++) newLevel[i] = new char[levelMap.map[i].length];
+		
+		for (int i = 0; i < levelMap.map.length; i++) {
+			for (int j = 0; j < levelMap.map[i].length; j++) {
+				double prob = r.nextDouble();
+				if (prob > 0.5){
+					newLevel[i][j] = levelMap.map[i][j];
+				}else{
+					newLevel[i][j] = levelMap2.map[i][j];
+				}
+			}
+		}
+		
+//		System.out.println("==========");
+//		System.out.println(getLevelString(newLevel));
+		
+		//Remove duplicates for singleton sprites
+		removeSingletonDuplicates(mappings, newLevel);
+		
+//		System.out.println("--------->");
+//		System.out.println(getLevelString(newLevel));
+		
+		return newLevel;
+	}
+
+	public void generateLevel(int width, int height, char[][] initMap){	
+//		
+//		System.out.println("Generating level for game: " + gameTitle);
+//
+//		boolean addLastGameInfosToNewIterations = true;		
+//		String gameDescPath = gameFolder + gameTitle + ".txt";
+//		ArrayList[] gameElements = Parser.readGameOutput(gameDescPath);
+//		ArrayList<Sprite> sprites = gameElements[0];
+//		ArrayList<LevelMapping> levelMappings = gameElements[2];
+//		ArrayList<Mapping> mappings = getMappings(sprites, levelMappings);
+//		
+//		GameChanger.setSpriteClasses();
+//		GameChanger.setAvatar(sprites);
+//		
+//		char[][] levelMap = initMap;
+//		if (levelMap == null) levelMap = makeLevel(mappings, width, height);
+//		
+//		char[][][] mutatedLevelMaps = new char[mutations + mutationsSurvive][][];
+//		char[][][] surivedMutatedLevelMaps = new char[mutationsSurvive][][];
+//		
+//		//Initialise with mutated levels
+//		for (int j = 0; j < mutations + mutationsSurvive; j++) {
+//			int amountChangedSprites = 5, amountRemoves = 2, amountNewWall = 2, amountNewSprites = 2;
+//			mutatedLevelMaps[j] = mutateLevel(levelMap, mappings, amountRemoves, amountChangedSprites, amountNewWall, amountNewSprites);
+//		}
+//
+//
+//		GameInfo[] lastGameInfos = new GameInfo[mutationsSurvive];
+//		for (int i = 0; i < iterations; i++) {
+//			
+//			if (i>0){ //Don't check for survived games in 1st iteration
+//				for (int j = 0; j < mutationsSurvive; j++) { //for each mutation that survived last iteration, generate (=mutations/mutationsSurvive) new mutations
+//					int amountNewMutations = mutations/mutationsSurvive;
+//										
+//					//Get game data
+//					GameInfo gi = lastGameInfos[j];
+//					
+//					//Mutate game accordingly a number of times
+//					for (int k = 0; k < amountNewMutations; k++) {
+//						int amountChangedSprites = 0, amountRemoves = 0, amountMoves = 0, amountNewSprites = 0;
+//						
+//						char[][] newLevelMap = mutateLevel(surivedMutatedLevelMaps[j], mappings, amountRemoves, amountChangedSprites, amountMoves, amountNewSprites);
+//						mutatedLevelMaps[j * amountNewMutations + k] = newLevelMap;
+//					}
+//					mutatedLevelMaps[mutations + j] = gi.levelMap.map;
+//				}
+//			}
+//
+//			
+//			//Play through all levels
+//			System.out.println("Finished mutating games ");
+//	        int mutatedGameCount = mutations;
+//	        if (addLastGameInfosToNewIterations) mutatedGameCount += mutationsSurvive;
+//	        
+//	        Comparator<GameInfo> comparator = new GameInfoComparator();
+//	        PriorityQueue<GameInfo> gameInfos = new PriorityQueue<GameInfo>(mutatedGameCount, comparator);
+//	        
+//			for (int j = 0; j < mutatedGameCount; j++) {	
+//				GameInfo gi = playGameGetData(gameDescPath, mutatedLevelMaps[j]);
+//				gameInfos.add(gi);
+//				
+//				System.out.println("Got gameInfo: + " + j + ", won: " + gi.won + " , timesteps: " + gi.timesteps + " , score: " + gi.score + " , action count: " + gi.actionCount);
+//				System.out.println(getLevelString(gi.levelMap.map));
+//			}
+//			
+//	        for (int s = 0; s < mutationsSurvive; s++) {
+//	        	GameInfo gi = gameInfos.poll();
+//	        	surivedMutatedLevelMaps[s] = gi.levelMap.map;
+//	        	lastGameInfos[s] = gi;
+//	        }
+//
+//		
+//	        System.out.println("---------------------------");
+//			System.out.println("Loop end - iteration: " + i);
+//			System.out.println("---------------------------");
+//			for (int j = 0; j < lastGameInfos.length; j++) {
+//				System.out.println("Survived GameInfo " + j + ", won: " + lastGameInfos[j].won + " , timesteps: " + lastGameInfos[j].timesteps + " , score: " + lastGameInfos[j].score + " , action count: " + lastGameInfos[j].actionCount);
+//				System.out.println(getLevelString(lastGameInfos[j].levelMap.map));
+//			}
+//			System.out.println("---------------------------");
+//			System.out.println("---------------------------");
+//			
+//		}
 	}
 	
 	
+	private GameInfo playGameGetData(String gameDescPath, LevelMap map) {		
+		//Save map as .txt-file as it is now
+		String lvlString = getLevelString(map.map);
+		String lvlPath = saveCurrentLevel(lvlString);
+		
+		String actionFilePath = outputFolder + "actions.txt";
+
+//		System.out.println("Playing game " + gameDescPath + " - level: ");
+//		System.out.println(getLevelString(map.map));
+		//Play map as it is now, and store output in file
+//        try {
+//			System.setOut(new PrintStream(new FileOutputStream(outputFolder + "gamedata.txt")));
+// 		} catch (FileNotFoundException e) {
+// 			e.printStackTrace();
+// 		}
+        
+                
+             
+       
+        GameResults results = GamePlayer.playGame(gameDescPath, lvlPath, "fastVGDL.controllers.puzzleSolverPlus.Agent", false);
+        
+        GameInfo gi = new GameInfo(results, map);
+        
+        
+//		ArcadeMachine.runOneGame(gameDescPath, lvlPath, false, "controllers.puzzleSolverPlus.Agent", actionFilePath, r.nextInt());
+//		System.setOut(origOut);
+		
+		return  gi;
+	}
+
 	private ArrayList<Mapping> getMappings(ArrayList<Sprite> sprites, ArrayList<LevelMapping> levelMappings) {
 		ArrayList<Mapping> result = new ArrayList<Mapping>();
 
@@ -253,9 +350,19 @@ public class LevelGenerator {
 			result.add(m);
 		}
 		
+		Mapping mw = new Mapping("w".charAt(0), false);
+		result.add(mw);
+		
+		Mapping ma = new Mapping("A".charAt(0), true);
+		result.add(ma);
+		
 		return result;
 	}
 
+	private char[][] mutateLevel(LevelMap levelMap, ArrayList<Mapping> mappings) {
+		return mutateLevel(levelMap.map, mappings, 1, 1, 1, 1);
+	}
+	
 	private char[][] mutateLevel(char[][] levelMap, ArrayList<Mapping> mappings, int amountRemoves, int amountChanges, int amountMoves, int amountNewSprites) {
 		char[][] newLevelMap = new char[levelMap.length][];
 		for (int i = 0; i < newLevelMap.length; i++) {
@@ -469,7 +576,7 @@ public class LevelGenerator {
 			if (mapping.isWall) amount = range(1, 10);
 			if (mapping.isSingleton) amount = 1;
 			
-			System.out.println("mapping.isAvatar: " + mapping.isAvatar);
+//			System.out.println("mapping.isAvatar: " + mapping.isAvatar);
 			
 			int amountFreeTiles = amountOfFreeTiles(levelMap);
 			boolean foundRoom = false;
@@ -536,11 +643,24 @@ public class LevelGenerator {
 		
 		public int actionCount = 0;
 		
-		public char[][] levelMap;
+		public int interactions = 0;
+		
+//		public char[][] levelMap;
+		public LevelMap levelMap;
 		
 		Pattern patternResult = Pattern.compile("Result \\(1->win; 0->lose\\):([-]?[0-1]+), Score:([-]?[0-9]+\\.[0-9]+), timesteps:([0-9]+)");
 
-		public GameInfo(String dataFolder, char[][] levelMap){
+		public GameInfo(GameResults gr, LevelMap levelMap){
+			
+			won = gr.won ? 1 : 0;
+			timesteps = gr.ticks;
+			actionCount = gr.actions;
+			interactions = gr.interactions;
+                        
+                        this.levelMap = levelMap;
+		}
+		
+		public GameInfo(String dataFolder, LevelMap levelMap){
 			String gameDataPath = dataFolder + "gamedata.txt";
 			String actionFilePath = dataFolder + "actions.txt";
 			
