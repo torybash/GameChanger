@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-import ontology.Types;
-import tools.IO;
+import fastVGDL.ontology.Types;
+import fastVGDL.tools.IO;
 import core.Node;
 import core.content.InteractionContent;
 import core.content.MappingContent;

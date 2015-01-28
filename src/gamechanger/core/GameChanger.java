@@ -10,27 +10,27 @@ import gamechanger.writer.Writer;
 import java.util.ArrayList;
 import java.util.Random;
 
-import ontology.avatar.FlakAvatar;
-import ontology.avatar.HorizontalAvatar;
-import ontology.avatar.MovingAvatar;
-import ontology.avatar.oriented.OrientedAvatar;
-import ontology.avatar.oriented.ShootAvatar;
-import ontology.sprites.Flicker;
-import ontology.sprites.Immovable;
-import ontology.sprites.OrientedFlicker;
-import ontology.sprites.Passive;
-import ontology.sprites.Resource;
-import ontology.sprites.Spreader;
-import ontology.sprites.missile.Missile;
-import ontology.sprites.missile.RandomMissile;
-import ontology.sprites.npc.AlternateChaser;
-import ontology.sprites.npc.Chaser;
-import ontology.sprites.npc.Fleeing;
-import ontology.sprites.npc.RandomAltChaser;
-import ontology.sprites.npc.RandomNPC;
-import ontology.sprites.producer.Bomber;
-import ontology.sprites.producer.Portal;
-import ontology.sprites.producer.SpawnPoint;
+import fastVGDL.ontology.avatar.FlakAvatar;
+import fastVGDL.ontology.avatar.HorizontalAvatar;
+import fastVGDL.ontology.avatar.MovingAvatar;
+import fastVGDL.ontology.avatar.oriented.OrientedAvatar;
+import fastVGDL.ontology.avatar.oriented.ShootAvatar;
+import fastVGDL.ontology.sprites.Flicker;
+import fastVGDL.ontology.sprites.Immovable;
+import fastVGDL.ontology.sprites.OrientedFlicker;
+import fastVGDL.ontology.sprites.Passive;
+import fastVGDL.ontology.sprites.Resource;
+import fastVGDL.ontology.sprites.Spreader;
+import fastVGDL.ontology.sprites.missile.Missile;
+import fastVGDL.ontology.sprites.missile.RandomMissile;
+import fastVGDL.ontology.sprites.npc.AlternateChaser;
+import fastVGDL.ontology.sprites.npc.Chaser;
+import fastVGDL.ontology.sprites.npc.Fleeing;
+import fastVGDL.ontology.sprites.npc.RandomAltChaser;
+import fastVGDL.ontology.sprites.npc.RandomNPC;
+import fastVGDL.ontology.sprites.producer.Bomber;
+import fastVGDL.ontology.sprites.producer.Portal;
+import fastVGDL.ontology.sprites.producer.SpawnPoint;
 
 public class GameChanger {
 	
@@ -113,8 +113,8 @@ public class GameChanger {
 		resourceSprites.clear();
                 
                 
-                if (avatarClasses == null)avatarClasses = possibleAvatarClasses;
-                if (spriteClasses == null)spriteClasses = possibleSpriteClasses;
+        if (avatarClasses == null)avatarClasses = possibleAvatarClasses;
+        if (spriteClasses == null)spriteClasses = possibleSpriteClasses;
                 
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		ArrayList<Interaction> interacts = new ArrayList<Interaction>();
@@ -147,6 +147,12 @@ public class GameChanger {
             spriteClasses = possiblePuzzleSpriteClasses;
             return makeGame();
         }
+        
+        
+    public static void setSpriteClasses(){
+        avatarClasses = possiblePuzzleAvatarClasses;
+        spriteClasses = possiblePuzzleSpriteClasses;
+    }
 	
 	public static String makeLevel(String game_desc){
 		ArrayList[] elements = Parser.readGameOutputString(game_desc);
@@ -164,25 +170,16 @@ public class GameChanger {
 		avatarNames = new ArrayList<String>();
 		haveAvatar = false;
 		for (Sprite s: sprites) {
-//<<<<<<< Updated upstream
 			for (int i = 0; i < avatarClasses.length; i++) {
 				String className = avatarClasses[i].getSimpleName();
 				if (s.referenceClass.equals(className) ||
 					(s.parent != null && s.parent.referenceClass.equals(className)) ||
 					(s.parent != null && s.parent.parent != null && s.parent.parent.referenceClass.equals(className))
-					){
-					
+					)
+				{
 					avatarNames.add(s.identifier);
-                                        haveAvatar = true;
-//=======
-//			for (int i = 0; i < avatarClasses.length; i++) {
-//				String className = avatarClasses[i].getSimpleName();
-//				if (s.referenceClass.equals(className)){
-//					avatarName = s.identifier;
-////>>>>>>> Stashed changes
-//					haveAvatar = true;
-				}
-//				
+                    haveAvatar = true;
+				}				
 			}
 		}
 		if (avatarNames.size() == 0) avatarNames.add("avatar");
