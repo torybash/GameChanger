@@ -29,22 +29,37 @@ public class AMain {
 //		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, randomController, doNothingController};
 		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, onestepController, randomController, doNothingController};
 //		Controller[] controllers = new Controller[]{dontDieController, mctsishController, mctsController, gaController, rosController, onestepController, randomController, doNothingController};
+//		Controller[] controllers = new Controller[]{mctsishController};
+
+		
+		
+		//*********************************
+		//******GEN GAMES TESTT*****
+		//*********************************
+		
+		
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "500_6wellformedgames_test");
+//		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "500_initial_test");
+//		gda.printWellFormedGamesIdx(controllers);
+//		gda.analyzeGameDifference(controllers, false, true);
+//		gda.analyzeAllGamesAverage(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 		
 		
 		//*********************************
 		//******25 P.T./800 TICKS TEST*****
 		//*********************************
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
-//		gda.analyzeGameDifference(controllers, false, true);
+//		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, false);
-		fa.analyzeFitness(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 
                         
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
-//		gda.analyzeGameDifference(controllers, false, true);
+//		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
-		fa.analyzeFitness(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 		
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed_genlvls");
@@ -117,7 +132,7 @@ public class AMain {
 		
 //		fa.printFeautureData(goodDataControllers, badDataControllers);
 		
-//		cmaes.evolveFitnessWeights(goodDataControllers, badDataControllers);
+		cmaes.evolveFitnessWeights(goodDataControllers, badDataControllers);
 		
 		//*********************************
 		//**********2 GAMES TEST***********

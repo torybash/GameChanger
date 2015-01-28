@@ -115,23 +115,23 @@ public class GameDataAnalysis {
 		LinkedHashMap<String, Boolean> valShow = new LinkedHashMap<String, Boolean>();
 		valShow.put(DataTypes.AVE, 		true);
 		valShow.put(DataTypes.SD, 		true);
-		valShow.put(DataTypes.NAVE, 	false);
-		valShow.put(DataTypes.ZNAVE, 	false);
+		valShow.put(DataTypes.NAVE, 	true);
+		valShow.put(DataTypes.ZNAVE, 	true);
 		valShow.put(DataTypes.MMAVE, 	true);
-		valShow.put(DataTypes.MMSD, 	false);
+		valShow.put(DataTypes.MMSD, 	true);
 		valShow.put(DataTypes.MMSE, 	true);
 		valShow.put(DataTypes.WRATE, 	true);
-		valShow.put(DataTypes.WRSD, 	false);
+		valShow.put(DataTypes.WRSD, 	true);
 		valShow.put(DataTypes.WRSE, 	true);
-		valShow.put(DataTypes.MEDI, 	false);
-		valShow.put(DataTypes.QUAR1, 	false);
-		valShow.put(DataTypes.QUAR3, 	false);
-		valShow.put(DataTypes.ERRLO, 	false);
-		valShow.put(DataTypes.ERRHI, 	false);
-		valShow.put(DataTypes.MAX, 		false);
-		valShow.put(DataTypes.MIN, 		false);
+		valShow.put(DataTypes.MEDI, 	true);
+		valShow.put(DataTypes.QUAR1, 	true);
+		valShow.put(DataTypes.QUAR3, 	true);
+		valShow.put(DataTypes.ERRLO, 	true);
+		valShow.put(DataTypes.ERRHI, 	true);
+		valShow.put(DataTypes.MAX, 		true);
+		valShow.put(DataTypes.MIN, 		true);
 		valShow.put(DataTypes.AVTIC, 	true);
-		valShow.put(DataTypes.SDTIC, 	false);
+		valShow.put(DataTypes.SDTIC, 	true);
 		valShow.put(DataTypes.ACTEN, 	true);
 		
 		
@@ -167,6 +167,54 @@ public class GameDataAnalysis {
 		System.out.println(infoLine);
 		for (int c = 0; c < n; c++) System.out.println(valLines[c]);
 		System.out.println();
+	}
+
+	
+	
+	public void printWellFormedGamesIdx(Controller[] controllers) {
+		int n = controllers.length;
+		//Extract data from data folders
+		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
+
+		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
+
+//		for (GameData[] gds : gameAverages) {
+//			printGameDatas(gds, controllers);
+//		}
+		
+		ArrayList<GameData[]> wellFormedGameAverages = new ArrayList<GameData[]>();
+		
+		String result = "{";
+		boolean first = false;
+		for (GameData[] gds : gameAverages) {
+			GameData gd = gds[0];
+
+			if (gd.gameValues.get(DataTypes.AVE) < 0) continue;
+			if (gd.gameValues.get(DataTypes.AVE) > 100) continue;
+			if (gd.gameValues.get(DataTypes.MIN) < -50) continue;
+			if (gd.gameValues.get(DataTypes.MAX) > 500) continue;
+			if ((gd.gameValues.get(DataTypes.MAX) - gd.gameValues.get(DataTypes.MIN)) > 50) continue;
+			if (gd.gameValues.get(DataTypes.WRATE) == 0) continue;
+			if (gd.gameValues.get(DataTypes.WRATE) == 1) continue;
+			if (gd.gameValues.get(DataTypes.SDTIC) == 0) continue;
+			if (gd.gameValues.get(DataTypes.SD) < 1) continue;
+						
+			if (first) result += ", ";
+			result += gd.gameTitle.split("_")[2].split(" ")[0];
+			first = true;
+			
+			wellFormedGameAverages.add(gds);
+			
+		}
+		result += "}";
+		
+		
+		
+		System.out.println(result);
+		
+		for (GameData[] gds : wellFormedGameAverages) {
+			printGameDatas(gds, controllers);
+		}
 	}
 
 

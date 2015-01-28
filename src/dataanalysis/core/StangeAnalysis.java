@@ -2,7 +2,7 @@ package dataanalysis.core;
 
 import java.util.ArrayList;
 
-import tools.IO;
+import fastVGDL.tools.IO;
 
 public class StangeAnalysis {
 

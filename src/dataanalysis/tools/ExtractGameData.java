@@ -54,7 +54,12 @@ public class ExtractGameData {
 //								System.out.println("-----reading actions for game " + gameNumber + ", level: " + levelNr + " try: " + tryNr);
 //								System.out.println(currGD.gameTitle.split("_")[2]);
 //								gameNumber = Integer.parseInt(currGD.gameTitle.split("_")[2]);
-								readActionFile(data, currGD, Integer.parseInt(currGD.gameTitle.split("_")[2]), levelNr, tryNr-1);
+								if (currGD.gameTitle.contains("gen")){
+									readActionFile(data, currGD, Integer.parseInt(currGD.gameTitle.split("_")[2]), levelNr, tryNr-1);
+								}else{
+									readActionFile(data, currGD, gameNumber, levelNr, tryNr-1);
+
+								}
 							}
 							
 						}

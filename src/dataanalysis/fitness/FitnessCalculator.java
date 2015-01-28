@@ -294,11 +294,16 @@ public class FitnessCalculator {
 	
 	public enum FeatureDataType{
 		SCORE(DataTypes.AVE),
-		SCORE_SD(DataTypes.SD),
+//		SCORE_SD(DataTypes.SD),
+		MMSCORE(DataTypes.MMAVE),
+//		SCORE_SD(DataTypes.MMSE),
+//		ERR_HI(DataTypes.ERRHI),
+//		ERR_LO(DataTypes.ERRLO),
 		WR(DataTypes.WRATE),
-		WR_SD(DataTypes.WRSE),
+//		WR_SD(DataTypes.WRSE),
 		TICKS(DataTypes.AVTIC),
-		TICKS_SD(DataTypes.SDTIC);
+//		TICKS_SD(DataTypes.SDTIC)
+		;
 		
 		 private String dataType;
 		 
@@ -351,6 +356,22 @@ public class FitnessCalculator {
 	
 	public static void setWeights(double[] featureWeights){
 		int count = 0;
+		
+		if (featureWeights == null){
+			ctrlmatrix_feature_weights = new double[ControllerType.class.getEnumConstants().length][][];
+			for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
+				ctrlmatrix_feature_weights[c1] = new double[ControllerType.class.getEnumConstants().length][];
+				for (int c2 = 0; c2 < ControllerType.class.getEnumConstants().length; c2++) {
+					if (c1 >= c2) continue;
+					ctrlmatrix_feature_weights[c1][c2] = new double[FeatureDataType.class.getEnumConstants().length];
+					for (int t = 0; t < FeatureDataType.class.getEnumConstants().length; t++) {
+						ctrlmatrix_feature_weights[c1][c2][t] = 1;
+					}
+				}
+			}
+			return;
+		}
+		
 		if (ctrlmatrix_feature_weights == null){
 			ctrlmatrix_feature_weights = new double[ControllerType.class.getEnumConstants().length][][];
 			for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
