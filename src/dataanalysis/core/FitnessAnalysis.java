@@ -10,8 +10,6 @@ import dataanalysis.controller.Controller;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.fitness.FitnessCalculator;
 import dataanalysis.fitness.FitnessCalculator.FeatureDataType;
-import dataanalysis.fitness.FitnessCalculator.FitnessType;
-import dataanalysis.fitness.FitnessCalculator.MatrixWeightType;
 import dataanalysis.fitness.GameFitness;
 import dataanalysis.fitness.GoodToBadFitness;
 import dataanalysis.tools.ExtractGameData;
@@ -49,8 +47,8 @@ public class FitnessAnalysis {
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
 
-		FitnessCalculator.setWeights(test_feature_weights48);
-		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, matrixApproach);
+		FitnessCalculator.setWeights(null, null);
+		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
 		
 		Collections.sort(fitnessValues);
 		
@@ -67,8 +65,8 @@ public class FitnessAnalysis {
 		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
-		FitnessCalculator.setWeights(init_feature_weights);
-		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameAverages, controllers, matrixApproach);
+		FitnessCalculator.setWeights(init_feature_weights, null);
+		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameAverages, controllers, null);
 		
 		Collections.sort(fitnessValues);
 		
@@ -78,7 +76,7 @@ public class FitnessAnalysis {
 	}
 	
 	
-	public void evolveFitnessWeights(Controller[] goodDataControllers, Controller[] badDataControllers, boolean matrixApproach) {
+	public void evolveFitnessWeights(Controller[] goodDataControllers, Controller[] badDataControllers, boolean[] dataTypesToUse) {
 		int n = goodDataControllers.length;
 		ArrayList<GameData[]> goodGameDatas = ExtractGameData.extractGameDatas(goodDataControllers, false);
 		ArrayList<GameData[]> badGameDatas = ExtractGameData.extractGameDatas(badDataControllers, false);
@@ -126,10 +124,10 @@ public class FitnessAnalysis {
 			
 			//Calculate fitness and make lists
 			for (int m = 0; m < mutations; m++) {
-				FitnessCalculator.setCtrlMatrixWeights(ctrlMatrixWeightList[m]);
+				FitnessCalculator.setWeights(ctrlMatrixWeightList[m]);
 
-				ArrayList<GameFitness> goodFitnessValues = FitnessCalculator.getFitnessForEachGame(goodGameAverages, goodDataControllers, matrixApproach);
-				ArrayList<GameFitness> badFitnessValues = FitnessCalculator.getFitnessForEachGame(badGameAverages, badDataControllers, matrixApproach);
+				ArrayList<GameFitness> goodFitnessValues = FitnessCalculator.getFitnessForEachGame(goodGameAverages, goodDataControllers, dataTypesToUse);
+				ArrayList<GameFitness> badFitnessValues = FitnessCalculator.getFitnessForEachGame(badGameAverages, badDataControllers, dataTypesToUse);
 				gtbFitnessList.add(new GoodToBadFitness(m, goodFitnessValues, badFitnessValues));
 			}
 			
@@ -200,9 +198,9 @@ public class FitnessAnalysis {
 		ArrayList<GameData[]> designedGameAverages = GameDataCalculator.getAverageForEachGame(designedGameDatas);
 		ArrayList<GameData[]> generatedGameAverages = GameDataCalculator.getAverageForEachGame(generatedGameDatas);
 		
-		FitnessCalculator.setWeights(null);
-		ArrayList<GameFitness> designedFitnessValues = FitnessCalculator.getFitnessForEachGame(designedGameAverages, designedDataControllers, false);
-		ArrayList<GameFitness> generatedFitnessValues = FitnessCalculator.getFitnessForEachGame(generatedGameAverages, generatedDataControllers, false);
+		FitnessCalculator.setWeights(null, null);
+		ArrayList<GameFitness> designedFitnessValues = FitnessCalculator.getFitnessForEachGame(designedGameAverages, designedDataControllers, null);
+		ArrayList<GameFitness> generatedFitnessValues = FitnessCalculator.getFitnessForEachGame(generatedGameAverages, generatedDataControllers, null);
 		
 		
 		int ctrlTypCnt = ControllerType.class.getEnumConstants().length;
@@ -253,5 +251,60 @@ public class FitnessAnalysis {
 
 
 
+	public void tryDifferentFitnessValues(Controller[] goodDataControllers, Controller[] badDataControllers) {
+		
+		CMAEvolStrat cma = new CMAEvolStrat();
+		
+//		0 --> [false, false,.., false]
+//		1 --> [false, false,.., true]
+		
+		int dataTypesCnt = FeatureDataType.class.getEnumConstants().length;
+		ArrayList<FitnessTryResults> results = new ArrayList<FitnessTryResults>((int) Math.pow(2, dataTypesCnt));
+		
+		for (int i = 1; i < Math.pow(2, dataTypesCnt); i++) {
+			
+			boolean[] dataTypesToUse = toBinary(i, dataTypesCnt);
+			System.out.println(" using: " + Arrays.toString(dataTypesToUse));
+//			evolveFitnessWeights(goodDataControllers, badDataControllers, dataTypesToUse);
+			double result = 1 - cma.evolveFitnessWeights(goodDataControllers, badDataControllers, dataTypesToUse);
+			
+			results.add(new FitnessTryResults(i, result));
+			System.out.println(result);
+		}
+		
+		Collections.sort(results);
+//		Arrays.toString(sortedResults);
 
+		for (FitnessTryResults fitnessTryResults : results) {
+			System.out.println(Arrays.toString(toBinary(fitnessTryResults.idx, dataTypesCnt)) + " = " + fitnessTryResults.result);
+		}	
+	}
+
+
+
+	private static boolean[] toBinary(int number, int base) {
+	    final boolean[] ret = new boolean[base];
+	    for (int i = 0; i < base; i++) {
+	        ret[base - 1 - i] = (1 << i & number) != 0;
+	    }
+	    return ret;
+	}
+
+	
+	class FitnessTryResults implements Comparable{
+		int idx;
+		double result;
+		
+		public FitnessTryResults(int idx, double result){
+			this.idx = idx;
+			this.result = result;
+		}
+
+		@Override
+		public int compareTo(Object o) {
+			double otherValue = ((FitnessTryResults) o).result;			
+			if (result-otherValue == 0) return 0;
+			return result-otherValue > 0 ? -1 : 1;
+		}
+	}
 }

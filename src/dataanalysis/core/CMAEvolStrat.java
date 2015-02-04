@@ -20,7 +20,7 @@ public class CMAEvolStrat {
 
 	
 	
-	public void evolveFitnessWeights(Controller[] goodDataControllers, Controller[] badDataControllers) {
+	public double evolveFitnessWeights(Controller[] goodDataControllers, Controller[] badDataControllers, boolean[] dataTypesToUse) {
 		int n = goodDataControllers.length;
 		ArrayList<GameData[]> goodGameDatas = ExtractGameData.extractGameDatas(goodDataControllers, false);
 		ArrayList<GameData[]> badGameDatas = ExtractGameData.extractGameDatas(badDataControllers, false);
@@ -32,14 +32,17 @@ public class CMAEvolStrat {
 		ArrayList<GameData[]> badGameAverages = GameDataCalculator.getAverageForEachGame(badGameDatas);
 		
 		int amountWeights = 0;
-		for (int i = 0; i < ControllerType.class.getEnumConstants().length; i++) {
-			for (int j = 0; j < ControllerType.class.getEnumConstants().length; j++) {
-				if (i > j){
-					for (int k = 0; k < FeatureDataType.class.getEnumConstants().length; k++) {
-						amountWeights++;
+		for (int t = 0; t < FeatureDataType.class.getEnumConstants().length; t++) {
+			if (FeatureDataType.values()[t].isRelDiffs()){
+				for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
+					for (int c2 = 0; c2 < ControllerType.class.getEnumConstants().length; c2++) {
+						if (c1 > c2){
+							if (dataTypesToUse == null || dataTypesToUse[t]) amountWeights++;
+						}
 					}
-
 				}
+			}else{
+				if (dataTypesToUse == null || dataTypesToUse[t]) amountWeights++;
 			}
 		}
 		
@@ -51,7 +54,7 @@ public class CMAEvolStrat {
 		cma.setInitialX(0.05); // in each dimension, also setTypicalX can be used
 		cma.setInitialStandardDeviation(0.2); // also a mandatory setting 
 		
-		
+//		cma.options.stopTolFun = 1e-8;
 //		System.out.println("cma.parameters.getDamps(): " + cma.parameters.getDamps());
 		
 		//		cma.options.stopFitness = -1e14;       // optional setting
@@ -62,8 +65,9 @@ public class CMAEvolStrat {
 		// initial output to files
 		cma.writeToDefaultFilesHeaders(0); // 0 == overwrites old files
 
+		
 		// iteration loop
-		while(cma.stopConditions.getNumber() == 0) {
+		while(cma.stopConditions.getNumber() == 0 && cma.getSigma() < 1) {
 
             // --- core iteration step ---
 			double[][] pop = cma.samplePopulation(); // get a new population of solutions
@@ -93,7 +97,7 @@ public class CMAEvolStrat {
 				
                 // compute fitness/objective value	
 //				fitness[i] = fitfun.valueOf(pop[i]); // fitfun.valueOf() is to be minimized
-				fitness[i] = - calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
+				fitness[i] = calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages, dataTypesToUse);
 //				fitness[i] = goodGameAverages.size() * badGameAverages.size() - calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
 //				fitness[i] = calculateGtbFitness(pop[i], goodDataControllers, badDataControllers, goodGameAverages, badGameAverages);
 			}
@@ -125,49 +129,44 @@ public class CMAEvolStrat {
 		for (String s : cma.stopConditions.getMessages())
 			cma.println("  " + s);
 //		cma.println("best function value " + (cma.getBestFunctionValue() 
-				cma.println("best function value " + (goodGameAverages.size() * badGameAverages.size() - cma.getBestFunctionValue())
+				cma.println("best function value " + cma.getBestFunctionValue()
 				+ " at evaluation " + cma.getBestEvaluationNumber());
 			
 		// we might return cma.getBestSolution() or cma.getBestX()
 		
 		System.out.println(Arrays.toString(cma.getBestX()));
+		
+		return cma.getBestFunctionValue();
 	}
 	
 	double calculateGtbFitness(double[] weights, Controller[] goodDataControllers, Controller[] badDataControllers, 
-			ArrayList<GameData[]> goodGameAverages, ArrayList<GameData[]> badGameAverages){
+			ArrayList<GameData[]> goodGameAverages, ArrayList<GameData[]> badGameAverages, boolean[] dataTypesToUse){
 		
-		int counter = 0;
-		double[][][] ctrlMatrixWeights = new double[ControllerType.class.getEnumConstants().length][][];
-		for (int c1 = 0; c1 < ctrlMatrixWeights.length; c1++) {
-			ctrlMatrixWeights[c1] = new double[ControllerType.class.getEnumConstants().length][];
-			for (int c2 = 0; c2 < ctrlMatrixWeights[c1].length; c2++) {
-				if (c1 >= c2) continue;
-				ctrlMatrixWeights[c1][c2] = new double[FeatureDataType.class.getEnumConstants().length];
-				for (int t = 0; t < ctrlMatrixWeights[c1][c2].length; t++) {
-					ctrlMatrixWeights[c1][c2][t] = weights[counter];
-					counter++;
-				}
+		if (dataTypesToUse == null){
+			dataTypesToUse = new boolean[FeatureDataType.class.getEnumConstants().length];
+			for (int i = 0; i < dataTypesToUse.length; i++) {
+				dataTypesToUse[i] = true;
 			}
 		}
 		
-		FitnessCalculator.setCtrlMatrixWeights(ctrlMatrixWeights);
+		FitnessCalculator.setWeights(weights, dataTypesToUse);
 
-		ArrayList<GameFitness> goodFitnessValues = FitnessCalculator.getFitnessForEachGame(goodGameAverages, goodDataControllers, false);
-		ArrayList<GameFitness> badFitnessValues = FitnessCalculator.getFitnessForEachGame(badGameAverages, badDataControllers, false);
+		ArrayList<GameFitness> goodFitnessValues = FitnessCalculator.getFitnessForEachGame(goodGameAverages, goodDataControllers, dataTypesToUse);
+		ArrayList<GameFitness> badFitnessValues = FitnessCalculator.getFitnessForEachGame(badGameAverages, badDataControllers, dataTypesToUse);
 		GoodToBadFitness gtbf = new GoodToBadFitness(-1, goodFitnessValues, badFitnessValues);
 		
-		Collections.sort(goodFitnessValues);
-		Collections.sort(badFitnessValues);
+//		Collections.sort(goodFitnessValues);
+//		Collections.sort(badFitnessValues);
 		
-		System.out.println("---");
-		for (int i = 0; i < goodFitnessValues.size(); i++) {
-			System.out.println(goodFitnessValues.get(i).gameTitle + " : " + goodFitnessValues.get(i).fitness);
-		}
-		
-		for (int i = 0; i < 5; i++) {
-			System.out.println(badFitnessValues.get(i).gameTitle + " : " + badFitnessValues.get(i).fitness);
-		}
-		System.out.println();
+//		System.out.println("---");
+//		for (int i = 0; i < goodFitnessValues.size(); i++) {
+//			System.out.println(goodFitnessValues.get(i).gameTitle + " : " + goodFitnessValues.get(i).fitness);
+//		}
+//		
+//		for (int i = 0; i < 5; i++) {
+//			System.out.println(badFitnessValues.get(i).gameTitle + " : " + badFitnessValues.get(i).fitness);
+//		}
+//		System.out.println();
 		
 //		System.out.println("weights!!!!: " + Arrays.toString(weights));
 //		System.out.println("gtbf.gtbFitness:::: " + gtbf.gtbFitness);
