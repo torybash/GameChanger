@@ -32,8 +32,8 @@ public class GameDataCalculator {
 					|| gameDatas.get(g)[0].gameTitle.contains("firestorms")
 //					|| gameDatas.get(g)[0].gameTitle.contains("infection")
 					|| gameDatas.get(g)[0].gameTitle.contains("firecaster")
-//					|| gameDatas.get(g)[0].gameTitle.contains("butterflies")
-//					|| gameDatas.get(g)[0].gameTitle.contains("frogs")
+					|| gameDatas.get(g)[0].gameTitle.contains("butterflies")
+					|| gameDatas.get(g)[0].gameTitle.contains("frogs")
 				)
 				continue;
 			
@@ -59,7 +59,6 @@ public class GameDataCalculator {
 	
 	
 	public static ArrayList<GameData[]> getAverageForEachGame(ArrayList<GameData[]> gameDatas) {
-		int n = gameDatas.get(0).length;
 		ArrayList<GameData[]> result = new ArrayList<GameData[]>();
 		for (int g = 0; g < gameDatas.size(); g++) {  //For each game
 			ArrayList<GameData[]> singleInputList = new ArrayList<GameData[]>();
@@ -141,7 +140,7 @@ public class GameDataCalculator {
 			float median = 0, quartile1 = 0, quartile3 = 0;
 			float actensum = 0;
 			float acten = 0;
-			
+			float nint = 0, naint = 0, nspr = 0, nspra = 0, nsprk = 0, nwals = 0;
 
 
 			float[] scoreArray = new float[count];
@@ -173,6 +172,14 @@ public class GameDataCalculator {
 					sumtic += lp.timesteps;
 					sumsqtic += lp.timesteps * lp.timesteps;
 					winsum += lp.won;
+					
+					nint += lp.numInteractions / (float)lp.timesteps;
+					naint += lp.numAvatarInteractions / (float)lp.timesteps;
+					nspr += lp.numSprites;
+					nspra += lp.numSpritesAdded;
+					nsprk += lp.numSpritesKilled;
+					if (nwals <= 0) nwals += lp.numWalls;
+					
 					if (lp.score > max) max = lp.score;
 					if (lp.score < min) min = lp.score;
 					scoreArray[i + g * gd.levelsPlayed.size()] = lp.score;
@@ -232,6 +239,13 @@ public class GameDataCalculator {
 			avtic = sumtic / (float)count;
 			nave = nsum / (float)count;
 			wrate = winsum / (float)count;
+			
+			nint = nint / (float)count;
+			naint = naint / (float)count;
+			nspr = nspr / (float)count;
+			nspra = nspr / (float)count;
+			nsprk = nsprk / (float)count;
+//			nwals = nwals / (float)count;
 			
 			double num = sumsq - (count * ave * ave);
 	        if (num < 0) {
@@ -304,6 +318,12 @@ public class GameDataCalculator {
 			aveGds[c].gameValues.put(DataTypes.AVTIC, avtic); 
 			aveGds[c].gameValues.put(DataTypes.SDTIC, sdtic); 
 			aveGds[c].gameValues.put(DataTypes.ACTEN, acten); 
+			aveGds[c].gameValues.put(DataTypes.NINT, nint); 
+			aveGds[c].gameValues.put(DataTypes.NAINT, naint); 
+			aveGds[c].gameValues.put(DataTypes.NSPR, nspr); 
+			aveGds[c].gameValues.put(DataTypes.NSPRA, nspra); 
+			aveGds[c].gameValues.put(DataTypes.NSPRK, nsprk); 
+			aveGds[c].gameValues.put(DataTypes.NWALS, nwals); 
 	        
 	        aveGameDatas[c] = aveGds[c];
 		}

@@ -23,6 +23,7 @@ public class GameData {
 	
 	Pattern patternGame = Pattern.compile(" \\*\\* Playing game [a-zA-Z0-9/\\.]+/([a-zA-Z0-9_]+)\\.txt, level [a-zA-Z0-9/\\.]+/[a-zA-Z0-9_]+_[a-z]*([0-9]*).txt \\(([0-9]+)/[0-9]+\\) \\*\\*");
 	Pattern patternResult = Pattern.compile("Result \\(1->win; 0->lose\\):([-]?[0-1]+), Score:([-]?[0-9]+\\.[0-9]+), timesteps:([0-9]+)");
+	Pattern patternResult2 = Pattern.compile("Num interactions:([0-9]+), avatar interactions:([0-9]+), num_sprites:([0-9]+), num_sprites_added:([0-9]+), num_sprites_killed:([0-9]+), num_walls: ([0-9]+)");
 	
 	public GameData(){
 		for (Field field: DataTypes.class.getDeclaredFields()) {
@@ -62,6 +63,19 @@ public class GameData {
 			currLP.won = Integer.parseInt(matcher.group(1));
 			currLP.score = Float.parseFloat(matcher.group(2));
 			currLP.timesteps = Integer.parseInt(matcher.group(3));
+			
+			return true;
+		}
+		
+		
+		matcher = patternResult2.matcher(line);
+		while (matcher.find()) {
+			currLP.numInteractions = Integer.parseInt(matcher.group(1));
+			currLP.numAvatarInteractions = Integer.parseInt(matcher.group(2));
+			currLP.numSprites = Integer.parseInt(matcher.group(3));
+			currLP.numSpritesAdded = Integer.parseInt(matcher.group(4));
+			currLP.numSpritesKilled = Integer.parseInt(matcher.group(5));
+			currLP.numWalls = Integer.parseInt(matcher.group(6));
 			
 			return true;
 		}

@@ -23,5 +23,12 @@ public class DataTypes {
 	public static final String WRSD = "Winrate-SD";
 	public static final String WRSE = "Winrate-SE";
 	public static final String ACTEN = "Actions entropy";
+	public static final String NINT = "Mean num interactions";
+	public static final String NAINT = "Mean num av. interactions";
+	public static final String NSPR = "Mean num sprites";
+	public static final String NSPRA = "Mean num sprites added";
+	public static final String NSPRK = "Mean num sprites killed";
+	public static final String NWALS = "Mean num wall sprites";
+	
 	
 }

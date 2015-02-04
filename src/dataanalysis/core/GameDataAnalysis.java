@@ -134,6 +134,13 @@ public class GameDataAnalysis {
 		valShow.put(DataTypes.SDTIC, 	true);
 		valShow.put(DataTypes.ACTEN, 	true);
 		
+		valShow.put(DataTypes.NINT, 	true);
+		valShow.put(DataTypes.NAINT, 	true);
+		valShow.put(DataTypes.NSPR, 	true);
+		valShow.put(DataTypes.NSPRA, 	true);
+		valShow.put(DataTypes.NSPRK, 	true);
+		valShow.put(DataTypes.NWALS, 	true);
+
 		
 		int nrValuesToShow = 1;
 		for (String stringKey : valShow.keySet()) {
