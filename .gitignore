@@ -9,6 +9,7 @@ mutatedgames BACKUP/**
 mutatedgames PUZZLEBACKUP/**
 puzzlegamedata/**
 sprites/**
+sokoban3_lvls/**
 *.dat
 *.class
 /nbbuild/

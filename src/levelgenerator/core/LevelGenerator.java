@@ -117,6 +117,7 @@ public class LevelGenerator {
                                                 newMap.map = crossOverLevel(lastGameInfos[idx1].levelMap, lastGameInfos[idx2].levelMap, mappings);
                                             }else{
                                                 newMap.map = makeLevel(mappings, width, height);	//new level
+
                                             }
                                         }else{
                                             newMap.map = lastGameInfos[m].levelMap.map;
@@ -152,11 +153,12 @@ public class LevelGenerator {
 	        PriorityQueue<GameInfo> gameInfos = new PriorityQueue<GameInfo>(mutations, comparator);
 	        
 	        for (int m = 0; m < mutations; m++) {
+//	        	System.out.println("Playing level: \n" + getLevelString(levelMaps[m].map));
 				GameInfo gi = playGameGetData(gameDescPath, levelMaps[m]);
 				gameInfos.add(gi);
 				
 //				System.out.println("Got gameInfo: + " + m + ", won: " + gi.won + " , timesteps: " + gi.timesteps + " , score: " + gi.score + " , action count: " + gi.actionCount);
-//				System.out.println(getLevelString(gi.levelMap.map));
+				;
 			}
 			
 	        for (int m = 0; m < mutations; m++) {
@@ -171,7 +173,8 @@ public class LevelGenerator {
 			System.out.println("Loop end - iteration: " + i);
 			System.out.println("---------------------------");
 			for (int j = 0; j < 3; j++) {
-				System.out.println("Survived GameInfo " + j + ", won: " + lastGameInfos[j].won + " , timesteps: " + lastGameInfos[j].timesteps + " , score: " + lastGameInfos[j].score + " , action count: " + lastGameInfos[j].actionCount);
+				System.out.println("Survived GameInfo: " + lastGameInfos[j]);
+//				System.out.println("Survived GameInfo " + j + ", won: " + lastGameInfos[j].won + " , timesteps: " + lastGameInfos[j].timesteps + " , score: " + lastGameInfos[j].score + " , action count: " + lastGameInfos[j].actionCount);
 				System.out.println(getLevelString(lastGameInfos[j].levelMap.map));
 			}
 			System.out.println("---------------------------");
@@ -308,8 +311,8 @@ public class LevelGenerator {
 		
 		String actionFilePath = outputFolder + "actions.txt";
 
-//		System.out.println("Playing game " + gameDescPath + " - level: ");
-//		System.out.println(getLevelString(map.map));
+		System.out.println("Playing game " + gameDescPath + " - level: ");
+		System.out.println(getLevelString(map.map));
 		//Play map as it is now, and store output in file
 //        try {
 //			System.setOut(new PrintStream(new FileOutputStream(outputFolder + "gamedata.txt")));
@@ -334,6 +337,7 @@ public class LevelGenerator {
 	private ArrayList<Mapping> getMappings(ArrayList<Sprite> sprites, ArrayList<LevelMapping> levelMappings) {
 		ArrayList<Mapping> result = new ArrayList<Mapping>();
 
+		boolean hasAvatar = false;
 		for (LevelMapping lm : levelMappings) {
 			boolean isSingleton = false;
 			
@@ -348,14 +352,18 @@ public class LevelGenerator {
 			
 			Mapping m = new Mapping(lm.charID, isSingleton);
 			result.add(m);
+			
+			if (lm.charID == "A".charAt(0)) hasAvatar = true;
 		}
 		
 		Mapping mw = new Mapping("w".charAt(0), false);
 		result.add(mw);
 		
-		Mapping ma = new Mapping("A".charAt(0), true);
-		result.add(ma);
-		
+		if (!hasAvatar){
+			Mapping ma = new Mapping("A".charAt(0), true);
+			result.add(ma);
+		}
+
 		return result;
 	}
 
@@ -375,7 +383,7 @@ public class LevelGenerator {
 		amountRemoves = amountOfSpriteTilesWithWalls < amountRemoves ? amountOfSpriteTilesWithWalls : amountRemoves;
 		for (int i = 0; i < amountRemoves; i++) {
 			int x = -1, y = -1;
-			while (x == -1 || newLevelMap[x][y] == "A".charAt(0)){
+			while (x == -1 || newLevelMap[x][y] == "A".charAt(0)  || newLevelMap[x][y] == groundChar){
 				
 				x = r.nextInt(newLevelMap.length - 2) + 1;
 				y = r.nextInt(newLevelMap[0].length - 2) + 1;
@@ -399,7 +407,7 @@ public class LevelGenerator {
 			if (mappingIdx >= mappings.size()){
 				newLevelMap[x][y] = "w".charAt(0);
 			}else{
-				while (lm == null || lm.charID == "A".charAt(0)){
+				while (lm == null || lm.charID == "A".charAt(0) || lm.charID == groundChar){
 					mappingIdx = r.nextInt(mappings.size());
 					lm = mappings.get(mappingIdx);
 				}
@@ -449,7 +457,7 @@ public class LevelGenerator {
 			if (mappingIdx >= mappings.size()){
 				newLevelMap[x][y] = "w".charAt(0);
 			}else{
-				while (lm == null || lm.charID == "A".charAt(0)){
+				while (lm == null || lm.charID == "A".charAt(0) || lm.charID == groundChar){
 					
 					mappingIdx = r.nextInt(mappings.size());
 					lm = mappings.get(mappingIdx);
@@ -458,9 +466,11 @@ public class LevelGenerator {
 			}
 
 		}
-		
 		//Remove duplicates for singleton sprites
 		removeSingletonDuplicates(mappings, newLevelMap);
+		
+
+
 		
 		return newLevelMap;
 	}
@@ -567,7 +577,6 @@ public class LevelGenerator {
 		Mapping wallMapping = new Mapping("w".charAt(0), false);
 		newMappings.add(wallMapping);
 		
-		
 		for (Mapping mapping : newMappings) {
 			int amount = range(1, 50);
 			amount = 1 + (amount * amount * amount * amount)/1000000; // 1 - 8
@@ -637,6 +646,8 @@ public class LevelGenerator {
 	
 	
 	class GameInfo{
+		public GameResults results;;
+		
 		public float score = 0;
 		public int timesteps = 0;
 		public int won = 0;
@@ -644,6 +655,7 @@ public class LevelGenerator {
 		public int actionCount = 0;
 		
 		public int interactions = 0;
+		public int sprites = 0;
 		
 //		public char[][] levelMap;
 		public LevelMap levelMap;
@@ -652,10 +664,13 @@ public class LevelGenerator {
 
 		public GameInfo(GameResults gr, LevelMap levelMap){
 			
-			won = gr.won ? 1 : 0;
-			timesteps = gr.ticks;
-			actionCount = gr.actions;
-			interactions = gr.interactions;
+//			won = gr.won ? 1 : 0;
+//			timesteps = gr.ticks;
+//			actionCount = gr.actions;
+//			interactions = gr.interactions;
+//			sprites = gr.numberSprites;
+			
+			results = gr;
                         
                         this.levelMap = levelMap;
 		}
@@ -692,6 +707,12 @@ public class LevelGenerator {
 				e.printStackTrace();
 			}
 		}
+		
+		@Override
+		public String toString() {
+			return results.toString();
+//			return "Won: " + won + ", actions: " + actionCount + ", interactions: " + interactions + ", sprites: " + sprites;
+		}
 	}
 	
     class GameInfoComparator implements Comparator<GameInfo>
@@ -699,33 +720,62 @@ public class LevelGenerator {
 	    @Override
 	    public int compare(GameInfo x, GameInfo y)
 	    {
-	    	if (x.won > y.won){
+	    	if (x.results.won && !y.results.won){
 	    		return -1;
 	    	}
-	        if (x.won < y.won){
-	            return 1;
-	        }
-	    	
-	    	if (x.actionCount > y.actionCount){
-	    		return -1;
-	    	}
-	    	if (x.actionCount < y.actionCount){
+	    	if (!x.results.won && y.results.won){
 	    		return 1;
 	    	}
 	    	
-	    	if (x.timesteps > y.timesteps){
+	    	if (x.results.actions > y.results.actions){
 	    		return -1;
 	    	}
-	    	if (x.timesteps < y.timesteps){
+	    	if (x.results.actions < y.results.actions){
 	    		return 1;
 	    	}
 	    	
-	    	if (x.score < y.score){
+	    	if (x.results.numSpritesHasInteracted > y.results.numSpritesHasInteracted){
 	    		return -1;
 	    	}
-	    	if (x.score > y.score){
+	    	if (x.results.numSpritesHasInteracted < y.results.numSpritesHasInteracted){
 	    		return 1;
 	    	}
+	    	
+	    	
+//	    	if (x.won > y.won){
+//	    		return -1;
+//	    	}
+//	        if (x.won < y.won){
+//	            return 1;
+//	        }
+	    	
+//	    	if (x.actionCount > y.actionCount){
+//	    		return -1;
+//	    	}
+//	    	if (x.actionCount < y.actionCount){
+//	    		return 1;
+//	    	}
+	    	
+//	    	if (x.interactions > y.interactions){
+//	    		return -1;
+//	    	}
+//	    	if (x.interactions < y.interactions){
+//	    		return 1;
+//	    	}
+//	    	
+//	    	if (x.timesteps > y.timesteps){
+//	    		return -1;
+//	    	}
+//	    	if (x.timesteps < y.timesteps){
+//	    		return 1;
+//	    	}
+//	    	
+//	    	if (x.score < y.score){
+//	    		return -1;
+//	    	}
+//	    	if (x.score > y.score){
+//	    		return 1;
+//	    	}
 	        return 0;
 	    }
 	}
