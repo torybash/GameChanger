@@ -74,18 +74,15 @@ public class GameChanger {
         static Class[] avatarClasses = null;
         static Class[] spriteClasses = null;
 	
-	/**
-	 * Mutate a VGDL game description. 
-	 * @return Mutated game description
-	 */
-	public static String changeGame(String game_desc, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
+        
+        
+        
+    public static String changeGame(ArrayList[] elements, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
 		resourceSprites.clear();
 		
-                avatarClasses = possibleAvatarClasses;
-                spriteClasses = possibleSpriteClasses;
-                
-		ArrayList[] elements = Parser.readGameOutput(game_desc);
-		
+        avatarClasses = possibleAvatarClasses;
+        spriteClasses = possibleSpriteClasses;
+        
 		ArrayList<Sprite> sprites = elements[0];
 		ArrayList<Interaction> interacts = elements[1];
 		ArrayList<LevelMapping> mappings = elements[2];
@@ -95,7 +92,7 @@ public class GameChanger {
 		
 		//change values to allow removal/creation of sprites/interactions/terms
 		int amountSprites = sprites.size(); // + range(-1,2); 
-		int amountInteractions = interacts.size(); // + range(-2,2); 
+		int amountInteractions = interacts.size() + range(-2,2); if (amountInteractions < 1) amountInteractions = 1;
 		int amountTerminations = terms.size();
 				
 		if (changeSprites) SpritesChanger.changeSprites(sprites, amountSprites);
@@ -103,6 +100,22 @@ public class GameChanger {
 		if (changeTerminations) TerminationsChanger.changeTerminations(sprites, terms, amountTerminations);
 			
 		return Writer.writeGameOutput(elements);
+    }
+        
+	public static String changeGameByDesc(String gameDesc, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
+		ArrayList[] elements = Parser.readGameDescByDesc(gameDesc);
+		return changeGame(elements, changeSprites, changeInteractions, changeTerminations);
+	}    
+        
+        
+        
+	/**
+	 * Mutate a VGDL game description. 
+	 * @return Mutated game description
+	 */
+	public static String changeGameByPath(String gamePath, boolean changeSprites, boolean changeInteractions, boolean changeTerminations){
+		ArrayList[] elements = Parser.readGameDescByPath(gamePath);
+		return changeGame(elements, changeSprites, changeInteractions, changeTerminations);
 	}
 	
 	/**
@@ -250,6 +263,50 @@ public class GameChanger {
 		int result = r.nextInt(to-from+1) + from;
 		return result;
 	}
-	
-	
+
+	public static String crossOverGame(String gameDesc1, String gameDesc2) {
+		ArrayList[] elements1 = Parser.readGameDescByDesc(gameDesc1);
+		ArrayList[] elements2 = Parser.readGameDescByDesc(gameDesc2);
+
+		ArrayList[] retElements = new ArrayList[4];
+		
+		retElements[0] = elements1[0];
+		retElements[2] = elements1[2];
+		retElements[3] = elements1[3];
+		
+		ArrayList<Interaction> game1Inters = elements1[1];
+		ArrayList<Interaction> game2Inters = elements2[1];
+		
+		int maxSize = Math.max(game1Inters.size(), game2Inters.size());
+		int minSize = Math.min(game1Inters.size(), game2Inters.size());
+		int size = (maxSize - minSize == 0) ? (maxSize) : (r.nextInt(maxSize - minSize) + minSize);
+		
+		ArrayList<Interaction> retGameInters = new ArrayList<Interaction>(size);
+
+		for (int i = 0; i < size; i++) {
+			Interaction inter = null;
+			if (r.nextFloat() > 0.5f){
+				if (i < game1Inters.size()){
+					inter = game1Inters.get(i);
+				}else{
+					inter = game2Inters.get(i);
+				}
+			}else{
+				if (i < game2Inters.size()){
+					inter = game2Inters.get(i);
+				}else{
+					inter = game1Inters.get(i);
+				}
+			}
+			retGameInters.add(inter);
+		}
+		
+		retElements[0] = elements1[0];
+		retElements[1] = retGameInters;
+		retElements[2] = elements1[2];
+		retElements[3] = elements1[3];
+		
+		return Writer.writeGameOutput(retElements);
+	}
+
 }

@@ -41,19 +41,45 @@ public class FitnessAnalysis {
     double[] test_feature_weights48 = new double[]{7.859456671106872E-13, 0.4830251738336509, 0.9999999999816537, -1.4315654279449245E-12, 0.9628053521180413, 0.9999999999988323, 0.7496159989598317, -0.7768701677527983, 0.9903398834071386, 7.844136539322498E-13, 0.9233255216982408, 0.9999999999998429, 0.8746339340365913, -0.7756177276199255, -0.999999999947285, 0.7279654593509312, -0.2657996101005413, -0.9999999999992467};
     
     
-	public void analyzeFitness(Controller[] controllers, boolean matrixApproach) {
+    double[] test_weights = new double[]{-0.999999999998071, 0.9528638013560664, -0.9999999999034973, 0.9999998571309845, 0.9999999999917611, 0.05011821426128776, -0.8008754048077598, -0.9999999999986027, 0.19377168254174515, -0.9999999999988564, -0.6872156549813219, -0.9970333992607171, 0.108786126955779, -0.9175340792018114, 0.9999999994079842, 0.16595780437742527, 0.9999999999997357, -0.23343132055988491, 0.9999999999850075, -0.016833797256816482, 0.999999999989705, -0.055236144705166336, 0.9999999999979231, 0.21709605935558118, 0.9999999999989154, 0.9999999999989462, 0.9999999999979765, 0.9999999999996815, 0.9999957661718297, -0.6439605268573311, 0.8053919858394232, 0.9999999999934079, 0.9999999999994954, -0.10786922451904689, 0.999999999949137, 0.9999999999988215};
+
+    
+    public double getFitnessForSingleGame(Controller[] controllers){
+    	ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
+    	boolean hasDisqualified = false;
+    	for (GameData[] gds : gameDatas) {
+			for (GameData gd : gds) {
+				for (LevelPlay lp : gd.levelsPlayed) {
+					if (lp.won < 0){
+						hasDisqualified = true;
+						break;
+					}
+				}
+			}
+		}
+    	if (hasDisqualified) return -1;
+    	
+		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);		
+		FitnessCalculator.setWeights(test_weights, null);
+		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
+
+    	
+    	return fitnessValues.get(0).fitness;
+    }
+    
+	public void analyzeFitness(Controller[] controllers, boolean acceptAllGames) {
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
-		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
+		if (!acceptAllGames) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
 
-		FitnessCalculator.setWeights(null, null);
+		FitnessCalculator.setWeights(test_weights, null);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
 		
-		Collections.sort(fitnessValues);
-		
+		System.out.println("FIRNTNIETNLENNENESS VALUESIUOL: " + fitnessValues.size());
 		for (GameFitness gameFitness : fitnessValues) {
 			System.out.println(gameFitness.gameTitle + " has fitness:\t" + gameFitness.fitness);
+			System.out.println(Arrays.toString(gameFitness.fitnessVals));
 		}
 	}
 	
@@ -207,14 +233,20 @@ public class FitnessAnalysis {
 		int dataTypCnt = FeatureDataType.class.getEnumConstants().length;
 		
 		String topString = "";
-		for (int c1 = 0; c1 < ctrlTypCnt; c1++) {
-			for (int c2 = 0; c2 < ctrlTypCnt; c2++) {
-				if (c1 >= c2) continue;
-				for (int t = 0; t < dataTypCnt; t++) {
-					topString += ControllerType.values()[c1] + ">" + ControllerType.values()[c2] + "::" + FeatureDataType.values()[t] + ",";
+		for (int t = 0; t < dataTypCnt; t++) {
+			if (FeatureDataType.values()[t].isRelDiffs()){
+				for (int c1 = 0; c1 < ctrlTypCnt; c1++) {
+					for (int c2 = 0; c2 < ctrlTypCnt; c2++) {
+						if (c1 >= c2) continue;
+						topString += ControllerType.values()[c1] + ">" + ControllerType.values()[c2] + "::" + FeatureDataType.values()[t] + ",";
+					}
 				}
+			}else{
+				topString += FeatureDataType.values()[t] + ",";
 			}
 		}
+		
+	
 		topString += "class";
 				
 		String gameStrings = "";

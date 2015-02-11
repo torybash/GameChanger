@@ -43,17 +43,17 @@ public class GoodToBadFitness implements Comparable{
 //		
 		
 		//METHOD 2
-		float goodGameTotalFitness = 0;
-		for (GameFitness goodGameFitness : goodFitnessValues) {
-			goodGameTotalFitness += 1+goodGameFitness.fitness * gameRatio;
-		}
-		float badGameTotalFitness = 0;
-		for (GameFitness badGameFitness : badFitnessValues) {
-			badGameTotalFitness += 1+badGameFitness.fitness;
-		}
+//		float goodGameTotalFitness = 0;
+//		for (GameFitness goodGameFitness : goodFitnessValues) {
+//			goodGameTotalFitness += 1+goodGameFitness.fitness * gameRatio;
+//		}
+//		float badGameTotalFitness = 0;
+//		for (GameFitness badGameFitness : badFitnessValues) {
+//			badGameTotalFitness += 1+badGameFitness.fitness;
+//		}
 //		fitness += goodGameTotalFitness - badGameTotalFitness;
 //		System.out.println("goodGameTotalFitness: " + goodGameTotalFitness + ", badGameTotalFitness: " + badGameTotalFitness);
-		fitness += Utility.relDiff(goodGameTotalFitness, badGameTotalFitness);
+//		fitness += Utility.relDiff(goodGameTotalFitness, badGameTotalFitness);
 		
 //		fitness -= 1;
 		
@@ -71,8 +71,8 @@ public class GoodToBadFitness implements Comparable{
 		Collections.sort(goodFitnessValues);
 		Collections.sort(badFitnessValues);
 //		fitness += Utility.relDiff(goodFitnessValues.get(goodFitnessValues.size()-1).fitness+1, badFitnessValues.get(0).fitness+1);
-//		fitness += (goodFitnessValues.get(goodFitnessValues.size()-1).fitness - badFitnessValues.get(0).fitness);
-//		fitness -= 1;
+		fitness -= (goodFitnessValues.get(goodFitnessValues.size()-1).fitness - badFitnessValues.get(0).fitness);
+		fitness += 1;
 		
 		
 //		fitness -= badFitnessValues.size() * goodFitnessValues.size() ;

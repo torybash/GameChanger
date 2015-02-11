@@ -66,7 +66,7 @@ public class LevelGenerator {
 		System.out.println("Generating level for game: " + gameTitle);
 
 		String gameDescPath = gameFolder + gameTitle + ".txt";
-		ArrayList[] gameElements = Parser.readGameOutput(gameDescPath);
+		ArrayList[] gameElements = Parser.readGameDescByPath(gameDescPath);
 		ArrayList<Sprite> sprites = gameElements[0];
 		ArrayList<LevelMapping> levelMappings = gameElements[2];
 		ArrayList<Mapping> mappings = getMappings(sprites, levelMappings);

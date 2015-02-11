@@ -43,6 +43,8 @@ public class FitnessCalculator {
 		
 		double fitness = 0;
 		int parameterCount = 0;
+				
+		
 		
 		for (int t = 0; t < maxDataTypeCount; t++) {
 			FeatureDataType typ = FeatureDataType.values()[t];
@@ -50,7 +52,7 @@ public class FitnessCalculator {
 				for (int c1 = 0; c1 < ctrlTypeCount; c1++) {
 					for (int c2 = 0; c2 < ctrlTypeCount; c2++) {
 						if (c1 >= c2) continue;
-						parameterCount += dataTypeCount;
+						parameterCount += 1;
 					}
 				}
 			}else{
@@ -58,7 +60,7 @@ public class FitnessCalculator {
 			}
 			
 		}
-		
+
 		double[] fitnessVals = new double[parameterCount];
 		
 		double[][] highestValues = new double[maxDataTypeCount][];
@@ -96,16 +98,18 @@ public class FitnessCalculator {
 						
 						fitness += val * ctrlmatrix_feature_weights[t][ct1][ct2];		
 
+						fitnessVals[cnt++] = val;
 						if (VERBOSE) System.out.println(ControllerType.values()[ct1] + " > " + ControllerType.values()[ct2] + ", DataType: " + typ + ", relDiff: " + val + 
 								", Highest val 1: " + highestValues[t][ct1] + ", Highest val 2: " + highestValues[t][ct2] + ", ctrlmatrix_feature_weights[ct1][ct2][t]: " + ctrlmatrix_feature_weights[t][ct1][ct2]);
 					}
 				}
 			}else{
-				val = highestValues[t][ControllerType.INTELLIGENT.id()];
+				val = highestValues[t][typ.ctrlTyp().id()];
 				fitness += val * ctrlmatrix_feature_weights[t][0][0];
+				fitnessVals[cnt++] = val;
 			}
 			
-			fitnessVals[cnt++] = val;
+			
 		}
 		if (VERBOSE) System.out.println("---Total fitness:\t" + fitness);
 		if (VERBOSE) System.out.println("parameterCount: " + parameterCount);
@@ -168,29 +172,35 @@ public class FitnessCalculator {
 	
 	
 	public enum FeatureDataType{
-		REL_SCORE(DataTypes.AVE, true),
-		REL_SCORE_SD(DataTypes.SD, true),
-//		MMSCORE(DataTypes.MMAVE, false),
+		REL_MMSCORE(DataTypes.MMAVE, true, null),
+//		REL_WR(DataTypes.WRATE, true, null),
+		REL_SCORE_SD(DataTypes.SD, true, null),
 //		MMSCORE_SD(DataTypes.MMSE),
-		QUAR1(DataTypes.QUAR1, true),
-		QUAR3(DataTypes.QUAR3, true),
-		REL_WR(DataTypes.WRATE, true),
+		QUAR1(DataTypes.QUAR1, true, null),
+		QUAR3(DataTypes.QUAR3, true, null),
+//		REL_WR(DataTypes.WRATE, true),
 //		REL_WR_SD(DataTypes.WRSE, true),
-		REL_TICKS(DataTypes.AVTIC, true),
-		REL_TICKS_SD(DataTypes.SDTIC, true),
-		REL_MAX(DataTypes.MAX, true),
-		REL_MEDI(DataTypes.MEDI, true),
+		REL_TICKS(DataTypes.AVTIC, true, null),
+		REL_TICKS_SD(DataTypes.SDTIC, true, null),
+//		REL_MAX(DataTypes.MAX, true),
+//		REL_MEDI(DataTypes.MEDI, true),
 //		REL_MIN(DataTypes.MIN, true),
-		MMSCORE(DataTypes.MMAVE, false),
-		WR(DataTypes.WRATE, false),
+//		INT_MMSCORE(DataTypes.MMAVE, false, ControllerType.INTELLIGENT),
+//		INT_WR(DataTypes.WRATE, false, ControllerType.INTELLIGENT),
+//		RND_MMSCORE(DataTypes.MMAVE, false, ControllerType.RANDOM),
+//		RND_WR(DataTypes.WRATE, false, ControllerType.RANDOM),
+//		DN_MMSCORE(DataTypes.MMAVE, false, ControllerType.DO_NOTHING),
+		
 		;
 		
 		 private String dataType;
 		 private boolean relDiffs;
+		 private ControllerType ctrlType;
 		 
-		 private FeatureDataType(String dataType, boolean relDiffs) {
+		 private FeatureDataType(String dataType, boolean relDiffs, ControllerType ctrlType) {
 		   this.dataType = dataType;
 		   this.relDiffs = relDiffs;
+		   this.ctrlType = ctrlType;
 		 }
 		 
 		 public String typ() {
@@ -200,6 +210,11 @@ public class FitnessCalculator {
 		 public boolean isRelDiffs() {
 		   return relDiffs;
 		 }
+		 
+		 public ControllerType ctrlTyp(){
+			 return ctrlType;
+		 }
+		 
 	}
 	
 //	public enum FitnessType{
@@ -241,6 +256,12 @@ public class FitnessCalculator {
 	
 	
 	public static void setWeights(double[] featureWeights, boolean[] dataTypesToUse){
+		boolean[] dataTypes = dataTypesToUse;
+		if (dataTypesToUse == null){ 
+			dataTypes = new boolean[FeatureDataType.class.getEnumConstants().length];
+			for (int i = 0; i < dataTypes.length; i++) dataTypes[i] = true;
+		}
+		
 		int count = 0;
 		if (ctrlmatrix_feature_weights == null){
 			ctrlmatrix_feature_weights = new double[FeatureDataType.class.getEnumConstants().length][][];
@@ -251,7 +272,7 @@ public class FitnessCalculator {
 				for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
 					ctrlmatrix_feature_weights[t][c1] = new double[ControllerType.class.getEnumConstants().length];
 					for (int c2 = 0; c2 < ControllerType.class.getEnumConstants().length; c2++) {
-						if (c1 >= c2 || !dataTypesToUse[t]) continue;
+						if (c1 >= c2 || !dataTypes[t]) continue;
 						if (FeatureDataType.values()[t].relDiffs){
 							if (featureWeights != null){
 								ctrlmatrix_feature_weights[t][c1][c2] = featureWeights[count++];
@@ -259,7 +280,12 @@ public class FitnessCalculator {
 								ctrlmatrix_feature_weights[t][c1][c2] = 1;
 							}
 						}else{
-							ctrlmatrix_feature_weights[t][0][0] = featureWeights[count++];
+							if (featureWeights != null){
+								ctrlmatrix_feature_weights[t][0][0] = featureWeights[count++];
+							}else{
+								ctrlmatrix_feature_weights[t][0][0] = 1;
+							}
+							
 							break outerloop;
 						}
 					}
@@ -268,18 +294,26 @@ public class FitnessCalculator {
 			return;
 		}else{
 			for (int t = 0; t < FeatureDataType.class.getEnumConstants().length; t++) {
-				if (!dataTypesToUse[t]) continue;
+				if (!dataTypes[t]) continue;
 				
 				if (FeatureDataType.values()[t].relDiffs){
 					for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
 						for (int c2 = 0; c2 < ControllerType.class.getEnumConstants().length; c2++) {
 							if (c1 >= c2) continue;
-							ctrlmatrix_feature_weights[t][c1][c2] = featureWeights[count++];
+							if (featureWeights != null){
+								ctrlmatrix_feature_weights[t][c1][c2] = featureWeights[count++];
+							}else{
+								ctrlmatrix_feature_weights[t][c1][c2] = 1;
+							}
 						}
 					}
 				}else{
 					
-					ctrlmatrix_feature_weights[t][0][0] = featureWeights[count++];
+					if (featureWeights != null){
+						ctrlmatrix_feature_weights[t][0][0] = featureWeights[count++];
+					}else{
+						ctrlmatrix_feature_weights[t][0][0] = 1;
+					}
 				}
 			}
 		}

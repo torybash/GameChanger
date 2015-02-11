@@ -139,6 +139,7 @@ public class CMAEvolStrat {
 		return cma.getBestFunctionValue();
 	}
 	
+	int c = 0;
 	double calculateGtbFitness(double[] weights, Controller[] goodDataControllers, Controller[] badDataControllers, 
 			ArrayList<GameData[]> goodGameAverages, ArrayList<GameData[]> badGameAverages, boolean[] dataTypesToUse){
 		
@@ -155,22 +156,25 @@ public class CMAEvolStrat {
 		ArrayList<GameFitness> badFitnessValues = FitnessCalculator.getFitnessForEachGame(badGameAverages, badDataControllers, dataTypesToUse);
 		GoodToBadFitness gtbf = new GoodToBadFitness(-1, goodFitnessValues, badFitnessValues);
 		
-//		Collections.sort(goodFitnessValues);
-//		Collections.sort(badFitnessValues);
+
 		
-//		System.out.println("---");
-//		for (int i = 0; i < goodFitnessValues.size(); i++) {
-//			System.out.println(goodFitnessValues.get(i).gameTitle + " : " + goodFitnessValues.get(i).fitness);
-//		}
-//		
-//		for (int i = 0; i < 5; i++) {
-//			System.out.println(badFitnessValues.get(i).gameTitle + " : " + badFitnessValues.get(i).fitness);
-//		}
-//		System.out.println();
-		
-//		System.out.println("weights!!!!: " + Arrays.toString(weights));
-//		System.out.println("gtbf.gtbFitness:::: " + gtbf.gtbFitness);
-		
+		c++;
+		if (c %1000 == 0){
+			Collections.sort(goodFitnessValues);
+			Collections.sort(badFitnessValues);
+			System.out.println("---");
+			for (int i = 0; i < goodFitnessValues.size(); i++) {
+				System.out.println(goodFitnessValues.get(i).gameTitle + " : " + goodFitnessValues.get(i).fitness);
+			}
+			
+			for (int i = 0; i < 5; i++) {
+				System.out.println(badFitnessValues.get(i).gameTitle + " : " + badFitnessValues.get(i).fitness);
+			}
+			System.out.println();
+			
+			System.out.println("weights!!!!: " + Arrays.toString(weights));
+			System.out.println("gtbf.gtbFitness:::: " + gtbf.gtbFitness);
+		}
 		return gtbf.gtbFitness;
 	}
 }

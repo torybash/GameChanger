@@ -22,10 +22,8 @@ public class Parser {
 	
 	public static int currentSet;
 	
-	public static ArrayList[] readGameOutput(String gamedesc_file) {
+	public static ArrayList[] readGameDesc(String[] desc_lines) {
 		sprites.clear();interacts.clear();mappings.clear();terms.clear();
-		
-		String[] desc_lines = new IO().readFile(gamedesc_file);
 		
         if(desc_lines != null)
         {        	
@@ -53,7 +51,16 @@ public class Parser {
         }
         
         return new ArrayList[]{sprites, interacts, mappings, terms};
-        
+	}
+	
+	public static ArrayList[] readGameDescByDesc(String gameDesc) {
+		String[] desc_lines = gameDesc.split("\n");
+		return readGameDesc(desc_lines);
+	}
+	
+	public static ArrayList[] readGameDescByPath(String gamedesc_file) {
+		String[] desc_lines = new IO().getDescLinesFromFile(gamedesc_file);
+		return readGameDesc(desc_lines);
 	}
 	
 	
@@ -231,5 +238,8 @@ public class Parser {
         }
         return gameDesc;
     	}
+
+
+
 	
 }

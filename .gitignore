@@ -8,6 +8,7 @@ mutatedgames/**
 mutatedgames BACKUP/**
 mutatedgames PUZZLEBACKUP/**
 puzzlegamedata/**
+game_generator/**
 sprites/**
 sokoban3_lvls/**
 *.dat
