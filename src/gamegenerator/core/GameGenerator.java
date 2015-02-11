@@ -10,14 +10,12 @@ import java.util.Arrays;
 import java.util.Random;
 
 import core.ArcadeMachine;
-
+import dataanalysis.controller.Controller;
+import dataanalysis.controller.Controller.ControllerType;
+import dataanalysis.controller.ControllerHelper;
+import dataanalysis.core.FitnessAnalysis;
 import fastVGDL.tools.IO;
 import gamechanger.core.GameChanger;
-import dataanalysis.controller.Controller;
-import dataanalysis.controller.ControllerHelper;
-import dataanalysis.controller.Controller.ControllerType;
-import dataanalysis.core.FitnessAnalysis;
-import dataanalysis.core.GameData;
 
 public class GameGenerator {
 
@@ -145,7 +143,7 @@ public class GameGenerator {
 		Controller dontDieController = new Controller("Explorer", "dontDie", ControllerType.INTELLIGENT);
 		Controller mctsController = new Controller("MCTS", "sampleMCTS", ControllerType.INTELLIGENT);
 		Controller gaController = new Controller("GA", "sampleGA", ControllerType.INTELLIGENT);
-		Controller rosController = new Controller("Onestep-S", "randomOneStep", ControllerType.SEMI_INTELLIGENT);
+//		Controller rosController = new Controller("Onestep-S", "randomOneStep", ControllerType.SEMI_INTELLIGENT);
 		Controller onestepController = new Controller("Onestep-H", "sampleonesteplookahead", ControllerType.INTELLIGENT);
 		Controller randomController = new Controller("Random", "random", ControllerType.RANDOM);
 		Controller doNothingController = new Controller("Do Nothing", "doNothing", ControllerType.DO_NOTHING);
@@ -153,7 +151,9 @@ public class GameGenerator {
 		Controller mctsishController = new Controller("MCTSish", "MCTSish", ControllerType.INTELLIGENT);
 		
 //		Controller[] controllers = new Controller[]{dontDieController, mctsController, rosController, randomController, doNothingController};
-		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, randomController, doNothingController};
+//		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, randomController, doNothingController};
+		Controller[] controllers = new Controller[]{dontDieController, randomController, doNothingController};
+//		Controller[] controllers = new Controller[]{dontDieController, doNothingController};
 
 		ControllerHelper.setControllerDataFolders(controllers, gameDataFolder, "game_gen_test");
 		

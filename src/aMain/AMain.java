@@ -18,7 +18,7 @@ public class AMain {
 		Controller dontDieController = new Controller("Explorer", "dontdie", ControllerType.INTELLIGENT);
 		Controller mctsController = new Controller("MCTS", "mcts", ControllerType.INTELLIGENT);
 		Controller gaController = new Controller("GA", "ga", ControllerType.INTELLIGENT);
-		Controller rosController = new Controller("Onestep-S", "randomonestep", ControllerType.SEMI_INTELLIGENT);
+//		Controller rosController = new Controller("Onestep-S", "randomonestep", ControllerType.SEMI_INTELLIGENT);
 		Controller onestepController = new Controller("Onestep-H", "onestep", ControllerType.INTELLIGENT);
 		Controller randomController = new Controller("Random", "random", ControllerType.RANDOM);
 		Controller doNothingController = new Controller("Do Nothing", "doNothing", ControllerType.DO_NOTHING);
@@ -27,7 +27,9 @@ public class AMain {
 		
 //		Controller[] controllers = new Controller[]{dontDieController, mctsController, rosController, randomController, doNothingController};
 //		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, randomController, doNothingController};
-		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, onestepController, randomController, doNothingController};
+//		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, onestepController, randomController, doNothingController};
+		Controller[] controllers = new Controller[]{dontDieController, randomController, doNothingController};
+//		Controller[] controllers = new Controller[]{dontDieController, doNothingController};
 //		Controller[] controllers = new Controller[]{dontDieController, mctsishController, mctsController, gaController, rosController, onestepController, randomController, doNothingController};
 //		Controller[] controllers = new Controller[]{mctsishController};
 
@@ -50,16 +52,16 @@ public class AMain {
 		//******25 P.T./800 TICKS TEST*****
 		//*********************************
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
-//		gda.analyzeGameDifference(controllers, true, true);
+//		gda.analyzeGameDifference(controllers, false, true);
 //		gda.analyzeAllGamesAverage(controllers, false);
-//		fa.analyzeFitness(controllers, false);
+		fa.analyzeFitness(controllers, false);
 
                         
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
 //		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
-//		fa.analyzeFitness(controllers, false);
+		fa.analyzeFitness(controllers, false);
 		
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed_genlvls");
@@ -132,7 +134,7 @@ public class AMain {
 		
 //		fa.printFeautureData(goodDataControllers, badDataControllers);
 		
-		cmaes.evolveFitnessWeights(goodDataControllers, badDataControllers);
+//		cmaes.evolveFitnessWeights(goodDataControllers, badDataControllers);
 		
 		//*********************************
 		//**********2 GAMES TEST***********

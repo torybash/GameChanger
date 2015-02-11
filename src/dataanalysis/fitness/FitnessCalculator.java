@@ -18,7 +18,7 @@ public class FitnessCalculator {
 	
 	private static double[][][] matrix_feature_weights;
 	
-	private static boolean VERBOSE = false;
+	private static boolean VERBOSE = true;
 	
 	
 	public static GameFitness calculateGameFitness(GameData[] gds, Controller[] controllers, boolean[] dataTypesToUse) {		
@@ -49,7 +49,7 @@ public class FitnessCalculator {
 		for (int t = 0; t < maxDataTypeCount; t++) {
 			FeatureDataType typ = FeatureDataType.values()[t];
 			if (typ.relDiffs){
-				for (int c1 = 0; c1 < ctrlTypeCount; c1++) {
+				for (int c1 = 0; c1 < 1; c1++) {
 					for (int c2 = 0; c2 < ctrlTypeCount; c2++) {
 						if (c1 >= c2) continue;
 						parameterCount += 1;
@@ -90,7 +90,7 @@ public class FitnessCalculator {
 			double val = 0;
 			
 			if (typ.relDiffs){
-				for (int ct1 = 0; ct1 < ctrlTypeCount; ct1++) {
+				for (int ct1 = 0; ct1 < 1; ct1++) {
 					for (int ct2 = 0; ct2 < ctrlTypeCount; ct2++) {				
 						if (ct1 >= ct2) continue;
 	
@@ -131,7 +131,7 @@ public class FitnessCalculator {
 		
 		int cnt = 0;
 		
-		for (int ct1 = 0; ct1 < ctrlTypeCount; ct1++) {
+		for (int ct1 = 0; ct1 < 1; ct1++) {
 			for (int ct2 = 0; ct2 < ctrlTypeCount; ct2++) {				
 				if (ct1 >= ct2) continue;
 				for (int t = 0; t < dataTypeCount; t++) {
@@ -155,7 +155,7 @@ public class FitnessCalculator {
 	public static double[] matrixWeightsToArray(double[][][] matrixWeights){
             ArrayList<Double> list = new ArrayList<Double>();
 
-            for (int c1 = 0; c1 < matrixWeights.length; c1++) {
+            for (int c1 = 0; c1 < 1; c1++) {
                     for (int c2 = 0; c2 < matrixWeights[c1].length; c2++) {
                             if (c1 >= c2) continue;
                             for (int t = 0; t < matrixWeights[c1][c2].length; t++) {
@@ -172,18 +172,18 @@ public class FitnessCalculator {
 	
 	
 	public enum FeatureDataType{
-		REL_MMSCORE(DataTypes.MMAVE, true, null),
-//		REL_WR(DataTypes.WRATE, true, null),
-		REL_SCORE_SD(DataTypes.SD, true, null),
+		REL_SCORE(DataTypes.AVE, true, null),
+		REL_WR(DataTypes.WRATE, true, null),
+//		REL_SCORE_SD(DataTypes.SD, true, null),
 //		MMSCORE_SD(DataTypes.MMSE),
-		QUAR1(DataTypes.QUAR1, true, null),
-		QUAR3(DataTypes.QUAR3, true, null),
+//		QUAR1(DataTypes.QUAR1, true, null),
+//		QUAR3(DataTypes.QUAR3, true, null),
 //		REL_WR(DataTypes.WRATE, true),
 //		REL_WR_SD(DataTypes.WRSE, true),
-		REL_TICKS(DataTypes.AVTIC, true, null),
-		REL_TICKS_SD(DataTypes.SDTIC, true, null),
+//		REL_TICKS(DataTypes.AVTIC, true, null),
+//		REL_TICKS_SD(DataTypes.SDTIC, true, null),
 //		REL_MAX(DataTypes.MAX, true),
-//		REL_MEDI(DataTypes.MEDI, true),
+		REL_MEDI(DataTypes.MEDI, true, null),
 //		REL_MIN(DataTypes.MIN, true),
 //		INT_MMSCORE(DataTypes.MMAVE, false, ControllerType.INTELLIGENT),
 //		INT_WR(DataTypes.WRATE, false, ControllerType.INTELLIGENT),
@@ -269,7 +269,7 @@ public class FitnessCalculator {
 			for (int t = 0; t < FeatureDataType.class.getEnumConstants().length; t++) {
 				ctrlmatrix_feature_weights[t] = new double[ControllerType.class.getEnumConstants().length][];
 				outerloop:
-				for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
+				for (int c1 = 0; c1 < 1; c1++) {
 					ctrlmatrix_feature_weights[t][c1] = new double[ControllerType.class.getEnumConstants().length];
 					for (int c2 = 0; c2 < ControllerType.class.getEnumConstants().length; c2++) {
 						if (c1 >= c2 || !dataTypes[t]) continue;
@@ -297,7 +297,7 @@ public class FitnessCalculator {
 				if (!dataTypes[t]) continue;
 				
 				if (FeatureDataType.values()[t].relDiffs){
-					for (int c1 = 0; c1 < ControllerType.class.getEnumConstants().length; c1++) {
+					for (int c1 = 0; c1 <1; c1++) {
 						for (int c2 = 0; c2 < ControllerType.class.getEnumConstants().length; c2++) {
 							if (c1 >= c2) continue;
 							if (featureWeights != null){

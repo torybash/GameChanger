@@ -73,10 +73,12 @@ public class FitnessAnalysis {
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
 
-		FitnessCalculator.setWeights(test_weights, null);
+		FitnessCalculator.setWeights(null, null);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
 		
-		System.out.println("FIRNTNIETNLENNENESS VALUESIUOL: " + fitnessValues.size());
+		Collections.sort(fitnessValues);
+		
+		System.out.println("Amount of games: " + fitnessValues.size());
 		for (GameFitness gameFitness : fitnessValues) {
 			System.out.println(gameFitness.gameTitle + " has fitness:\t" + gameFitness.fitness);
 			System.out.println(Arrays.toString(gameFitness.fitnessVals));
