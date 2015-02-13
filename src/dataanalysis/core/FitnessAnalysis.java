@@ -44,8 +44,8 @@ public class FitnessAnalysis {
     double[] test_weights = new double[]{-0.999999999998071, 0.9528638013560664, -0.9999999999034973, 0.9999998571309845, 0.9999999999917611, 0.05011821426128776, -0.8008754048077598, -0.9999999999986027, 0.19377168254174515, -0.9999999999988564, -0.6872156549813219, -0.9970333992607171, 0.108786126955779, -0.9175340792018114, 0.9999999994079842, 0.16595780437742527, 0.9999999999997357, -0.23343132055988491, 0.9999999999850075, -0.016833797256816482, 0.999999999989705, -0.055236144705166336, 0.9999999999979231, 0.21709605935558118, 0.9999999999989154, 0.9999999999989462, 0.9999999999979765, 0.9999999999996815, 0.9999957661718297, -0.6439605268573311, 0.8053919858394232, 0.9999999999934079, 0.9999999999994954, -0.10786922451904689, 0.999999999949137, 0.9999999999988215};
 
     
-    public double getFitnessForSingleGame(Controller[] controllers){
-    	ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
+    public GameFitness getFitnessForSingleGame(Controller[] controllers){
+    	ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, true);
     	boolean hasDisqualified = false;
     	for (GameData[] gds : gameDatas) {
 			for (GameData gd : gds) {
@@ -57,23 +57,24 @@ public class FitnessAnalysis {
 				}
 			}
 		}
-    	if (hasDisqualified) return -1;
+    	if (hasDisqualified) return new GameFitness("", -1);
     	
+		FitnessCalculator.setWeights(null);
+
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);		
-		FitnessCalculator.setWeights(test_weights, null);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
 
     	
-    	return fitnessValues.get(0).fitness;
+    	return fitnessValues.get(0);
     }
     
 	public void analyzeFitness(Controller[] controllers, boolean acceptAllGames) {
-		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
+		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, true);
 		if (!acceptAllGames) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
 
-		FitnessCalculator.setWeights(null, null);
+		FitnessCalculator.setWeights(null);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
 		
 		Collections.sort(fitnessValues);
@@ -81,7 +82,10 @@ public class FitnessAnalysis {
 		System.out.println("Amount of games: " + fitnessValues.size());
 		for (GameFitness gameFitness : fitnessValues) {
 			System.out.println(gameFitness.gameTitle + " has fitness:\t" + gameFitness.fitness);
+			System.out.println(FitnessCalculator.getFitnessTopString(", "));
 			System.out.println(Arrays.toString(gameFitness.fitnessVals));
+			System.out.println(Arrays.toString(gameFitness.fitnessValsString));
+			System.out.println();
 		}
 	}
 	
@@ -93,7 +97,7 @@ public class FitnessAnalysis {
 		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
-		FitnessCalculator.setWeights(init_feature_weights, null);
+		FitnessCalculator.setWeights(null);
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameAverages, controllers, null);
 		
 		Collections.sort(fitnessValues);
@@ -129,6 +133,8 @@ public class FitnessAnalysis {
 		for (int i = 0; i < iterations; i++) {
 			System.out.println("---------ITERATION: " + i + "---------------------");
 		
+			System.out.println("DONT WORK FitnessCalculator.setWeights(ctrlMatrixWeightList[m]); commented out");
+			
 			gtbFitnessList.clear();
 			
 			//Create initial values (weights)
@@ -152,7 +158,7 @@ public class FitnessAnalysis {
 			
 			//Calculate fitness and make lists
 			for (int m = 0; m < mutations; m++) {
-				FitnessCalculator.setWeights(ctrlMatrixWeightList[m]);
+//				FitnessCalculator.setWeights(ctrlMatrixWeightList[m]);
 
 				ArrayList<GameFitness> goodFitnessValues = FitnessCalculator.getFitnessForEachGame(goodGameAverages, goodDataControllers, dataTypesToUse);
 				ArrayList<GameFitness> badFitnessValues = FitnessCalculator.getFitnessForEachGame(badGameAverages, badDataControllers, dataTypesToUse);

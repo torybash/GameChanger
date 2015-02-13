@@ -112,34 +112,40 @@ public class GameDataAnalysis {
 	private void printGameDatas(GameData[] gds, Controller[] controllers) {
 		int n = gds.length;
 		
+//		String seperator = ","; //"\t" 
+		String seperator = "\t";
+		
 		LinkedHashMap<String, Boolean> valShow = new LinkedHashMap<String, Boolean>();
 		valShow.put(DataTypes.AVE, 		true);
 		valShow.put(DataTypes.SD, 		true);
-		valShow.put(DataTypes.NAVE, 	true);
-		valShow.put(DataTypes.ZNAVE, 	true);
+		valShow.put(DataTypes.SE, 		true);
+		valShow.put(DataTypes.NAVE, 	false);
+		valShow.put(DataTypes.ZNAVE, 	false);
 		valShow.put(DataTypes.MMAVE, 	true);
 		valShow.put(DataTypes.MMSD, 	true);
 		valShow.put(DataTypes.MMSE, 	true);
 		valShow.put(DataTypes.WRATE, 	true);
-		valShow.put(DataTypes.WRSD, 	true);
+		valShow.put(DataTypes.WRSD, 	false);
 		valShow.put(DataTypes.WRSE, 	true);
 		valShow.put(DataTypes.MEDI, 	true);
 		valShow.put(DataTypes.QUAR1, 	true);
 		valShow.put(DataTypes.QUAR3, 	true);
-		valShow.put(DataTypes.ERRLO, 	true);
-		valShow.put(DataTypes.ERRHI, 	true);
+		valShow.put(DataTypes.ERRLO, 	false);
+		valShow.put(DataTypes.ERRHI, 	false);
 		valShow.put(DataTypes.MAX, 		true);
 		valShow.put(DataTypes.MIN, 		true);
 		valShow.put(DataTypes.AVTIC, 	true);
 		valShow.put(DataTypes.SDTIC, 	true);
+		valShow.put(DataTypes.SETIC, 	true);
 		valShow.put(DataTypes.ACTEN, 	true);
+		valShow.put(DataTypes.ACTSE, 	true);
 		
-		valShow.put(DataTypes.NINT, 	true);
-		valShow.put(DataTypes.NAINT, 	true);
-		valShow.put(DataTypes.NSPR, 	true);
-		valShow.put(DataTypes.NSPRA, 	true);
-		valShow.put(DataTypes.NSPRK, 	true);
-		valShow.put(DataTypes.NWALS, 	true);
+		valShow.put(DataTypes.NINT, 	false);
+		valShow.put(DataTypes.NAINT, 	false);
+		valShow.put(DataTypes.NSPR, 	false);
+		valShow.put(DataTypes.NSPRA, 	false);
+		valShow.put(DataTypes.NSPRK, 	false);
+		valShow.put(DataTypes.NWALS, 	false);
 
 		
 		int nrValuesToShow = 1;
@@ -147,11 +153,11 @@ public class GameDataAnalysis {
 			if (valShow.get(stringKey)) nrValuesToShow++;
 		}
 		
-		String infoLine = "Agent:\t";
+		String infoLine = "Agent:" + seperator; 
 		String[] info = new String[nrValuesToShow]; info[0] = "Agent"; int cnt = 1;
 		for (String s : valShow.keySet()) {
 			if (valShow.get(s)){
-				infoLine += s + ":\t";
+				infoLine += s + ":" + seperator;
 				info[cnt] = s; cnt++;
 			}
 		}
@@ -160,11 +166,11 @@ public class GameDataAnalysis {
 		for (int c = 0; c < n; c++) {
 			cnt = 1;
 			valLines[c] = "";
-			valLines[c] += controllers[c].name + "\t";
+			valLines[c] += controllers[c].name + seperator;
 			HashMap<String, Float> gameVals = gds[c].gameValues;
 			for (String s : valShow.keySet()) {
 				if (valShow.get(s)){
-					valLines[c] += gameVals.get(s) + "\t";
+					valLines[c] += gameVals.get(s) + seperator;
 					values[c][cnt] = ""+gameVals.get(s);
 				}
 			}

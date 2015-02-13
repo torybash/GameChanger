@@ -5,9 +5,15 @@ public class GameFitness implements Comparable{
 	public String gameTitle = "";
 	public double fitness = 0;
 	public double[] fitnessVals;
+	public String[] fitnessValsString;
 	
 	public GameFitness(String gameTitle){
 		this.gameTitle = gameTitle;
+	}
+	
+	public GameFitness(String gameTitle, double fitness){
+		this.gameTitle = gameTitle;
+		this.fitness = fitness;
 	}
 	
 	@Override

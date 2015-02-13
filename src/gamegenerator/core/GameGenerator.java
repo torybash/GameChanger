@@ -1,5 +1,8 @@
 package gamegenerator.core;
 
+import fastVGDL.tools.IO;
+import gamechanger.core.GameChanger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,8 +17,8 @@ import dataanalysis.controller.Controller;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.controller.ControllerHelper;
 import dataanalysis.core.FitnessAnalysis;
-import fastVGDL.tools.IO;
-import gamechanger.core.GameChanger;
+import dataanalysis.fitness.FitnessCalculator;
+import dataanalysis.fitness.GameFitness;
 
 public class GameGenerator {
 
@@ -28,8 +31,8 @@ public class GameGenerator {
 	static Random r = new Random();
 	
 	public static void main(String[] args) {
-		
-		evolveGame("../gvgai/examples/gridphysics/", "zelda");
+		evolveGameFromExisting("../gvgai/examples/gridphysics/", "overload");
+//		evolveGameFromScratch("coolgame");
 	}
 	
 	
@@ -44,34 +47,47 @@ public class GameGenerator {
 			String gameFolder = "../gvgai/examples/gridphysics/";
 			
 			
-			evolveGame(gameFolder, games[i]);
+//			evolveGame(gameFolder, games[i]);
 
 			
 		}
 	}
 	
+	public static void evolveGameFromExisting(String gameFolder, String gameTitle){
+		String origGamePath = gameFolder + gameTitle + ".txt";
+		String origGameDesc = new IO().getDescFromFile(origGamePath);
+		
+		evolveGame(origGameDesc, gameTitle, gameFolder);
+	}
 	
-	public static void evolveGame(String gameFolder, String gameTitle){
+	public static void evolveGameFromScratch(String gameTitle){
+		String gameDesc = GameChanger.makeGame();
+		String lvlDesc = GameChanger.makeLevel(gameDesc);
+		
+		storeLvlDesc(lvlDesc, gameTitle);
+		
+		evolveGame(gameDesc, gameTitle, gameFolder);
+	}
+	
+	
+	public static void evolveGame(String gameDesc, String gameTitle, String levelFolder){
 		int iterations = 100, mutations = 50, mutationsSurvive = 30;
 
-
-		String origGamePath = gameFolder + gameTitle + ".txt";
-	
-		String origGameDesc = new IO().getDescFromFile(origGamePath);
-//		System.out.println(origGameDesc);
-		EvolveGameData origData = playGameGetData(origGameDesc, gameTitle, gameFolder);
+		EvolveGameData origData = playGameGetData(gameDesc, gameTitle, levelFolder);
 		
 		
 		String[] gameDescs = new String[mutations];
 		EvolveGameData[] evolveGameDatas = new EvolveGameData[mutations];
 		
 		for (int m = 0; m < mutations; m++) {
-			gameDescs[m] = GameChanger.changeGameByPath(origGamePath, false, true, false);
+			gameDescs[m] = GameChanger.changeGameByDesc(gameDesc, false, true, false);
 		}
 		
 		
 		
 		for (int i = 0; i < iterations; i++) {
+			
+			System.out.println("----Iteration " +i  + "-----");
 			
 			//Mutate game descriptions
 			if (i>0){
@@ -90,7 +106,7 @@ public class GameGenerator {
 							int idx2 = r.nextInt(mutations);
 							newGameDesc =  GameChanger.crossOverGame(evolveGameDatas[idx1].gameDesc, evolveGameDatas[idx2].gameDesc);
 						}else{ //New  --  10%
-							newGameDesc = GameChanger.changeGameByPath(origGamePath, false, true, false);
+							newGameDesc = GameChanger.changeGameByDesc(gameDesc, false, true, false);
 						}
 					}
 					gameDescs[m] = newGameDesc;
@@ -102,10 +118,10 @@ public class GameGenerator {
 			for (int m = 0; m < mutations; m++) {
 				if (m < mutationsSurvive){
 					if (evolveGameDatas[m] == null){
-						evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, gameFolder);
+						evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
 					}
 				}else{
-					evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, gameFolder);
+					evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
 				}
 			}
 			
@@ -124,55 +140,48 @@ public class GameGenerator {
 	}
 	
 
-	private static EvolveGameData playGameGetData(String gameDesc, String gameTitle, String origGameFolder) {
+	private static EvolveGameData playGameGetData(String gameDesc, String gameTitle, String levelFolder) {
 		storeGameDesc(gameDesc, gameTitle);
 		
         System.out.println("Playing game..");
+        
+//        System.out.println(gameDesc);
+//        System.out.println();
+        
         long tim = System.currentTimeMillis();
-		playGame(gameTitle, origGameFolder);
+		playGame(gameTitle, levelFolder);
 		System.out.println("Finished playing game - calculating fitness..");
-		double fitness = getGameData();
-        System.out.println("Fitness: " + fitness + ", time: " + (System.currentTimeMillis()-tim));
-
+		GameFitness gf = getGameData();
+        System.out.println("Fitness: " + gf.fitness + ", time: " + (System.currentTimeMillis()-tim));
+        System.out.println(FitnessCalculator.getFitnessTopString(", "));
+        System.out.println(Arrays.toString(gf.fitnessVals));
+        System.out.println(Arrays.toString(gf.fitnessValsString));
+        System.out.println();
 		
 		
-		return new EvolveGameData(fitness, gameDesc);
+		return new EvolveGameData(gf.fitness, gameDesc);
 	}
 	
-	private static double getGameData() {
-		Controller dontDieController = new Controller("Explorer", "dontDie", ControllerType.INTELLIGENT);
-		Controller mctsController = new Controller("MCTS", "sampleMCTS", ControllerType.INTELLIGENT);
-		Controller gaController = new Controller("GA", "sampleGA", ControllerType.INTELLIGENT);
-//		Controller rosController = new Controller("Onestep-S", "randomOneStep", ControllerType.SEMI_INTELLIGENT);
-		Controller onestepController = new Controller("Onestep-H", "sampleonesteplookahead", ControllerType.INTELLIGENT);
-		Controller randomController = new Controller("Random", "random", ControllerType.RANDOM);
-		Controller doNothingController = new Controller("Do Nothing", "doNothing", ControllerType.DO_NOTHING);
-		
-		Controller mctsishController = new Controller("MCTSish", "MCTSish", ControllerType.INTELLIGENT);
-		
-//		Controller[] controllers = new Controller[]{dontDieController, mctsController, rosController, randomController, doNothingController};
-//		Controller[] controllers = new Controller[]{dontDieController, mctsController, gaController, rosController, randomController, doNothingController};
-		Controller[] controllers = new Controller[]{dontDieController, randomController, doNothingController};
-//		Controller[] controllers = new Controller[]{dontDieController, doNothingController};
-
+	private static GameFitness getGameData() {
+		Controller[] controllers = ControllerHelper.getMainControllers();
 		ControllerHelper.setControllerDataFolders(controllers, gameDataFolder, "game_gen_test");
 		
-		
 		return fa.getFitnessForSingleGame(controllers);
-		
 	}
 
 
-	private static void playGame(String gameTitle, String origGameFolder){
+	private static void playGame(String gameTitle, String levelFolder){
 
 		
 		int seed = new Random().nextInt();
 		
-        String[] controllers = new String[]{"controllers.sampleMCTS.Agent", "controllers.dontDie.Agent", "controllers.sampleGA.Agent", 
-        		"controllers.randomOneStep.Agent", "controllers.sampleonesteplookahead.Agent", "controllers.random.Agent",
-        		"controllers.doNothing.Agent"};
+//        String[] controllers = new String[]{"controllers.sampleMCTS.Agent", "controllers.dontDie.Agent", "controllers.sampleGA.Agent", 
+//        		"controllers.randomOneStep.Agent", "controllers.sampleonesteplookahead.Agent", "controllers.random.Agent",
+//        		"controllers.doNothing.Agent"};
+        
+        String[] controllers = new String[]{"controllers.dontDie.Agent","controllers.randomOneStep.Agent","controllers.random.Agent","controllers.doNothing.Agent"};
 		
-        int N = 1, L = 1, M = 10;
+        int N = 1, L = 1, M = 6;
         boolean saveActions = true;
         String[] levels = new String[L];
         String[] actionFiles = new String[L*M];
@@ -192,7 +201,7 @@ public class GameGenerator {
             int actionIdx = 0;
             String game = gameFolder + gameTitle + ".txt";
             for(int j = 0; j < L; ++j){
-                levels[j] = origGameFolder +gameTitle + "_lvl" + j +".txt";
+                levels[j] = levelFolder +gameTitle + "_lvl" + j +".txt";
                 if(saveActions) for(int k = 0; k < M; ++k)
                     actionFiles[actionIdx++] = foldername + "/" + "actions_game_" + 0 + "_level_" + j + "_" + k + ".txt";
             }
@@ -219,6 +228,19 @@ public class GameGenerator {
 		}
 	}
 
-
+	private static void storeLvlDesc(String lvlDesc, String gameTitle) {
+		
+		PrintWriter writer;
+		String path = gameFolder + gameTitle + "_lvl0" + ".txt";
+		try {
+			writer = new PrintWriter(path, "UTF-8");
+			writer.println(lvlDesc);
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -140,6 +140,7 @@ public class GameDataCalculator {
 			float median = 0, quartile1 = 0, quartile3 = 0;
 			float actensum = 0;
 			float acten = 0;
+			float actse = 0;
 			float nint = 0, naint = 0, nspr = 0, nspra = 0, nsprk = 0, nwals = 0;
 
 
@@ -283,8 +284,8 @@ public class GameDataCalculator {
 			mmpecentile84p135 = (float) mmScoreArray[(int)(mmScoreArray.length * 0.84135)];
 	        
 			acten = actensum / (float)amountGames; 
-			
-			
+	        actse = (float) Math.sqrt(count * acten * (1 - acten)) / count;		//	        sqrt(np(1-p))
+
 //			float H = 0;
 ////			System.out.println("Probs for try nr: " + lp.levelNumberTry);
 //			for (String string : actcounter.keySet()) {
@@ -317,7 +318,9 @@ public class GameDataCalculator {
 			aveGds[c].gameValues.put(DataTypes.WRSE, wrse); 
 			aveGds[c].gameValues.put(DataTypes.AVTIC, avtic); 
 			aveGds[c].gameValues.put(DataTypes.SDTIC, sdtic); 
+			aveGds[c].gameValues.put(DataTypes.SETIC, setic); 
 			aveGds[c].gameValues.put(DataTypes.ACTEN, acten); 
+			aveGds[c].gameValues.put(DataTypes.ACTSE, actse); 
 			aveGds[c].gameValues.put(DataTypes.NINT, nint); 
 			aveGds[c].gameValues.put(DataTypes.NAINT, naint); 
 			aveGds[c].gameValues.put(DataTypes.NSPR, nspr); 

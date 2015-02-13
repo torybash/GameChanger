@@ -17,12 +17,14 @@ public class DataTypes {
 	public static final String SE = "Std. deviation err";
 	public static final String WRATE = "Winrate";
 	public static final String SDTIC = "Std tick";
+	public static final String SETIC = "Std tick err";
 	public static final String AVTIC = "Mean tick";
 	public static final String MMSD = "MaxMinN-SD";
 	public static final String MMSE = "MaxMinN-SE";
 	public static final String WRSD = "Winrate-SD";
 	public static final String WRSE = "Winrate-SE";
 	public static final String ACTEN = "Actions entropy";
+	public static final String ACTSE = "Actions entropy err";
 	public static final String NINT = "Mean num interactions";
 	public static final String NAINT = "Mean num av. interactions";
 	public static final String NSPR = "Mean num sprites";

@@ -15,10 +15,10 @@ public class Controller {
 	
 	public static enum ControllerType{
 		INTELLIGENT(0),
-//		SEMI_INTELLIGENT(1),
+		SEMI_INTELLIGENT(1),
 //		STUPID(2);
-		RANDOM(1),
-		DO_NOTHING(2);
+		RANDOM(2),
+		DO_NOTHING(3);
 //		
 		 private int id;
  
