@@ -4,6 +4,7 @@ import dataanalysis.controller.Controller;
 import dataanalysis.controller.ControllerHelper;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.core.CMAEvolStrat;
+import dataanalysis.core.DataTypes;
 //import dataanalysis.core.CMAEvolStrat;
 import dataanalysis.core.FitnessAnalysis;
 import dataanalysis.core.GameDataAnalysis;
@@ -36,18 +37,20 @@ public class AMain {
 		//******25 P.T./800 TICKS TEST*****
 		//*********************************
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
+		gda.countGamesHaveCondition(controllers, true);
 //		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
-		fa.analyzeFitness(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_mutation_");
 //		gda.analyzeAllMutationsAverage(controllers, 10, true);
 //		fa.analyzeFitness(controllers, false);              
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
+		gda.countGamesHaveCondition(controllers, true);
 //		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
-		fa.analyzeFitness(controllers, false);
+//		fa.analyzeFitness(controllers, false);
 		
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed_genlvls");

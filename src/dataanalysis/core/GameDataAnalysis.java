@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import dataanalysis.controller.Controller;
+import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.fitness.FitnessCalculator;
 import dataanalysis.fitness.GameFitness;
 import dataanalysis.tools.ExtractGameData;
@@ -230,7 +231,43 @@ public class GameDataAnalysis {
 		}
 	}
 
+	public void countGamesHaveCondition(Controller[] controllers, boolean readActionFiles) {
+		int n = controllers.length;		
+		//Extract data from data folders
+		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, readActionFiles);
+		//Don't accept bad games
+		ArrayList<GameData[]> acceptedGameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 
+		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
+
+		
+		for (int c1 = 0; c1 < controllers.length; c1++) {
+			for (int c2 = 0; c2 < controllers.length; c2++) {
+				if (c1 >= c2) continue;
+				for (int t = 0; t < DataTypes.class.getFields().length; t++) {
+					try {
+						countGamesHaveCondition(controllers, gameAverages, (String) DataTypes.class.getFields()[t].get(new String()), c1, c2);
+					} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+	}
+
+
+	public int countGamesHaveCondition(Controller[] controllers, ArrayList<GameData[]> gameAverages, String dataTyp, int ctrl1Id, int ctrl2Id) {
+		int count = 0;
+		for (GameData[] gds : gameAverages) { // fore game
+			float ctrl1Val = gds[ctrl1Id].gameValues.get(dataTyp);
+			float ctrl2Val = gds[ctrl2Id].gameValues.get(dataTyp);
+			if (ctrl1Val > ctrl2Val) count++;
+		}
+		System.out.println(count + " games (out of " + gameAverages.size() + ") fulfil the condition: " + dataTyp + " " + controllers[ctrl1Id].name + ">" + controllers[ctrl2Id].name);
+		
+		return count;
+	}
 
 
 
