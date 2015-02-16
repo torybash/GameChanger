@@ -1,19 +1,25 @@
 package gamegenerator.core;
 
+import dataanalysis.fitness.GameFitness;
+
 public class EvolveGameData implements Comparable{
-	double fitness;
+	GameFitness gf;
 	String gameDesc;
 	
-	public EvolveGameData(double fitness, String gameDesc){
-		this.fitness = fitness;
+	public EvolveGameData(GameFitness gf, String gameDesc){
+		this.gf = gf;
 		this.gameDesc = gameDesc;
 	}
 
 	@Override
 	public int compareTo(Object o) {
-		double otherFitness = ((EvolveGameData)o).fitness;
+		double otherFitness = ((EvolveGameData)o).gf.fitness;
 		
-		if (fitness-otherFitness == 0) return 0;
-		return fitness-otherFitness > 0 ? -1 : 1;
+		if (gf.fitness-otherFitness == 0) return 0;
+		return gf.fitness-otherFitness > 0 ? -1 : 1;
+	}
+
+	public EvolveGameData copy() {
+		return new EvolveGameData(gf.copy(), gameDesc);
 	}
 }

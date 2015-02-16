@@ -31,8 +31,8 @@ public class GameGenerator {
 	static Random r = new Random();
 	
 	public static void main(String[] args) {
-		evolveGameFromExisting("../gvgai/examples/gridphysics/", "overload");
-//		evolveGameFromScratch("coolgame");
+//		evolveGameFromExisting("../gvgai/examples/gridphysics/", "boulderdash");
+		evolveGameFromScratch("coolgame");
 	}
 	
 	
@@ -78,6 +78,7 @@ public class GameGenerator {
 		
 		String[] gameDescs = new String[mutations];
 		EvolveGameData[] evolveGameDatas = new EvolveGameData[mutations];
+		EvolveGameData[] survivedGameDatas = new EvolveGameData[mutationsSurvive];
 		
 		for (int m = 0; m < mutations; m++) {
 			gameDescs[m] = GameChanger.changeGameByDesc(gameDesc, false, true, false);
@@ -117,8 +118,10 @@ public class GameGenerator {
 			//Play through games and get fitness data
 			for (int m = 0; m < mutations; m++) {
 				if (m < mutationsSurvive){
-					if (evolveGameDatas[m] == null){
+					if (evolveGameDatas[m] == null){ //first iteratino
 						evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
+					}else{
+						evolveGameDatas[m] = survivedGameDatas[m];
 					}
 				}else{
 					evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
@@ -128,12 +131,19 @@ public class GameGenerator {
 			//Sort by fitness
 			Arrays.sort(evolveGameDatas);
 			
+			for (int j = 0; j < survivedGameDatas.length; j++) {
+				survivedGameDatas[j] = evolveGameDatas[j].copy();
+			}
 			
 			System.out.println("Top 3 fitness: ");
-			for (int j = 0; j < 3; j++) System.out.println(evolveGameDatas[j].fitness);
-			System.out.println("(Orig fitness: " + origData.fitness + ")");
+			for (int j = 0; j < 3; j++) System.out.println(evolveGameDatas[j].gf.fitness);
+			System.out.println("(Orig fitness: " + origData.gf.fitness + ")");
 			System.out.println("Best game desc:");
 			System.out.println(evolveGameDatas[0].gameDesc);
+			System.out.println("---fitness vals:");
+	        System.out.println(FitnessCalculator.getFitnessTopString(", "));
+	        System.out.println(Arrays.toString(evolveGameDatas[0].gf.fitnessVals));
+	        System.out.println(Arrays.toString(evolveGameDatas[0].gf.fitnessValsString));
 			System.out.println();
 
 		}
@@ -159,11 +169,11 @@ public class GameGenerator {
         System.out.println();
 		
 		
-		return new EvolveGameData(gf.fitness, gameDesc);
+		return new EvolveGameData(gf, gameDesc);
 	}
 	
 	private static GameFitness getGameData() {
-		Controller[] controllers = ControllerHelper.getMainControllers();
+		Controller[] controllers = ControllerHelper.getMainFourControllers();
 		ControllerHelper.setControllerDataFolders(controllers, gameDataFolder, "game_gen_test");
 		
 		return fa.getFitnessForSingleGame(controllers);
@@ -205,7 +215,7 @@ public class GameGenerator {
                 if(saveActions) for(int k = 0; k < M; ++k)
                     actionFiles[actionIdx++] = foldername + "/" + "actions_game_" + 0 + "_level_" + j + "_" + k + ".txt";
             }
-            ArcadeMachine.runGames(game, levels, M, controllers[c], saveActions? actionFiles:null, seed);
+            ArcadeMachine.runGames(game, levels, M, controllers[c], saveActions? actionFiles:null);
 	          
         }
         
