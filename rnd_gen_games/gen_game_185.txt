@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > AlternateChaser stype1=gen3 stype2=gen2 img=zombie cooldown=3
+		gen2 > Passive img=wall
+		gen3 > Spreader limit=15 spreadprob=0.0841 stype=gen4 img=wall
+		gen4 > Resource limit=5 value=4 img=camel
+	InteractionSet
+		gen2 wall > changeResource value=3 resource=gen4
+		gen3 gen4 > transformTo stype=gen2 scoreChange=8
+		gen1 EOS > turnAround
+		gen2 avatar > killIfOtherHasMore limit=8 resource=gen4
+		gen2 EOS > cloneSprite scoreChange=-2
+		gen3 gen3 > undoAll
+		gen4 avatar > killIfOtherHasMore limit=12 resource=gen4
+		gen4 wall > cloneSprite
+		gen4 gen3 > killIfFromAbove
+		gen3 gen3 > killIfOtherHasMore limit=11 resource=gen4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

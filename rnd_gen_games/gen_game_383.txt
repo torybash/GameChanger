@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Missile orientation=UP img=marsh
+		gen2 > Flicker limit=21 img=bomb
+		gen3 > RandomNPC img=flower
+		gen4 > Spreader limit=35 spreadprob=0.6241000000000001 stype=gen3 img=camel
+		gen5 > AlternateChaser stype1=gen3 stype2=gen2 img=boulder cooldown=7
+		gen6 > SpawnPoint stype=gen5 singleton=TRUE img=water prob=0.0324
+	InteractionSet
+		gen6 gen6 > killIfFromAbove
+		gen5 gen3 > attractGaze
+		gen5 EOS > stepBack scoreChange=1
+		gen2 gen6 > killIfFromAbove
+		gen5 gen1 > attractGaze
+		gen4 gen6 > pullWithIt
+		gen6 gen3 > wallStop
+		gen1 gen2 > killIfFromAbove scoreChange=10
+		gen6 EOS > cloneSprite scoreChange=5
+		gen3 gen6 > turnAround scoreChange=1
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

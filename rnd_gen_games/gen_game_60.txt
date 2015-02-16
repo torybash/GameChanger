@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > OrientedFlicker limit=6 orientation=UP img=bomb
+		gen2 > RandomAltChaser speed=0.0961 stype1=gen1 stype2=avatar img=flower epsilon=0.4367351979374686
+		gen3 > RandomNPC img=gold
+		gen4 > Passive img=marsh
+		gen5 > RandomAltChaser stype1=gen4 stype2=gen4 img=butterfly epsilon=0.32020724158557057
+	InteractionSet
+		avatar gen4 > stepBack
+		gen4 avatar > pullWithIt scoreChange=-1
+		gen3 wall > killSprite scoreChange=9
+		gen1 EOS > stepBack scoreChange=7
+		gen5 gen5 > attractGaze
+		gen4 gen5 > cloneSprite
+		gen4 gen3 > stepBack
+		gen1 wall > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

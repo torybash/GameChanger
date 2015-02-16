@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Chaser fleeing=TRUE stype=gen6 img=zombie
+		gen2 > AlternateChaser fleeing=TRUE stype1=gen6 stype2=gen1 img=boulder
+		gen3 > RandomAltChaser stype1=gen4 stype2=avatar img=water epsilon=0.29094777844999387
+		gen4 > Chaser stype=avatar img=box
+		gen5 > Portal stype=gen4 singleton=TRUE img=flower
+		gen6 > OrientedFlicker limit=23 orientation=UP img=camel
+	InteractionSet
+		avatar gen2 > spawnIfHasMore limit=0 stype=gen4 resource=null
+		avatar gen6 > bounceForward
+		gen1 EOS > undoAll
+		gen1 gen6 > spawnIfHasMore limit=0 stype=gen4 resource=null
+		avatar gen4 > killSprite
+		gen5 gen6 > wallStop scoreChange=6
+		gen4 gen6 > reverseDirection
+		gen2 gen2 > attractGaze scoreChange=-3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=FALSE 

@@ -13,6 +13,8 @@ public class Test {
 
     public static void main(String[] args) {
 		
+    	String generatedGamesFolder = "rnd_gen_games/";
+    	
         String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
                 "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
                 "camelRace", "digdug", "firestorms", "infection", "firecaster",
@@ -56,17 +58,17 @@ public class Test {
 
 		
         //2. Makes a lot of completely new games
-		int newGameAmount = 500, levelsPerGame = 10;
+		int newGameAmount = 400, levelsPerGame = 1;
 		for (int i = 0; i < newGameAmount; i++) {
 			String new_desc = GameChanger.makeGame();
 			String[] level_descs = new String[levelsPerGame];
 			for (int j = 0; j < level_descs.length; j++) {
 				level_descs[j] = GameChanger.makeLevel(new_desc);
 			}
-			String gamePath = "generatedgames/gen_game_" + i + ".txt";
+			String gamePath = generatedGamesFolder + "gen_game_" + i + ".txt";
 			String[] levelPaths = new String[levelsPerGame];
 			for (int j = 0; j < levelPaths.length; j++) {
-				levelPaths[j] = "generatedgames/gen_game_" + i + "_lvl" + j + ".txt";
+				levelPaths[j] = generatedGamesFolder + "gen_game_" + i + "_lvl" + j + ".txt";
 			}
 			
 			PrintWriter writer = null;

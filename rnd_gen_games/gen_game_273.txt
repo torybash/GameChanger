@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > AlternateChaser stype1=avatar stype2=gen7 img=virus
+		gen2 > SpawnPoint stype=gen6 img=hell
+		gen3 > Resource limit=6 value=2 img=dirt
+		gen4 > OrientedFlicker limit=5 orientation=DOWN img=log
+		gen5 > SpawnPoint stype=gen7 img=mana
+		gen6 > Spreader limit=38 spreadprob=0.16000000000000003 stype=gen7 img=goal
+		gen7 > Spreader limit=5 stype=gen4 img=virus
+	InteractionSet
+		gen5 wall > changeResource value=5 resource=gen3
+		gen2 gen5 > spawnIfHasMore limit=7 stype=gen2 resource=gen3 scoreChange=-2
+		gen6 gen3 > changeResource value=-5 resource=gen3
+		gen2 gen7 > pullWithIt
+		gen2 gen1 > undoAll scoreChange=1
+		gen5 EOS > transformTo stype=gen5
+		gen7 gen1 > killIfHasLess limit=14 resource=gen3
+		gen4 gen7 > bounceForward scoreChange=8
+		gen4 avatar > transformTo stype=gen1
+		gen3 avatar > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen6 stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

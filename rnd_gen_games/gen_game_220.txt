@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar speed=0.31360000000000005 img=avatar
+		gen1 > Fleeing fleeing=TRUE stype=gen3 img=explosion
+		gen2 > Resource limit=15 value=4 img=mana
+		gen3 > Resource limit=7 value=3 img=sword
+	InteractionSet
+		gen3 avatar > spawnIfHasMore limit=7 stype=gen2 resource=gen3
+		gen3 wall > changeResource value=-3 resource=gen3
+		gen2 gen3 > killIfHasMore limit=8 resource=gen2 scoreChange=5
+		avatar gen1 > pullWithIt scoreChange=-5
+		avatar gen2 > bounceForward
+		gen2 gen3 > changeResource value=-4 resource=gen3
+		gen2 gen2 > killIfOtherHasMore limit=1 resource=gen2
+		gen2 avatar > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

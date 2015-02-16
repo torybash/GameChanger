@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=2
+		gen1 > Chaser fleeing=TRUE stype=gen2 img=boulder
+		gen2 > Portal stype=avatar img=bullet
+		gen3 > RandomNPC singleton=TRUE img=shovel
+		gen4 > RandomAltChaser stype1=gen5 stype2=gen1 img=carcass epsilon=0.12278003964990758
+		gen5 > OrientedFlicker limit=11 orientation=UP img=marsh
+		gen6 > SpawnPoint stype=gen3 img=city
+	InteractionSet
+		gen6 gen2 > stepBack
+		gen4 wall > flipDirection scoreChange=-5
+		avatar gen3 > attractGaze
+		gen3 gen6 > flipDirection
+		gen4 gen4 > attractGaze
+		gen4 gen1 > attractGaze scoreChange=-1
+		gen4 gen6 > killIfFromAbove
+		gen4 gen2 > killIfFromAbove
+		gen1 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

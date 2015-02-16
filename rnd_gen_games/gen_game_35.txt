@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen3 img=avatar
+		gen1 > RandomMissile img=flower cooldown=4
+		gen2 > Flicker limit=37 img=hole
+		gen3 > AlternateChaser fleeing=TRUE stype1=gen4 singleton=TRUE stype2=gen1 img=mushroom
+		gen4 > Portal stype=avatar img=honey
+	InteractionSet
+		avatar gen3 > pullWithIt
+		avatar EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen2 gen2 > cloneSprite
+		gen2 gen1 > killSprite scoreChange=-3
+		gen2 gen1 > wallStop
+		avatar gen1 > undoAll scoreChange=10
+		gen3 gen3 > attractGaze
+		gen4 EOS > undoAll
+		gen4 avatar > bounceForward scoreChange=1
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar speed=0.3364 stype=gen3 img=avatar cooldown=9
+		gen1 > OrientedFlicker limit=30 orientation=UP img=forest
+		gen2 > Passive img=spaceship
+		gen3 > Flicker limit=48 img=diamond
+		gen4 > Portal stype=gen6 singleton=TRUE img=bomb
+		gen5 > Passive img=virus
+		gen6 > OrientedFlicker limit=46 orientation=LEFT singleton=TRUE img=carcass
+	InteractionSet
+		gen3 EOS > cloneSprite scoreChange=-1
+		gen1 wall > cloneSprite
+		gen5 gen5 > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=2
+		gen5 gen1 > bounceForward
+		gen3 gen4 > wallStop scoreChange=4
+		gen2 gen4 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		avatar EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen2 wall > stepBack scoreChange=6
+		avatar gen1 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen6 stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar cooldown=8
+		gen1 > Passive img=carcass
+		gen2 > Passive img=virus
+		gen3 > AlternateChaser stype1=gen7 stype2=gen4 img=water
+		gen4 > Spreader limit=36 stype=gen6 img=zombie
+		gen5 > Resource limit=16 value=4 img=ghost
+		gen6 > RandomMissile img=mushroom cooldown=1
+		gen7 > RandomMissile img=ghost cooldown=5
+	InteractionSet
+		gen2 wall > undoAll
+		gen7 gen4 > pullWithIt
+		gen1 wall > cloneSprite scoreChange=-3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

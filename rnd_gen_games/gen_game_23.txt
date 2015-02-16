@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Portal stype=avatar img=boulder
+		gen2 > Resource limit=18 value=0 img=monster
+		gen3 > Resource limit=16 value=0 img=frog
+	InteractionSet
+		avatar gen3 > changeResource value=-2 resource=gen3 scoreChange=-3
+		avatar gen2 > killIfOtherHasMore limit=13 resource=gen3 scoreChange=-2
+		gen3 gen3 > killIfFromAbove scoreChange=8
+		gen3 avatar > bounceForward
+		gen3 gen1 > killIfFromAbove
+		gen1 wall > killSprite
+		avatar gen1 > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=gen1 win=FALSE 

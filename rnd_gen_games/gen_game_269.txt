@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Missile orientation=UP img=fire
+		gen2 > RandomAltChaser stype1=gen1 singleton=TRUE stype2=gen3 img=forest epsilon=0.9160909223673153
+		gen3 > Missile orientation=UP img=virus
+		gen4 > SpawnPoint stype=gen3 img=fire prob=0.25 cooldown=5
+		gen5 > Chaser stype=gen6 img=log
+		gen6 > Flicker limit=16 img=hole
+	InteractionSet
+		avatar gen3 > attractGaze
+		gen4 EOS > stepBack scoreChange=3
+		gen4 gen4 > killSprite
+		avatar gen3 > attractGaze
+		gen5 gen2 > attractGaze scoreChange=9
+		gen2 gen4 > spawnIfHasMore limit=0 stype=gen4 resource=null
+		gen2 avatar > attractGaze
+		gen4 avatar > stepBack
+		gen4 gen5 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

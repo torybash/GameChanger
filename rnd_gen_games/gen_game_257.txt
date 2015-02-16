@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=3
+		gen1 > OrientedFlicker limit=11 orientation=LEFT singleton=TRUE img=frog
+		gen2 > Chaser stype=gen1 img=log
+	InteractionSet
+		gen1 gen1 > transformTo stype=gen1
+		gen2 EOS > flipDirection
+		gen1 gen2 > bounceForward
+		avatar EOS > transformTo stype=avatar
+		gen2 gen2 > attractGaze
+		gen1 gen1 > killSprite
+		gen2 gen1 > flipDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

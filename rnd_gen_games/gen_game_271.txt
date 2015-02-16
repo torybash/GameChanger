@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=4
+		gen1 > Flicker limit=28 img=log
+		gen2 > Fleeing fleeing=TRUE stype=avatar img=spaceship cooldown=5
+		gen3 > Passive img=mushroom
+		gen4 > RandomMissile img=portal cooldown=7
+	InteractionSet
+		gen2 avatar > attractGaze
+		avatar gen4 > attractGaze scoreChange=-2
+		gen2 gen4 > attractGaze
+		gen2 avatar > attractGaze
+		gen1 avatar > killSprite
+		gen2 wall > turnAround
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen4 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

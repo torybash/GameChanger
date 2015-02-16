@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar speed=0.9603999999999999 stype=gen2 img=avatar
+		gen1 > Missile orientation=DOWN speed=0.1936 img=key
+		gen2 > RandomMissile speed=0.09 img=carcass
+		gen3 > Flicker limit=49 singleton=TRUE img=mushroom
+		gen4 > RandomNPC img=goal
+	InteractionSet
+		avatar EOS > stepBack
+		gen2 EOS > flipDirection
+		gen2 gen2 > attractGaze scoreChange=-1
+		gen4 EOS > reverseDirection
+		gen2 avatar > transformTo stype=gen2 scoreChange=6
+		gen4 EOS > wrapAround scoreChange=5
+		gen2 gen3 > turnAround scoreChange=5
+		gen1 gen3 > undoAll scoreChange=-5
+		avatar gen3 > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen4 wall > transformTo stype=gen3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

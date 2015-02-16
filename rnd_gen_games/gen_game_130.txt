@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Spreader limit=23 stype=gen2 img=boulder
+		gen2 > Bomber orientation=LEFT stype=gen1 img=city
+	InteractionSet
+		gen2 wall > wallStop
+		gen1 gen2 > killIfFromAbove
+		avatar gen1 > stepBack
+		gen2 EOS > reverseDirection
+		gen1 EOS > cloneSprite
+		avatar gen2 > transformTo stype=avatar scoreChange=-2
+		gen1 avatar > pullWithIt
+		avatar gen1 > stepBack scoreChange=7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

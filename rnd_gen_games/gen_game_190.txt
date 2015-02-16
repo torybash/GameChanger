@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen6 img=avatar cooldown=10
+		gen1 > Spreader limit=18 stype=gen4 img=gold
+		gen2 > Spreader limit=33 spreadprob=0.3364 stype=gen1 img=water
+		gen3 > Spreader limit=7 stype=gen4 img=wall
+		gen4 > Fleeing speed=0.8464 stype=gen7 img=mushroom
+		gen5 > Portal stype=gen6 singleton=TRUE img=hell
+		gen6 > SpawnPoint stype=gen3 img=powerpill prob=0.0225 cooldown=5
+		gen7 > Spreader limit=12 spreadprob=0.42250000000000004 stype=gen2 img=bee
+	InteractionSet
+		gen7 EOS > wrapAround scoreChange=9
+		gen7 EOS > transformTo stype=gen5
+		gen2 gen7 > spawnIfHasMore limit=0 stype=gen6 resource=null
+		gen6 gen1 > stepBack
+		gen6 EOS > wrapAround scoreChange=6
+		gen3 EOS > wrapAround
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

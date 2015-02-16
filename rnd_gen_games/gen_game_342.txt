@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > AlternateChaser stype1=avatar stype2=avatar img=truck cooldown=7
+		gen2 > SpawnPoint stype=gen1 img=camel prob=0.16810000000000003
+	InteractionSet
+		gen2 gen1 > bounceForward
+		avatar EOS > killSprite
+		gen1 wall > pullWithIt
+		gen2 gen2 > undoAll scoreChange=-1
+		avatar gen2 > stepBack
+		gen2 gen2 > undoAll
+		avatar wall > bounceForward scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > RandomMissile img=dirt
+		gen2 > RandomAltChaser stype1=gen1 stype2=gen1 img=ghost epsilon=0.32386780716261754 cooldown=6
+		gen3 > Immovable img=hell
+		gen4 > Missile orientation=UP singleton=TRUE img=hole
+	InteractionSet
+		avatar wall > killSprite
+		avatar wall > wallStop scoreChange=-4
+		gen1 wall > stepBack
+		gen4 gen2 > attractGaze
+		gen1 gen4 > attractGaze
+		gen2 wall > bounceForward
+		gen4 gen4 > attractGaze
+		gen1 EOS > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=avatar stype2=avatar win=FALSE 

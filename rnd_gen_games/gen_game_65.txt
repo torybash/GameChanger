@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen4 img=avatar
+		gen1 > Flicker limit=14 singleton=TRUE img=fire
+		gen2 > RandomNPC singleton=TRUE img=monster
+		gen3 > Passive img=missile
+		gen4 > RandomNPC speed=0.6724000000000001 img=forest cooldown=4
+	InteractionSet
+		gen3 gen3 > wallStop scoreChange=6
+		gen2 avatar > attractGaze
+		gen4 avatar > attractGaze
+		avatar gen2 > attractGaze scoreChange=-1
+		gen3 avatar > pullWithIt scoreChange=2
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

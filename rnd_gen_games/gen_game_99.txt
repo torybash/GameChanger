@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=2
+		gen1 > Resource limit=10 value=5 img=fire
+		gen2 > RandomNPC img=wall
+		gen3 > Resource limit=4 singleton=TRUE value=1 img=explosion
+		gen4 > OrientedFlicker limit=23 orientation=RIGHT img=water
+		gen5 > Spreader limit=14 stype=gen1 img=spaceship
+	InteractionSet
+		avatar gen1 > killIfFromAbove
+		avatar gen2 > killIfOtherHasMore limit=4 resource=gen1
+		gen5 gen1 > cloneSprite
+		gen4 gen5 > pullWithIt
+		gen3 avatar > changeResource value=1 resource=gen1
+		avatar gen1 > undoAll
+		avatar gen4 > stepBack
+		avatar gen5 > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen6 img=avatar
+		gen1 > Bomber orientation=RIGHT stype=gen4 singleton=TRUE img=water prob=0.11560000000000002 cooldown=1
+		gen2 > Immovable img=fire
+		gen3 > Missile orientation=DOWN img=bomb cooldown=4
+		gen4 > RandomMissile img=gold cooldown=6
+		gen5 > Missile orientation=LEFT img=shovel
+		gen6 > Bomber orientation=UP speed=0.0121 stype=gen4 img=mana prob=0.18489999999999998 cooldown=1
+		gen7 > OrientedFlicker limit=28 orientation=DOWN img=truck
+	InteractionSet
+		gen6 gen2 > wallStop
+		gen7 gen5 > killSprite
+		gen1 gen4 > attractGaze
+		gen4 EOS > cloneSprite
+		gen1 gen2 > cloneSprite
+		gen4 gen7 > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

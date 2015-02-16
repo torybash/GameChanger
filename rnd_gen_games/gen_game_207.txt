@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Portal stype=gen2 img=box
+		gen2 > RandomNPC img=wall
+		gen3 > Fleeing fleeing=TRUE stype=gen2 img=fire
+		gen4 > RandomNPC img=hell cooldown=3
+	InteractionSet
+		gen1 gen3 > killSprite
+		gen3 wall > pullWithIt
+		gen1 gen2 > cloneSprite
+		gen3 gen4 > attractGaze
+		gen3 gen1 > flipDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

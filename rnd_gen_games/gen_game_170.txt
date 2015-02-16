@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Missile orientation=UP img=box cooldown=8
+		gen2 > Passive img=flower
+		gen3 > RandomMissile img=hell cooldown=2
+		gen4 > Missile orientation=UP img=fire cooldown=7
+		gen5 > Passive img=monster
+		gen6 > SpawnPoint stype=gen2 img=zombie prob=0.9216
+		gen7 > Chaser stype=avatar img=portal cooldown=1
+	InteractionSet
+		gen5 gen7 > undoAll scoreChange=9
+		gen2 gen3 > bounceForward scoreChange=7
+		gen5 gen6 > undoAll
+		gen4 EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen7 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

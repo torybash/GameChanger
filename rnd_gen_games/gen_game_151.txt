@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar speed=0.1444 img=avatar
+		gen1 > Missile orientation=DOWN img=honey cooldown=3
+		gen2 > RandomMissile img=honey
+		gen3 > RandomMissile img=bomb cooldown=7
+	InteractionSet
+		gen1 gen3 > attractGaze
+		gen1 avatar > reverseDirection
+		gen3 avatar > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

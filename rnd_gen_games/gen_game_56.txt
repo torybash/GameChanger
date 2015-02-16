@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomNPC img=bullet
+		gen2 > AlternateChaser stype1=gen4 stype2=avatar img=sword
+		gen3 > RandomAltChaser speed=0.8281000000000001 stype1=gen4 stype2=gen5 img=wall epsilon=0.3913478449312937
+		gen4 > OrientedFlicker limit=17 orientation=LEFT img=honey
+		gen5 > AlternateChaser speed=0.7395999999999999 stype1=gen2 stype2=gen2 img=spaceship
+	InteractionSet
+		avatar gen5 > attractGaze
+		gen1 EOS > turnAround
+		gen4 gen2 > bounceForward
+		gen1 wall > undoAll
+		gen1 wall > cloneSprite scoreChange=-5
+		gen3 gen1 > attractGaze
+		gen3 gen4 > wallStop
+		gen5 avatar > attractGaze
+		gen1 avatar > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

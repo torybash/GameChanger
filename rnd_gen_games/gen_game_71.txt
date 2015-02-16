@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > Chaser stype=gen2 img=shovel
+		gen2 > Chaser fleeing=TRUE stype=avatar img=flower
+		gen3 > Portal stype=gen1 img=log
+		gen4 > Resource limit=5 value=1 img=zombie
+	InteractionSet
+		gen3 gen3 > changeResource value=2 resource=gen4
+		gen4 gen1 > collectResource
+		avatar EOS > undoAll
+		gen2 gen2 > attractGaze scoreChange=-3
+		avatar gen1 > transformTo stype=avatar
+		gen1 wall > killIfHasMore limit=3 resource=gen4
+		gen3 gen3 > wallStop
+		gen3 wall > bounceForward scoreChange=9
+		gen4 gen3 > cloneSprite
+		gen1 gen3 > killIfHasLess limit=14 resource=gen4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

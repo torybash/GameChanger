@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar speed=0.2601 img=avatar
+		gen1 > Immovable img=bee
+		gen2 > RandomAltChaser fleeing=TRUE stype1=gen4 stype2=gen4 img=box epsilon=0.46535547760289264
+		gen3 > Portal stype=gen1 img=key
+		gen4 > Flicker limit=16 img=mushroom
+	InteractionSet
+		gen3 avatar > bounceForward
+		gen2 EOS > killSprite
+		gen2 gen1 > reverseDirection
+		gen2 EOS > killSprite scoreChange=4
+		gen3 gen1 > pullWithIt
+		gen2 avatar > killSprite scoreChange=-4
+		gen2 avatar > flipDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

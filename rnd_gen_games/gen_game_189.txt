@@ -1,0 +1,15 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar cooldown=1
+		gen1 > SpawnPoint stype=gen2 img=frog prob=0.7921
+		gen2 > Spreader limit=32 stype=gen1 img=hell
+	InteractionSet
+		avatar gen1 > reverseDirection
+		avatar EOS > stepBack
+		gen1 gen2 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

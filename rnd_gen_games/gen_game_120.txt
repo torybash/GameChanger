@@ -1,0 +1,16 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > RandomNPC img=box
+		gen2 > Immovable img=mushroom
+	InteractionSet
+		avatar wall > undoAll
+		gen2 EOS > wrapAround
+		gen1 gen2 > turnAround
+		avatar gen2 > bounceForward scoreChange=9
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

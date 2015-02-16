@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Immovable img=monster
+		gen2 > RandomAltChaser fleeing=TRUE stype1=gen1 stype2=avatar img=door epsilon=0.235046569820609
+		gen3 > Flicker limit=47 img=bee
+		gen4 > Bomber total=16 orientation=RIGHT stype=gen1 img=truck prob=0.25
+	InteractionSet
+		gen3 gen1 > transformTo stype=gen2
+		gen1 avatar > spawnIfHasMore limit=0 stype=gen3 resource=null
+		avatar gen2 > undoAll
+		gen1 gen2 > bounceForward
+		gen2 EOS > flipDirection
+		avatar EOS > spawnIfHasMore limit=0 stype=gen2 resource=null
+		avatar gen3 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

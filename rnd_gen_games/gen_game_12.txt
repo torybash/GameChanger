@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Spreader limit=33 stype=gen3 img=honey
+		gen2 > SpawnPoint stype=gen4 img=spaceship
+		gen3 > Portal stype=gen1 img=missile
+		gen4 > RandomNPC singleton=TRUE img=forest
+	InteractionSet
+		avatar wall > undoAll
+		gen2 avatar > wallStop scoreChange=1
+		avatar gen2 > spawnIfHasMore limit=0 stype=gen1 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

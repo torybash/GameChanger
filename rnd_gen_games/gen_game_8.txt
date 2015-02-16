@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Portal stype=gen3 img=camel
+		gen2 > Immovable img=fire
+		gen3 > Resource limit=15 value=4 img=fire
+		gen4 > Portal stype=gen3 img=frog
+		gen5 > Spreader limit=48 spreadprob=0.0841 stype=gen6 img=fire
+		gen6 > RandomMissile speed=0.06760000000000001 img=explosion
+		gen7 > Spreader limit=49 stype=gen3 img=log
+	InteractionSet
+		avatar gen5 > killIfOtherHasMore limit=11 resource=gen3
+		gen7 gen6 > killIfHasMore limit=15 resource=gen3
+		gen7 gen1 > teleportToExit
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

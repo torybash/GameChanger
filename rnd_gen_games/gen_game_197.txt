@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Fleeing fleeing=TRUE stype=gen4 img=frog
+		gen2 > Chaser stype=gen4 img=marsh
+		gen3 > Flicker limit=41 img=goal
+		gen4 > Portal stype=gen5 img=virus
+		gen5 > Passive img=hell
+		gen6 > Spreader limit=12 stype=gen1 img=forest
+	InteractionSet
+		gen5 gen6 > wallStop
+		avatar wall > killSprite scoreChange=7
+		avatar gen1 > bounceForward
+		gen2 gen5 > flipDirection scoreChange=1
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=FALSE 

@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar
+		gen1 > Chaser fleeing=TRUE stype=gen4 img=dirt
+		gen2 > Fleeing stype=gen4 singleton=TRUE img=shovel
+		gen3 > AlternateChaser stype1=gen4 stype2=gen2 img=log cooldown=2
+		gen4 > SpawnPoint stype=gen1 img=forest cooldown=5
+	InteractionSet
+		gen1 gen3 > attractGaze
+		gen4 EOS > undoAll scoreChange=8
+		avatar gen2 > attractGaze
+		gen3 gen3 > attractGaze
+		gen2 gen1 > attractGaze
+		gen3 gen1 > attractGaze
+		avatar EOS > turnAround
+		gen1 gen2 > attractGaze scoreChange=9
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=avatar stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

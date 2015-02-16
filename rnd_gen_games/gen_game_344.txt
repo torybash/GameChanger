@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Resource limit=7 value=1 img=goal
+		gen2 > Spreader limit=12 stype=gen1 img=diamond
+	InteractionSet
+		avatar EOS > killIfHasLess limit=1 resource=gen1
+		gen2 EOS > changeResource value=2 resource=gen1
+		gen1 wall > wallStop
+		gen2 gen1 > undoAll
+		gen2 wall > killSprite
+		gen2 gen1 > spawnIfHasMore limit=12 stype=gen1 resource=gen1 scoreChange=-2
+		avatar gen2 > turnAround
+		gen2 gen1 > pullWithIt
+		gen2 EOS > stepBack scoreChange=3
+		avatar EOS > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=gen1 win=FALSE 

@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen3 img=avatar cooldown=9
+		gen1 > SpawnPoint stype=gen2 singleton=TRUE img=marsh prob=0.5625
+		gen2 > SpawnPoint stype=gen1 img=forest prob=0.6400000000000001
+		gen3 > SpawnPoint stype=gen2 img=alien prob=0.9801 cooldown=6
+	InteractionSet
+		gen2 EOS > killSprite scoreChange=10
+		gen2 gen1 > wallStop
+		gen1 gen3 > cloneSprite scoreChange=5
+		gen2 avatar > stepBack
+		avatar gen2 > killIfFromAbove scoreChange=-2
+		gen2 gen3 > undoAll
+		gen1 gen3 > wallStop
+		gen1 wall > spawnIfHasMore limit=0 stype=gen2 resource=null
+		avatar EOS > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

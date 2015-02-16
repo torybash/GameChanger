@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar cooldown=9
+		gen1 > Portal stype=gen3 img=fire
+		gen2 > OrientedFlicker limit=7 orientation=LEFT img=honey
+		gen3 > Portal stype=gen4 img=ghost
+		gen4 > Spreader limit=42 stype=gen3 img=ghost
+	InteractionSet
+		avatar EOS > spawnIfHasMore limit=0 stype=gen4 resource=null
+		gen3 gen3 > spawnIfHasMore limit=0 stype=gen4 resource=null
+		avatar gen3 > undoAll
+		gen1 avatar > spawnIfHasMore limit=0 stype=gen3 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

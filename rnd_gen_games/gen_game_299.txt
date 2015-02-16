@@ -1,0 +1,16 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > Spreader limit=5 spreadprob=0.6084 stype=gen2 img=sword
+		gen2 > Missile orientation=UP singleton=TRUE img=forest
+	InteractionSet
+		avatar wall > undoAll
+		gen1 gen1 > wallStop
+		gen1 EOS > undoAll
+		gen1 gen1 > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

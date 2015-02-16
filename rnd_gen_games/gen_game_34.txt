@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > Bomber orientation=DOWN stype=gen2 img=alien prob=0.9409
+		gen2 > Chaser stype=gen3 img=key
+		gen3 > Chaser stype=avatar img=cocoon
+	InteractionSet
+		gen1 avatar > attractGaze scoreChange=3
+		gen3 gen3 > attractGaze
+		gen3 avatar > attractGaze
+		gen2 wall > turnAround
+		gen1 gen2 > attractGaze scoreChange=-4
+		avatar gen3 > attractGaze
+		gen3 avatar > attractGaze
+		avatar EOS > transformTo stype=avatar
+		gen2 wall > killSprite
+		gen3 gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

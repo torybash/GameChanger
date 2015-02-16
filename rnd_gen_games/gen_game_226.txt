@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomNPC img=log
+		gen2 > SpawnPoint stype=gen5 img=gold prob=0.4900000000000001
+		gen3 > Flicker limit=43 img=bullet
+		gen4 > Immovable img=water
+		gen5 > RandomNPC img=wall
+		gen6 > RandomNPC img=cocoon
+		gen7 > Immovable img=gold
+	InteractionSet
+		gen5 gen6 > attractGaze
+		gen7 gen3 > stepBack
+		gen3 gen2 > transformTo stype=gen5
+		gen7 gen2 > spawnIfHasMore limit=0 stype=gen7 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

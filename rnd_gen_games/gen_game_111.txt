@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar
+		gen1 > Flicker limit=43 img=wall
+		gen2 > Missile orientation=LEFT img=hole
+		gen3 > Passive singleton=TRUE img=powerpill
+		gen4 > OrientedFlicker limit=45 orientation=UP img=flower
+	InteractionSet
+		gen2 wall > undoAll
+		avatar gen3 > pullWithIt
+		avatar gen3 > bounceForward
+		avatar gen3 > killIfFromAbove scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

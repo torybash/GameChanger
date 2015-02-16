@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar ammo=gen6
+		gen1 > RandomAltChaser fleeing=TRUE stype1=gen3 stype2=gen4 img=monster epsilon=0.5933926048141207
+		gen2 > RandomAltChaser stype1=gen3 stype2=gen4 img=powerpill epsilon=0.8329193802538288 cooldown=2
+		gen3 > AlternateChaser stype1=gen2 stype2=gen6 img=water
+		gen4 > Resource limit=11 value=3 img=forest
+		gen5 > Missile orientation=DOWN singleton=TRUE img=virus cooldown=1
+		gen6 > Resource limit=1 value=2 img=gold
+	InteractionSet
+		gen4 gen6 > stepBack
+		gen2 gen3 > attractGaze
+		gen3 gen3 > attractGaze
+		gen4 gen3 > killIfFromAbove
+		gen2 gen6 > killSprite
+		gen3 gen2 > attractGaze scoreChange=-2
+		gen5 gen5 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=avatar stype2=gen4 win=FALSE 

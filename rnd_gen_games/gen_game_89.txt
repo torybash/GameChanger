@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Flicker limit=35 img=bomb
+		gen2 > OrientedFlicker limit=4 orientation=UP img=shovel
+		gen3 > Immovable singleton=TRUE img=fire
+		gen4 > Chaser stype=gen5 img=frog
+		gen5 > Immovable img=mana
+		gen6 > Chaser stype=avatar img=truck cooldown=9
+	InteractionSet
+		gen1 gen2 > wallStop
+		gen1 wall > bounceForward
+		gen6 gen3 > transformTo stype=gen5
+		gen6 gen3 > undoAll
+		gen6 gen3 > stepBack
+		gen1 gen4 > stepBack
+		gen5 EOS > undoAll scoreChange=-3
+		avatar gen1 > killIfFromAbove scoreChange=4
+		gen6 wall > stepBack
+		gen4 gen6 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=gen6 win=FALSE 

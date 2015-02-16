@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Spreader limit=35 spreadprob=0.34809999999999997 stype=gen4 img=butterfly
+		gen2 > Immovable img=cocoon
+		gen3 > Missile orientation=LEFT img=marsh
+		gen4 > Portal stype=gen1 img=marsh
+	InteractionSet
+		gen3 gen3 > attractGaze scoreChange=1
+		gen1 EOS > cloneSprite scoreChange=-4
+		avatar EOS > stepBack
+		avatar EOS > wrapAround scoreChange=7
+		gen3 EOS > cloneSprite
+		gen2 gen1 > spawnIfHasMore limit=0 stype=gen1 resource=null
+		gen3 gen2 > killIfFromAbove scoreChange=3
+		gen4 avatar > bounceForward
+		gen1 gen3 > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen1 gen4 > transformTo stype=gen4 scoreChange=7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=avatar stype2=gen1 win=FALSE 

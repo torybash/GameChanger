@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar cooldown=1
+		gen1 > RandomNPC speed=0.7569 img=dirt cooldown=5
+		gen2 > Resource limit=8 value=2 img=bullet
+		gen3 > Immovable img=explosion
+		gen4 > RandomMissile speed=0.2601 img=marsh
+		gen5 > Fleeing fleeing=TRUE stype=gen2 img=key cooldown=7
+	InteractionSet
+		gen4 wall > changeResource value=1 resource=gen2 scoreChange=-3
+		gen2 EOS > wrapAround
+		gen1 gen4 > attractGaze
+		gen3 EOS > killIfHasLess limit=15 resource=gen2
+		gen2 gen1 > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=avatar stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

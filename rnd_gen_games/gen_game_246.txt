@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar
+		gen1 > RandomAltChaser stype1=avatar stype2=avatar img=mana epsilon=0.9017262594669567
+		gen2 > SpawnPoint stype=gen3 singleton=TRUE img=forest prob=0.004900000000000001
+		gen3 > SpawnPoint stype=gen5 img=key prob=0.8464
+		gen4 > AlternateChaser stype1=gen1 stype2=gen1 img=truck cooldown=8
+		gen5 > RandomNPC img=cocoon
+	InteractionSet
+		gen1 gen4 > attractGaze
+		gen2 gen5 > pullWithIt
+		avatar EOS > stepBack
+		gen1 gen3 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

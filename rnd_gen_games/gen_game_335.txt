@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=10
+		gen1 > Passive img=wall
+		gen2 > Portal stype=gen3 img=frog
+		gen3 > SpawnPoint stype=gen2 img=alien
+		gen4 > Chaser stype=gen5 img=boulder
+		gen5 > RandomAltChaser stype1=avatar stype2=gen4 img=marsh epsilon=0.07940869009931817
+		gen6 > AlternateChaser fleeing=TRUE stype1=gen5 stype2=gen5 img=butterfly cooldown=10
+	InteractionSet
+		avatar wall > stepBack
+		gen2 gen3 > undoAll
+		gen6 gen3 > reverseDirection
+		gen5 gen4 > attractGaze
+		gen2 gen1 > spawnIfHasMore limit=0 stype=gen4 resource=null
+		gen6 gen4 > attractGaze
+		gen5 gen6 > attractGaze scoreChange=-4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen6 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

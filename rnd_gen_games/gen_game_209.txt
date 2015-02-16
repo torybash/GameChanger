@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Bomber orientation=LEFT stype=gen3 img=wall prob=0.010000000000000002 cooldown=8
+		gen2 > RandomMissile singleton=TRUE img=key
+		gen3 > Passive img=monster
+		gen4 > RandomMissile img=goal
+		gen5 > Fleeing fleeing=TRUE stype=gen2 img=forest
+	InteractionSet
+		gen2 gen4 > attractGaze
+		gen4 wall > spawnIfHasMore limit=0 stype=gen5 resource=null scoreChange=-2
+		gen2 EOS > spawnIfHasMore limit=0 stype=gen3 resource=null scoreChange=10
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

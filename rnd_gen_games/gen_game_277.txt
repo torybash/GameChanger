@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=3
+		gen1 > Passive img=cocoon
+		gen2 > RandomNPC img=portal
+		gen3 > Flicker limit=27 img=butterfly
+		gen4 > Spreader limit=21 stype=gen5 img=alien
+		gen5 > Spreader limit=50 stype=gen2 img=camel
+	InteractionSet
+		gen3 gen1 > transformTo stype=gen5
+		gen2 gen4 > turnAround scoreChange=7
+		gen1 avatar > cloneSprite
+		avatar EOS > stepBack scoreChange=8
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

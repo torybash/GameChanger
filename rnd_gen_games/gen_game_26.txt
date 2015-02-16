@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar speed=0.3364 stype=gen1 img=avatar
+		gen1 > RandomMissile img=water
+		gen2 > Missile orientation=UP img=powerpill
+		gen3 > Resource limit=1 value=5 img=diamond
+		gen4 > Fleeing stype=gen5 img=butterfly
+		gen5 > Fleeing speed=0.8649000000000001 stype=gen7 img=diamond
+		gen6 > RandomNPC img=mushroom
+		gen7 > Bomber total=9 orientation=RIGHT speed=0.0576 stype=gen1 img=monster
+	InteractionSet
+		gen2 gen6 > attractGaze
+		gen7 EOS > flipDirection
+		gen4 gen6 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen5 win=FALSE 

@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=1
+		gen1 > Portal stype=gen6 img=bee
+		gen2 > Immovable img=gold
+		gen3 > Immovable img=portal
+		gen4 > Resource limit=2 value=1 img=door
+		gen5 > RandomAltChaser fleeing=TRUE stype1=gen4 stype2=gen1 img=hell epsilon=0.7661326193988331
+		gen6 > Resource limit=14 value=3 img=water
+		gen7 > Bomber orientation=DOWN speed=0.0576 stype=gen5 img=flower prob=0.0144 cooldown=7
+	InteractionSet
+		gen5 EOS > turnAround scoreChange=6
+		gen6 gen1 > killIfFromAbove
+		avatar gen1 > transformTo stype=avatar
+		gen1 gen3 > spawnIfHasMore limit=2 stype=gen1 resource=gen6
+		gen3 gen5 > killIfFromAbove
+		gen7 gen3 > killSprite scoreChange=2
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen7 win=FALSE 

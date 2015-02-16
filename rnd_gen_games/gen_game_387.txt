@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen4 img=avatar
+		gen1 > Chaser stype=avatar img=bee
+		gen2 > RandomAltChaser stype1=gen6 stype2=gen6 img=sword epsilon=0.6915739406864594 cooldown=3
+		gen3 > Immovable img=explosion
+		gen4 > RandomAltChaser stype1=gen3 stype2=gen2 img=mana epsilon=0.3696449574659586 cooldown=5
+		gen5 > Missile orientation=UP img=log cooldown=6
+		gen6 > SpawnPoint stype=gen5 img=butterfly prob=0.0961
+	InteractionSet
+		gen2 gen5 > attractGaze
+		gen2 avatar > attractGaze scoreChange=-1
+		gen6 gen1 > spawnIfHasMore limit=0 stype=gen6 resource=null
+		gen4 gen3 > spawnIfHasMore limit=0 stype=gen6 resource=null scoreChange=-5
+		gen4 gen5 > attractGaze
+		gen4 gen6 > spawnIfHasMore limit=0 stype=gen5 resource=null
+		gen4 EOS > wrapAround scoreChange=-1
+		gen2 gen6 > bounceForward
+		gen6 wall > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

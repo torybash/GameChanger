@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Chaser speed=0.7224999999999999 stype=gen2 img=truck
+		gen2 > AlternateChaser stype1=gen4 stype2=avatar img=flower
+		gen3 > Spreader limit=5 stype=gen2 img=honey
+		gen4 > Chaser stype=gen3 img=dirt
+		gen5 > Chaser stype=gen4 img=virus
+	InteractionSet
+		gen4 gen4 > attractGaze
+		gen2 gen1 > attractGaze scoreChange=-5
+		gen3 avatar > killSprite
+		gen5 wall > stepBack scoreChange=-1
+		gen4 gen3 > killIfFromAbove
+		gen4 gen1 > attractGaze scoreChange=-4
+		gen3 gen1 > stepBack
+		gen3 gen5 > pullWithIt
+		gen3 EOS > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=gen2 win=FALSE 

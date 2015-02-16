@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > AlternateChaser stype1=gen2 stype2=gen6 img=base
+		gen2 > Missile orientation=UP img=city
+		gen3 > OrientedFlicker limit=7 orientation=RIGHT img=forest
+		gen4 > Passive img=missile
+		gen5 > RandomAltChaser stype1=gen3 stype2=gen1 img=boulder epsilon=0.8529107907128132
+		gen6 > AlternateChaser fleeing=TRUE stype1=gen5 stype2=avatar img=camel
+		gen7 > Fleeing stype=gen4 singleton=TRUE img=diamond cooldown=10
+	InteractionSet
+		gen1 gen1 > attractGaze
+		avatar wall > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=8
+		gen4 gen6 > transformTo stype=gen6 scoreChange=-4
+		gen4 gen4 > pullWithIt
+		avatar gen7 > pullWithIt
+		gen4 gen3 > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

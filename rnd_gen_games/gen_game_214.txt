@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > RandomMissile img=portal
+		gen2 > Chaser stype=gen1 img=powerpill cooldown=3
+	InteractionSet
+		gen1 gen1 > attractGaze
+		avatar gen1 > undoAll
+		gen2 gen2 > attractGaze
+		gen2 avatar > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=3
+		gen1 avatar > killSprite scoreChange=8
+		gen2 EOS > wrapAround scoreChange=10
+		gen1 wall > flipDirection
+		gen1 avatar > flipDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

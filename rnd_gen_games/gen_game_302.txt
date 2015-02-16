@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen6 img=avatar cooldown=8
+		gen1 > Passive img=cocoon
+		gen2 > Resource limit=18 value=2 img=mushroom
+		gen3 > Passive img=portal
+		gen4 > Resource limit=4 value=2 img=truck
+		gen5 > AlternateChaser stype1=gen2 stype2=gen4 img=alien
+		gen6 > RandomMissile singleton=TRUE img=honey
+		gen7 > RandomMissile speed=0.5041 img=base
+	InteractionSet
+		gen5 gen5 > attractGaze
+		gen4 avatar > killIfHasLess limit=14 resource=gen2
+		gen6 EOS > stepBack scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=FALSE 

@@ -1,0 +1,15 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Chaser stype=avatar img=zombie cooldown=3
+		gen2 > Fleeing stype=gen1 img=marsh
+	InteractionSet
+		avatar wall > pullWithIt
+		gen1 avatar > cloneSprite scoreChange=-4
+		avatar EOS > transformTo stype=avatar
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

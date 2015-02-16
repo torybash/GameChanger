@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Flicker limit=33 singleton=TRUE img=shovel
+		gen2 > Bomber orientation=LEFT stype=gen4 img=missile
+		gen3 > RandomMissile img=forest
+		gen4 > Missile orientation=RIGHT img=key
+	InteractionSet
+		gen2 gen3 > attractGaze
+		gen2 gen3 > attractGaze scoreChange=8
+		avatar gen4 > stepBack scoreChange=-5
+		avatar wall > undoAll
+		avatar EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen2 gen2 > attractGaze
+		gen4 gen4 > attractGaze
+		gen1 EOS > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

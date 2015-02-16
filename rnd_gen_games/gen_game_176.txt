@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > Immovable img=alien
+		gen2 > AlternateChaser speed=0.4624000000000001 stype1=gen1 stype2=gen3 img=sword
+		gen3 > Resource limit=13 value=3 img=camel
+		gen4 > Portal stype=gen6 img=bullet
+		gen5 > SpawnPoint stype=gen3 img=boulder prob=0.0081 cooldown=2
+		gen6 > RandomAltChaser stype1=gen3 stype2=gen3 img=zombie epsilon=0.44616905504226345
+	InteractionSet
+		gen1 gen2 > bounceForward
+		avatar gen6 > stepBack
+		gen6 avatar > killIfOtherHasMore limit=7 resource=gen3
+		gen5 avatar > bounceForward scoreChange=3
+		gen2 avatar > spawnIfHasMore limit=0 stype=gen1 resource=gen3
+		gen4 gen1 > wallStop
+		gen2 gen4 > teleportToExit
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

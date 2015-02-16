@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Flicker limit=26 img=water
+		gen2 > Passive img=wall
+		gen3 > Passive img=shovel
+		gen4 > Spreader limit=39 spreadprob=0.1024 stype=gen5 img=butterfly
+		gen5 > Spreader limit=4 spreadprob=0.16810000000000003 stype=gen2 img=frog
+	InteractionSet
+		gen2 wall > killIfFromAbove
+		gen5 gen4 > killSprite scoreChange=-2
+		gen5 gen2 > wallStop
+		gen1 EOS > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=FALSE 

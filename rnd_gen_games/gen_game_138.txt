@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Immovable img=base
+		gen2 > Bomber orientation=DOWN stype=gen5 img=goal prob=0.0256
+		gen3 > OrientedFlicker limit=8 orientation=UP img=virus
+		gen4 > Portal stype=gen3 img=diamond
+		gen5 > Missile orientation=RIGHT img=ghost
+	InteractionSet
+		gen4 gen1 > wallStop
+		gen5 gen4 > stepBack
+		gen2 gen4 > cloneSprite
+		gen3 gen4 > killIfFromAbove scoreChange=4
+		avatar gen4 > killIfFromAbove
+		avatar gen3 > killIfFromAbove
+		gen3 wall > bounceForward scoreChange=1
+		gen4 gen3 > wallStop
+		gen5 gen4 > teleportToExit
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=gen1 win=FALSE 

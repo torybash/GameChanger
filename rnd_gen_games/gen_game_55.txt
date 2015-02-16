@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar cooldown=5
+		gen1 > RandomMissile img=door cooldown=2
+		gen2 > AlternateChaser stype1=gen1 stype2=avatar img=powerpill
+		gen3 > SpawnPoint stype=gen4 img=box
+		gen4 > Spreader limit=9 stype=gen3 img=camel
+	InteractionSet
+		gen3 EOS > stepBack
+		gen4 gen2 > bounceForward
+		avatar EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen2 gen3 > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen4 wall > bounceForward scoreChange=3
+		gen4 gen4 > transformTo stype=gen2
+		gen2 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

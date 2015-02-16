@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar
+		gen1 > Fleeing speed=0.9801 stype=gen3 img=sword cooldown=7
+		gen2 > Bomber orientation=LEFT stype=gen3 img=diamond prob=0.5328999999999999
+		gen3 > Chaser fleeing=TRUE stype=gen5 img=cocoon
+		gen4 > Passive img=portal
+		gen5 > Missile orientation=UP speed=0.1296 img=sword
+		gen6 > Bomber orientation=LEFT stype=gen3 img=truck prob=0.6084
+	InteractionSet
+		avatar gen4 > killIfFromAbove
+		avatar gen5 > attractGaze scoreChange=9
+		gen4 gen1 > undoAll
+		gen3 EOS > stepBack
+		gen4 gen4 > wallStop
+		gen5 gen5 > attractGaze scoreChange=1
+		gen2 gen3 > attractGaze
+		gen5 gen6 > attractGaze
+		gen5 gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

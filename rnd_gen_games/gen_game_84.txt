@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen5 img=avatar cooldown=2
+		gen1 > SpawnPoint stype=gen4 img=dirt prob=0.3844
+		gen2 > RandomNPC img=base
+		gen3 > Immovable img=truck
+		gen4 > Bomber orientation=LEFT stype=gen1 img=mana prob=0.016900000000000002 cooldown=3
+		gen5 > RandomMissile img=spaceship cooldown=5
+		gen6 > RandomMissile img=key
+		gen7 > OrientedFlicker limit=49 orientation=DOWN img=zombie
+	InteractionSet
+		avatar wall > undoAll scoreChange=7
+		gen6 gen2 > attractGaze scoreChange=8
+		gen7 gen6 > bounceForward
+		gen6 gen6 > attractGaze scoreChange=4
+		gen4 gen7 > cloneSprite scoreChange=-5
+		gen1 EOS > killSprite
+		gen5 gen6 > attractGaze
+		gen4 gen3 > pullWithIt
+		avatar gen3 > transformTo stype=avatar
+		gen5 gen6 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=FALSE 

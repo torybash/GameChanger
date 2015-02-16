@@ -1,0 +1,15 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=7
+		gen1 > SpawnPoint total=15 stype=gen2 singleton=TRUE img=gold prob=0.11560000000000002
+		gen2 > Spreader limit=25 stype=gen1 singleton=TRUE img=missile
+	InteractionSet
+		avatar wall > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 gen2 > killSprite
+		gen2 wall > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

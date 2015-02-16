@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=10
+		gen1 > Flicker limit=41 img=fire
+		gen2 > Bomber total=7 orientation=UP stype=gen6 img=box prob=0.1296
+		gen3 > SpawnPoint stype=gen1 singleton=TRUE img=bee
+		gen4 > Fleeing fleeing=TRUE stype=gen3 img=zombie
+		gen5 > Spreader limit=47 stype=gen6 img=box
+		gen6 > Bomber orientation=DOWN stype=gen1 img=fire prob=0.0484
+		gen7 > Fleeing fleeing=TRUE stype=gen2 img=missile
+	InteractionSet
+		gen1 avatar > pullWithIt
+		gen6 gen7 > attractGaze
+		gen4 gen1 > turnAround
+		gen1 gen4 > undoAll scoreChange=2
+		gen4 gen6 > attractGaze
+		gen2 gen5 > turnAround
+		gen3 gen7 > killSprite scoreChange=7
+		gen6 EOS > wrapAround
+		gen2 gen1 > killSprite
+		avatar gen4 > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=FALSE 

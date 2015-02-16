@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=1
+		gen1 > RandomAltChaser fleeing=TRUE stype1=gen6 stype2=gen3 img=portal epsilon=0.421873987548804 cooldown=3
+		gen2 > Portal stype=gen4 img=sword
+		gen3 > AlternateChaser stype1=avatar stype2=gen5 img=gold
+		gen4 > Spreader limit=44 stype=gen2 img=portal
+		gen5 > SpawnPoint stype=gen3 img=butterfly
+		gen6 > Spreader limit=34 stype=gen1 img=hole
+	InteractionSet
+		gen4 gen5 > transformTo stype=gen2
+		gen6 gen4 > pullWithIt
+		gen3 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

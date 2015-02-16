@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > Fleeing fleeing=TRUE stype=gen3 img=city
+		gen2 > Immovable img=log
+		gen3 > Chaser speed=0.4761000000000001 stype=gen1 img=log
+	InteractionSet
+		gen2 avatar > pullWithIt
+		gen3 gen1 > attractGaze
+		gen1 gen1 > attractGaze
+		gen1 wall > stepBack scoreChange=1
+		avatar EOS > reverseDirection scoreChange=5
+		gen2 avatar > cloneSprite
+		gen3 gen2 > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

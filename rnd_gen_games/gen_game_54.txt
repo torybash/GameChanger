@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > AlternateChaser fleeing=TRUE stype1=gen3 stype2=gen3 img=pellet
+		gen2 > Fleeing fleeing=TRUE stype=gen1 img=butterfly
+		gen3 > SpawnPoint stype=gen2 img=cocoon prob=0.6889000000000001
+	InteractionSet
+		gen2 gen1 > attractGaze
+		avatar gen1 > stepBack scoreChange=10
+		gen1 gen3 > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen3 win=FALSE 

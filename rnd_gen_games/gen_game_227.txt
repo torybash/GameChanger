@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > Immovable img=shovel
+		gen2 > Passive img=missile
+		gen3 > Passive img=hole
+	InteractionSet
+		gen1 gen2 > bounceForward scoreChange=3
+		gen3 avatar > cloneSprite
+		gen1 gen3 > undoAll scoreChange=9
+		gen2 gen1 > pullWithIt
+		gen3 avatar > killIfFromAbove
+		gen2 gen1 > bounceForward scoreChange=7
+		gen1 EOS > spawnIfHasMore limit=0 stype=gen2 resource=null
+		avatar gen3 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

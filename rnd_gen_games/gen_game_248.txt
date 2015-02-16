@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > RandomNPC img=truck
+		gen2 > Spreader limit=28 stype=gen6 img=marsh
+		gen3 > Passive img=virus
+		gen4 > SpawnPoint stype=gen7 img=log prob=0.04409999999999999 cooldown=5
+		gen5 > OrientedFlicker limit=1 orientation=LEFT img=hole
+		gen6 > Missile orientation=LEFT img=box
+		gen7 > AlternateChaser stype1=gen2 stype2=gen1 img=hole
+	InteractionSet
+		avatar gen5 > wallStop
+		gen1 gen2 > undoAll
+		gen3 gen5 > killSprite
+		gen1 gen5 > killSprite
+		avatar gen2 > turnAround scoreChange=-1
+		gen1 avatar > attractGaze scoreChange=6
+		gen5 gen2 > stepBack
+		gen5 wall > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

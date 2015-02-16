@@ -1,0 +1,18 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Fleeing stype=gen2 singleton=TRUE img=hole
+		gen2 > RandomNPC img=log
+		gen3 > Chaser fleeing=TRUE speed=0.10890000000000001 stype=avatar img=base
+	InteractionSet
+		gen3 wall > stepBack
+		gen1 EOS > undoAll scoreChange=10
+		gen1 gen1 > attractGaze
+		gen3 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

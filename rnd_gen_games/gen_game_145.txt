@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar cooldown=7
+		gen1 > RandomNPC img=spaceship
+		gen2 > Passive img=marsh
+		gen3 > AlternateChaser stype1=gen4 singleton=TRUE stype2=avatar img=explosion
+		gen4 > Missile orientation=DOWN img=bullet
+	InteractionSet
+		gen3 avatar > reverseDirection
+		gen2 gen3 > transformTo stype=gen3
+		gen3 gen1 > attractGaze scoreChange=-3
+		gen2 gen4 > pullWithIt
+		avatar gen2 > transformTo stype=avatar
+		avatar gen3 > bounceForward
+		gen4 gen2 > bounceForward scoreChange=3
+		gen2 wall > cloneSprite
+		gen4 wall > stepBack scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

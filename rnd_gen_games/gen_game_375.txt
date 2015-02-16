@@ -1,0 +1,15 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.7395999999999999 img=avatar
+		gen1 > SpawnPoint stype=gen2 img=mana prob=0.0484 cooldown=7
+		gen2 > Spreader limit=24 stype=gen1 img=fire
+	InteractionSet
+		avatar gen1 > reverseDirection
+		gen2 avatar > wallStop
+		gen1 avatar > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=-5
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=FALSE 

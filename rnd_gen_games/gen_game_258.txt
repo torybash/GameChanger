@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Passive img=honey
+		gen2 > OrientedFlicker limit=44 orientation=DOWN img=zombie
+		gen3 > SpawnPoint stype=gen1 img=cocoon prob=0.9409
+		gen4 > RandomMissile img=fire cooldown=9
+		gen5 > SpawnPoint stype=gen3 img=boulder prob=0.39690000000000003
+	InteractionSet
+		gen4 gen2 > reverseDirection scoreChange=3
+		gen3 gen1 > cloneSprite
+		gen2 wall > cloneSprite
+		gen4 wall > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

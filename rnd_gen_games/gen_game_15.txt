@@ -1,0 +1,18 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Flicker limit=49 img=key
+		gen2 > RandomMissile singleton=TRUE img=water
+	InteractionSet
+		gen1 EOS > wrapAround
+		gen1 gen1 > wallStop
+		gen2 gen1 > bounceForward
+		avatar wall > turnAround
+		gen1 avatar > pullWithIt
+		gen2 avatar > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Immovable img=missile
+		gen2 > Fleeing stype=gen3 img=shovel
+		gen3 > Missile orientation=LEFT img=bullet
+		gen4 > Passive img=sword
+		gen5 > Fleeing stype=gen2 img=frog cooldown=10
+		gen6 > RandomAltChaser fleeing=TRUE stype1=gen5 stype2=gen4 img=ghost epsilon=0.2759655050521862
+	InteractionSet
+		gen5 gen4 > stepBack
+		avatar gen3 > transformTo stype=avatar
+		gen2 gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen5 stype2=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen5 win=FALSE 

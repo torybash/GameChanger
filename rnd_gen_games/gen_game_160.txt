@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Passive img=water
+		gen2 > Bomber orientation=DOWN stype=gen1 img=boulder cooldown=3
+		gen3 > Passive img=wall
+	InteractionSet
+		gen2 gen1 > wallStop
+		avatar gen3 > stepBack scoreChange=-5
+		gen2 gen3 > transformTo stype=gen3
+		avatar gen3 > stepBack
+		gen2 gen2 > attractGaze scoreChange=5
+		gen3 wall > cloneSprite scoreChange=8
+		gen2 avatar > undoAll scoreChange=-5
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

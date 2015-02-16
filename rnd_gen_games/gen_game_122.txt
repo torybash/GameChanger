@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar cooldown=8
+		gen1 > RandomAltChaser fleeing=TRUE stype1=gen5 stype2=gen5 img=missile epsilon=0.28564147285654906
+		gen2 > RandomNPC img=ghost cooldown=3
+		gen3 > Immovable img=hell
+		gen4 > SpawnPoint stype=gen2 img=alien prob=0.2304
+		gen5 > RandomMissile img=marsh
+	InteractionSet
+		gen4 wall > killSprite
+		gen2 EOS > reverseDirection scoreChange=2
+		gen1 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

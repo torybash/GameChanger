@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Portal stype=gen6 img=monster
+		gen2 > RandomMissile img=boulder
+		gen3 > Chaser fleeing=TRUE stype=gen5 singleton=TRUE img=honey cooldown=5
+		gen4 > Portal stype=gen6 img=water
+		gen5 > RandomAltChaser stype1=gen2 stype2=gen2 img=goal epsilon=0.2356595175837617
+		gen6 > Flicker limit=31 img=hell
+		gen7 > RandomAltChaser stype1=gen5 stype2=avatar img=log epsilon=0.5277767191013475
+	InteractionSet
+		gen4 gen3 > pullWithIt
+		gen7 wall > undoAll
+		gen6 gen2 > spawnIfHasMore limit=0 stype=gen4 resource=null
+		gen3 gen7 > attractGaze
+		gen5 gen3 > attractGaze
+		gen5 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=gen3 win=FALSE 

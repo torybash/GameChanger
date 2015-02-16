@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Missile orientation=UP img=honey cooldown=7
+		gen2 > RandomNPC img=zombie cooldown=8
+	InteractionSet
+		gen1 avatar > attractGaze scoreChange=6
+		avatar gen2 > attractGaze
+		gen1 EOS > flipDirection
+		gen1 gen2 > attractGaze
+		gen1 EOS > wrapAround
+		gen1 gen2 > attractGaze scoreChange=-3
+		gen2 avatar > attractGaze
+		gen1 avatar > attractGaze
+		gen2 wall > pullWithIt
+		gen2 avatar > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=gen2 win=FALSE 

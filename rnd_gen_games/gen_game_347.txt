@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > OrientedFlicker limit=37 orientation=DOWN img=powerpill
+		gen2 > Missile orientation=RIGHT img=honey cooldown=4
+		gen3 > Portal stype=gen2 img=bullet
+		gen4 > RandomMissile img=hole
+		gen5 > Resource limit=18 value=2 img=hole
+		gen6 > Passive img=box
+	InteractionSet
+		gen1 gen4 > killIfHasLess limit=13 resource=gen5
+		gen1 EOS > spawnIfHasMore limit=15 stype=gen2 resource=gen5 scoreChange=-4
+		gen6 gen5 > killSprite
+		avatar gen1 > wallStop
+		gen1 avatar > killIfHasLess limit=10 resource=gen5
+		gen4 EOS > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

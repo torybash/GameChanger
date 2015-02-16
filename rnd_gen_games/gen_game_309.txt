@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > AlternateChaser speed=0.5041 stype1=gen3 stype2=gen5 img=forest cooldown=2
+		gen2 > RandomNPC singleton=TRUE img=wall
+		gen3 > Resource limit=3 value=4 img=zombie
+		gen4 > RandomAltChaser fleeing=TRUE speed=0.8281000000000001 stype1=gen5 singleton=TRUE stype2=gen2 img=monster epsilon=0.06520331899314336
+		gen5 > OrientedFlicker limit=12 orientation=LEFT singleton=TRUE img=hole
+	InteractionSet
+		gen1 gen5 > changeResource value=5 resource=gen3
+		avatar EOS > changeResource value=2 resource=gen3
+		gen4 gen4 > attractGaze
+		gen1 gen3 > flipDirection
+		avatar gen5 > undoAll
+		gen5 gen3 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

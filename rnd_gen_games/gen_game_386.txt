@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=1
+		gen1 > Flicker limit=25 img=missile
+		gen2 > Missile orientation=LEFT img=honey cooldown=1
+		gen3 > Resource limit=5 value=0 img=frog
+		gen4 > RandomNPC singleton=TRUE img=water
+		gen5 > Chaser fleeing=TRUE stype=gen1 img=diamond
+	InteractionSet
+		gen2 gen4 > attractGaze
+		avatar gen3 > killIfFromAbove
+		gen1 gen5 > transformTo stype=gen4 scoreChange=7
+		gen2 gen5 > attractGaze
+		gen4 gen1 > bounceForward
+		gen2 avatar > wallStop
+		gen2 gen1 > undoAll
+		avatar gen3 > killSprite scoreChange=2
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=FALSE 

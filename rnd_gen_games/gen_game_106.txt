@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar speed=0.1444 stype=gen3 img=avatar
+		gen1 > Spreader limit=9 stype=gen2 img=bomb
+		gen2 > Immovable img=box
+		gen3 > SpawnPoint total=4 stype=gen1 img=cocoon prob=0.28090000000000004
+	InteractionSet
+		gen2 gen3 > wallStop
+		gen2 gen2 > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen1 gen1 > wallStop
+		gen3 gen1 > bounceForward
+		gen3 wall > stepBack
+		gen1 EOS > killSprite scoreChange=-4
+		gen2 avatar > transformTo stype=gen3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

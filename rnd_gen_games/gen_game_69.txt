@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Chaser fleeing=TRUE stype=avatar img=alien cooldown=4
+		gen2 > Portal stype=gen1 singleton=TRUE img=bee
+	InteractionSet
+		avatar gen2 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 gen1 > attractGaze
+		gen2 gen2 > undoAll
+		gen2 gen1 > killSprite scoreChange=7
+		avatar gen2 > wallStop
+		gen2 EOS > undoAll
+		avatar wall > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

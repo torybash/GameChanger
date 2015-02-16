@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Missile orientation=RIGHT speed=0.04409999999999999 img=base
+		gen2 > Portal stype=gen5 singleton=TRUE img=virus
+		gen3 > Portal stype=gen1 img=door
+		gen4 > OrientedFlicker limit=20 orientation=UP img=mana
+		gen5 > RandomNPC img=truck
+		gen6 > RandomAltChaser speed=0.7055999999999999 stype1=gen2 stype2=gen5 img=shovel epsilon=0.314170594819114
+	InteractionSet
+		gen1 gen6 > attractGaze scoreChange=7
+		gen1 gen1 > attractGaze scoreChange=1
+		gen6 gen1 > attractGaze
+		gen1 gen2 > killSprite scoreChange=5
+		gen6 gen3 > killSprite
+		avatar gen5 > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

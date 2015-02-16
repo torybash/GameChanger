@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Missile orientation=DOWN img=virus
+		gen2 > SpawnPoint stype=gen1 img=pellet
+		gen3 > Fleeing stype=gen2 img=ghost
+		gen4 > Flicker limit=4 img=shovel
+		gen5 > Missile orientation=RIGHT img=butterfly
+	InteractionSet
+		gen3 avatar > bounceForward
+		gen2 gen3 > stepBack
+		gen3 avatar > turnAround scoreChange=5
+		gen4 gen2 > cloneSprite
+		avatar wall > spawnIfHasMore limit=0 stype=gen3 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=FALSE 

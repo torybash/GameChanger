@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Fleeing stype=avatar img=butterfly
+		gen2 > Missile orientation=DOWN img=frog cooldown=4
+		gen3 > RandomMissile img=door
+		gen4 > RandomAltChaser stype1=gen1 stype2=gen3 img=honey epsilon=0.6681142731096948
+		gen5 > Immovable img=boulder
+		gen6 > OrientedFlicker limit=3 orientation=UP img=monster
+	InteractionSet
+		gen6 gen3 > stepBack
+		gen4 gen3 > attractGaze scoreChange=-3
+		gen2 gen2 > attractGaze
+		gen3 gen1 > attractGaze scoreChange=1
+		gen3 gen4 > attractGaze scoreChange=7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

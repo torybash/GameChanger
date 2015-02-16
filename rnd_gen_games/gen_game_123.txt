@@ -1,0 +1,15 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > RandomMissile img=fire cooldown=2
+		gen2 > OrientedFlicker limit=9 orientation=RIGHT img=flower
+	InteractionSet
+		gen2 wall > pullWithIt
+		avatar wall > wallStop scoreChange=2
+		avatar EOS > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

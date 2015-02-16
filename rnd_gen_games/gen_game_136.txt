@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar speed=0.11560000000000002 img=avatar
+		gen1 > Spreader limit=13 stype=gen2 img=camel
+		gen2 > Flicker limit=28 img=bullet
+	InteractionSet
+		avatar wall > bounceForward
+		gen1 avatar > pullWithIt scoreChange=2
+		avatar wall > wallStop scoreChange=8
+		gen1 wall > stepBack
+		gen2 avatar > stepBack
+		gen1 gen1 > transformTo stype=gen1 scoreChange=3
+		avatar wall > stepBack scoreChange=-2
+		gen2 wall > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

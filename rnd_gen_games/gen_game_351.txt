@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=2
+		gen1 > Portal stype=gen5 img=door
+		gen2 > RandomMissile img=door
+		gen3 > Fleeing stype=gen6 img=hell
+		gen4 > SpawnPoint stype=gen7 img=marsh prob=0.0729
+		gen5 > Passive img=monster
+		gen6 > Chaser stype=gen4 img=door cooldown=8
+		gen7 > Resource limit=18 value=2 img=ghost
+	InteractionSet
+		gen4 gen4 > killIfHasMore limit=0 resource=gen7
+		gen2 gen1 > cloneSprite
+		avatar EOS > wrapAround
+		gen5 wall > spawnIfHasMore limit=5 stype=gen3 resource=gen7
+		gen3 gen7 > spawnIfHasMore limit=13 stype=gen4 resource=gen7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

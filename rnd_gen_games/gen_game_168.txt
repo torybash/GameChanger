@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=5
+		gen1 > RandomAltChaser stype1=gen4 stype2=gen4 img=shovel epsilon=0.3347745000622002
+		gen2 > Portal stype=avatar img=monster
+		gen3 > Missile orientation=LEFT img=diamond
+		gen4 > Fleeing speed=0.6889000000000001 stype=gen1 img=butterfly
+	InteractionSet
+		gen2 gen2 > stepBack
+		gen3 avatar > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen1 EOS > transformTo stype=gen1
+		gen3 gen1 > attractGaze
+		gen3 gen1 > attractGaze
+		gen4 gen2 > transformTo stype=gen3 scoreChange=4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

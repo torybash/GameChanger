@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Bomber orientation=UP stype=gen2 img=spaceship cooldown=3
+		gen2 > Chaser stype=avatar singleton=TRUE img=base
+	InteractionSet
+		avatar gen2 > undoAll scoreChange=10
+		avatar gen2 > pullWithIt scoreChange=7
+		gen2 gen2 > attractGaze
+		gen2 avatar > pullWithIt
+		avatar wall > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

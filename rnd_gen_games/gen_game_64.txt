@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > RandomAltChaser stype1=gen2 stype2=avatar img=cocoon epsilon=0.7025615960535332
+		gen2 > Missile orientation=RIGHT img=bee
+		gen3 > RandomAltChaser speed=0.9025000000000001 stype1=gen1 stype2=avatar img=camel epsilon=0.5322201740083274
+	InteractionSet
+		avatar gen1 > killIfFromAbove
+		gen1 EOS > undoAll
+		avatar gen2 > stepBack
+		gen2 EOS > killSprite
+		gen3 avatar > transformTo stype=gen2
+		gen3 wall > killSprite
+		gen1 EOS > turnAround
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

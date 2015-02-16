@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > SpawnPoint total=24 stype=gen4 img=spaceship prob=0.6084 cooldown=5
+		gen2 > Bomber orientation=RIGHT stype=gen1 img=carcass prob=0.43560000000000004 cooldown=1
+		gen3 > AlternateChaser fleeing=TRUE stype1=gen4 stype2=gen1 img=cocoon cooldown=10
+		gen4 > RandomAltChaser stype1=gen1 stype2=gen2 img=cocoon epsilon=0.3195139913328193 cooldown=6
+	InteractionSet
+		avatar gen2 > wallStop
+		gen1 gen3 > bounceForward scoreChange=-2
+		gen2 avatar > pullWithIt
+		avatar EOS > wrapAround
+		gen2 wall > pullWithIt scoreChange=10
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

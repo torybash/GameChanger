@@ -1,0 +1,18 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Resource limit=6 value=5 img=bomb
+		gen2 > RandomNPC speed=0.1296 img=bee
+	InteractionSet
+		gen2 gen1 > wallStop
+		gen1 gen1 > bounceForward
+		gen1 gen2 > killSprite
+		gen1 avatar > collectResource scoreChange=7
+		gen2 avatar > changeResource value=-3 resource=gen1 scoreChange=-5
+		avatar wall > transformTo stype=avatar scoreChange=4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > AlternateChaser speed=0.16000000000000003 stype1=gen3 stype2=gen2 img=explosion cooldown=4
+		gen2 > SpawnPoint stype=gen4 img=mushroom
+		gen3 > Immovable img=monster
+		gen4 > Spreader limit=45 spreadprob=0.019600000000000003 stype=gen6 singleton=TRUE img=powerpill
+		gen5 > RandomMissile img=diamond cooldown=1
+		gen6 > Bomber orientation=LEFT stype=gen2 img=ghost prob=0.30250000000000005
+	InteractionSet
+		gen5 gen5 > attractGaze
+		avatar gen5 > attractGaze
+		gen2 gen5 > bounceForward
+		gen5 avatar > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=gen1 win=FALSE 

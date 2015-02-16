@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > Immovable img=mushroom
+		gen2 > AlternateChaser stype1=avatar stype2=gen1 img=virus
+	InteractionSet
+		gen1 EOS > stepBack
+		gen1 EOS > undoAll
+		gen2 gen2 > attractGaze
+		gen1 gen2 > wallStop
+		gen2 gen2 > attractGaze
+		gen1 wall > cloneSprite
+		avatar gen1 > pullWithIt scoreChange=-5
+		gen1 EOS > wrapAround
+		gen2 EOS > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=gen1 win=FALSE 

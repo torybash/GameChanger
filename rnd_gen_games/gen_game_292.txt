@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar speed=0.5929 stype=gen3 img=avatar cooldown=6
+		gen1 > Resource limit=3 value=3 img=spaceship
+		gen2 > RandomNPC img=sword
+		gen3 > RandomAltChaser speed=0.1296 stype1=gen4 stype2=avatar img=carcass epsilon=0.2545901708317083
+		gen4 > RandomAltChaser stype1=avatar stype2=avatar img=wall epsilon=0.7740214290904678
+	InteractionSet
+		avatar gen4 > wallStop scoreChange=4
+		avatar gen1 > wallStop
+		gen3 avatar > reverseDirection
+		gen1 gen4 > killIfOtherHasMore limit=12 resource=gen1
+		gen2 EOS > reverseDirection scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen5 img=avatar cooldown=5
+		gen1 > Fleeing fleeing=TRUE stype=gen4 img=bomb cooldown=1
+		gen2 > RandomNPC img=bullet cooldown=5
+		gen3 > Immovable img=pellet
+		gen4 > Missile orientation=RIGHT img=diamond cooldown=5
+		gen5 > RandomAltChaser speed=0.1521 stype1=gen4 stype2=gen4 img=camel epsilon=0.4206925666859471
+		gen6 > Passive img=forest
+	InteractionSet
+		gen6 gen5 > wallStop
+		gen5 gen4 > attractGaze
+		gen1 gen6 > cloneSprite
+		gen6 gen2 > spawnIfHasMore limit=0 stype=gen6 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

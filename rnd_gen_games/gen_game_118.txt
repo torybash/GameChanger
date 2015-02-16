@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > OrientedFlicker limit=8 orientation=DOWN img=missile
+		gen2 > RandomMissile img=diamond
+		gen3 > Fleeing stype=gen4 img=powerpill
+		gen4 > Missile orientation=LEFT speed=0.07840000000000001 img=key cooldown=1
+		gen5 > AlternateChaser fleeing=TRUE stype1=gen3 stype2=gen6 img=key
+		gen6 > RandomNPC img=key
+	InteractionSet
+		avatar gen6 > attractGaze
+		gen6 gen5 > attractGaze
+		avatar gen3 > attractGaze
+		gen5 gen1 > pullWithIt
+		gen2 EOS > killSprite
+		gen2 gen5 > attractGaze
+		gen3 avatar > attractGaze
+		gen1 EOS > undoAll scoreChange=7
+		gen6 gen6 > attractGaze
+		gen3 wall > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

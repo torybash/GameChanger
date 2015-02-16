@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Portal stype=avatar img=city
+		gen2 > Spreader limit=41 stype=gen1 singleton=TRUE img=virus
+	InteractionSet
+		avatar EOS > spawnIfHasMore limit=0 stype=gen2 resource=null
+		avatar gen2 > stepBack
+		avatar gen2 > bounceForward
+		gen1 avatar > undoAll
+		avatar wall > killSprite
+		gen2 avatar > pullWithIt
+		avatar wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Spreader limit=11 stype=gen3 img=carcass
+		gen2 > OrientedFlicker limit=35 orientation=UP img=ghost
+		gen3 > SpawnPoint stype=gen2 img=dirt prob=0.9801
+		gen4 > RandomMissile img=bee
+		gen5 > RandomAltChaser stype1=gen1 stype2=gen6 img=missile epsilon=0.9078859966066195
+		gen6 > Spreader limit=2 stype=gen4 img=city
+		gen7 > Chaser stype=gen6 img=zombie
+	InteractionSet
+		gen4 gen3 > killSprite
+		gen7 gen7 > attractGaze
+		gen6 gen3 > killIfFromAbove scoreChange=9
+		gen3 gen3 > transformTo stype=gen6
+		gen5 gen2 > stepBack
+		gen2 avatar > transformTo stype=gen7
+		gen6 gen6 > transformTo stype=gen3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

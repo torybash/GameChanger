@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=6
+		gen1 > Missile orientation=LEFT img=key
+		gen2 > Chaser fleeing=TRUE stype=gen3 img=diamond
+		gen3 > Missile orientation=RIGHT img=sword
+		gen4 > RandomMissile img=gold
+	InteractionSet
+		gen2 gen2 > attractGaze
+		gen3 wall > killIfFromAbove scoreChange=9
+		avatar gen2 > transformTo stype=avatar scoreChange=3
+		gen4 gen1 > attractGaze scoreChange=3
+		gen1 EOS > stepBack
+		gen1 gen4 > attractGaze
+		gen3 gen4 > attractGaze
+		gen1 gen1 > attractGaze
+		gen3 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

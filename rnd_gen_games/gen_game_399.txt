@@ -1,0 +1,18 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=1
+		gen1 > Missile orientation=RIGHT img=pellet
+		gen2 > Missile orientation=DOWN singleton=TRUE img=goal
+	InteractionSet
+		avatar gen2 > killSprite scoreChange=10
+		avatar gen1 > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=-3
+		gen1 avatar > wallStop
+		gen2 wall > reverseDirection
+		gen1 EOS > reverseDirection
+		gen1 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar cooldown=3
+		gen1 > SpawnPoint total=8 stype=gen3 img=flower prob=0.30250000000000005
+		gen2 > Flicker limit=7 img=goal
+		gen3 > Fleeing fleeing=TRUE stype=avatar img=missile
+	InteractionSet
+		gen1 avatar > pullWithIt
+		gen3 gen3 > attractGaze
+		gen1 EOS > killSprite
+		gen3 wall > pullWithIt
+		gen1 avatar > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

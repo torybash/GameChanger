@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=8
+		gen1 > Portal stype=gen2 img=shovel
+		gen2 > OrientedFlicker limit=4 orientation=UP img=wall
+		gen3 > Passive img=ghost
+	InteractionSet
+		gen1 gen1 > killIfFromAbove
+		gen1 avatar > undoAll
+		gen3 wall > killSprite
+		gen3 wall > undoAll
+		gen2 gen1 > undoAll scoreChange=7
+		gen3 avatar > undoAll
+		gen1 avatar > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Spreader limit=46 stype=gen3 img=powerpill
+		gen2 > Passive img=log
+		gen3 > Bomber orientation=DOWN stype=gen4 img=spaceship
+		gen4 > Bomber orientation=LEFT stype=gen2 img=carcass prob=0.2916
+	InteractionSet
+		gen4 gen1 > cloneSprite
+		gen3 gen4 > attractGaze
+		gen2 gen3 > bounceForward
+		gen4 wall > killSprite
+		avatar gen2 > stepBack
+		gen1 wall > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen4 stype2=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen4 win=FALSE 

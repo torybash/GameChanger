@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=9
+		gen1 > OrientedFlicker limit=13 orientation=UP img=virus
+		gen2 > SpawnPoint stype=gen4 singleton=TRUE img=boulder prob=0.7569 cooldown=3
+		gen3 > Chaser fleeing=TRUE stype=gen2 img=bomb
+		gen4 > Immovable singleton=TRUE img=box
+	InteractionSet
+		avatar gen2 > undoAll
+		gen4 gen4 > pullWithIt
+		gen1 gen2 > killSprite scoreChange=6
+		gen4 wall > cloneSprite
+		gen1 EOS > wrapAround
+		gen1 avatar > transformTo stype=gen1
+		gen3 wall > flipDirection
+		gen1 gen2 > killIfFromAbove
+		gen1 gen3 > killSprite
+		gen1 EOS > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

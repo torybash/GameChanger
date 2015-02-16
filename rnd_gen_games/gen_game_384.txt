@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar cooldown=2
+		gen1 > Passive img=virus
+		gen2 > Resource limit=1 value=1 img=mana
+	InteractionSet
+		gen1 EOS > killSprite
+		gen1 wall > cloneSprite
+		gen2 gen1 > killIfHasMore limit=11 resource=gen2
+		gen1 avatar > changeResource value=3 resource=gen2
+		gen1 EOS > killIfHasMore limit=10 resource=gen2
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen2 win=FALSE 

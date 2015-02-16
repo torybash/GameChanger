@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Bomber orientation=RIGHT speed=0.06760000000000001 stype=gen2 img=log prob=0.04000000000000001
+		gen2 > RandomMissile speed=0.10890000000000001 img=city
+		gen3 > Portal stype=gen1 img=shovel
+		gen4 > Portal stype=gen3 img=marsh
+	InteractionSet
+		gen2 wall > killSprite
+		avatar gen1 > pullWithIt
+		gen2 gen2 > attractGaze
+		gen3 gen2 > pullWithIt
+		avatar wall > killSprite
+		gen4 wall > wallStop
+		gen3 EOS > undoAll scoreChange=-2
+		gen3 gen4 > bounceForward scoreChange=8
+		gen4 gen4 > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

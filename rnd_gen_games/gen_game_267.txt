@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Portal stype=gen2 singleton=TRUE img=mana
+		gen2 > RandomNPC img=wall
+		gen3 > Portal stype=gen2 img=shovel
+		gen4 > Spreader limit=31 stype=gen3 img=truck
+		gen5 > RandomAltChaser stype1=avatar stype2=gen4 img=gold epsilon=0.389619458979256
+	InteractionSet
+		avatar gen5 > wallStop
+		gen1 wall > spawnIfHasMore limit=0 stype=gen5 resource=null
+		gen2 gen5 > attractGaze
+		gen3 gen3 > wallStop scoreChange=-4
+		avatar gen2 > pullWithIt scoreChange=-3
+		gen1 wall > pullWithIt
+		gen2 EOS > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

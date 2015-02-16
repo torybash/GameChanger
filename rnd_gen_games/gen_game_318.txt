@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.27040000000000003 img=avatar
+		gen1 > Bomber orientation=RIGHT stype=gen3 img=frog prob=0.3249000000000001 cooldown=6
+		gen2 > Immovable img=wall
+		gen3 > Fleeing stype=avatar img=diamond
+	InteractionSet
+		gen1 gen1 > attractGaze scoreChange=10
+		gen3 wall > flipDirection
+		avatar gen1 > attractGaze
+		gen3 wall > transformTo stype=gen1
+		gen2 EOS > undoAll
+		avatar gen3 > attractGaze scoreChange=2
+		gen1 avatar > attractGaze
+		gen3 avatar > attractGaze
+		gen1 gen2 > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar cooldown=8
+		gen1 > Spreader limit=46 spreadprob=0.4096 stype=gen3 img=monster
+		gen2 > RandomMissile img=honey
+		gen3 > SpawnPoint stype=gen2 singleton=TRUE img=box
+	InteractionSet
+		gen3 avatar > wallStop scoreChange=-2
+		avatar EOS > killSprite
+		gen2 EOS > cloneSprite
+		avatar gen3 > wallStop
+		gen1 gen1 > killIfFromAbove scoreChange=-2
+		avatar gen1 > turnAround
+		gen3 EOS > wrapAround scoreChange=-3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

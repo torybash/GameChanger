@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Spreader limit=12 stype=gen4 img=hell
+		gen2 > Resource limit=10 singleton=TRUE value=3 img=gold
+		gen3 > Passive singleton=TRUE img=carcass
+		gen4 > Immovable img=zombie
+		gen5 > Missile orientation=DOWN speed=0.5476 img=pellet cooldown=6
+		gen6 > OrientedFlicker limit=24 orientation=LEFT img=forest
+		gen7 > Fleeing stype=avatar img=camel
+	InteractionSet
+		gen4 avatar > killSprite
+		gen1 gen4 > killIfHasLess limit=3 resource=gen2
+		gen2 gen7 > pullWithIt
+		gen2 gen4 > killIfOtherHasMore limit=13 resource=gen2
+		gen7 gen2 > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen7 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen7 win=FALSE 

@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Chaser speed=0.36 stype=gen2 img=zombie cooldown=7
+		gen2 > SpawnPoint stype=gen1 img=hole prob=0.010000000000000002
+		gen3 > RandomNPC img=truck cooldown=4
+		gen4 > RandomNPC img=powerpill
+	InteractionSet
+		avatar wall > pullWithIt scoreChange=-3
+		gen2 gen1 > killIfFromAbove
+		gen3 gen1 > attractGaze
+		gen1 avatar > flipDirection
+		gen3 EOS > wrapAround scoreChange=10
+		avatar EOS > transformTo stype=avatar
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

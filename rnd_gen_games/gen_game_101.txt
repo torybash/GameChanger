@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > RandomNPC img=butterfly
+		gen2 > RandomNPC img=shovel cooldown=3
+		gen3 > RandomMissile img=virus
+		gen4 > Spreader limit=9 stype=gen3 img=ghost
+	InteractionSet
+		avatar EOS > undoAll
+		gen1 wall > transformTo stype=gen1
+		gen3 gen4 > flipDirection scoreChange=4
+		gen3 wall > killSprite scoreChange=7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=avatar stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > Portal stype=gen6 img=bomb
+		gen2 > Bomber orientation=UP stype=gen3 img=truck prob=0.010000000000000002
+		gen3 > Bomber orientation=DOWN stype=gen6 img=bullet prob=0.004900000000000001
+		gen4 > OrientedFlicker limit=26 orientation=LEFT img=fire
+		gen5 > RandomMissile speed=0.5625 img=butterfly cooldown=8
+		gen6 > Fleeing fleeing=TRUE stype=gen1 img=marsh
+	InteractionSet
+		avatar gen5 > killSprite
+		avatar gen5 > bounceForward scoreChange=7
+		gen6 gen5 > attractGaze scoreChange=-3
+		gen2 wall > flipDirection
+		avatar gen4 > killIfFromAbove
+		gen3 gen2 > attractGaze
+		avatar gen3 > stepBack scoreChange=2
+		gen3 avatar > turnAround
+		gen5 gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen3 stype2=gen6 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

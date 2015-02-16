@@ -1,0 +1,31 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar speed=0.7055999999999999 stype=gen7 img=avatar
+		gen1 > Missile orientation=DOWN img=zombie cooldown=5
+		gen2 > Flicker limit=19 singleton=TRUE img=cocoon
+		gen3 > Passive img=camel
+		gen4 > Spreader limit=25 spreadprob=0.0324 stype=gen2 singleton=TRUE img=butterfly
+		gen5 > Fleeing stype=gen6 img=bullet
+		gen6 > Immovable img=mana
+		gen7 > Bomber orientation=UP stype=gen3 img=ghost prob=0.9603999999999999
+	InteractionSet
+		gen4 gen6 > undoAll scoreChange=-5
+		avatar gen4 > stepBack
+		gen5 gen1 > attractGaze
+		gen5 gen2 > stepBack
+		avatar gen7 > attractGaze
+		gen3 gen3 > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=-5
+		gen5 gen1 > attractGaze scoreChange=1
+		gen5 gen5 > attractGaze
+		avatar gen5 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen7 win=FALSE 

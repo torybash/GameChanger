@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen5 img=avatar
+		gen1 > Fleeing fleeing=TRUE stype=gen4 singleton=TRUE img=explosion
+		gen2 > Fleeing stype=gen5 img=shovel
+		gen3 > SpawnPoint total=1 stype=gen5 img=spaceship prob=0.4761000000000001
+		gen4 > Bomber orientation=UP stype=gen3 img=shovel prob=0.2304
+		gen5 > AlternateChaser fleeing=TRUE stype1=gen2 stype2=gen4 img=honey cooldown=2
+	InteractionSet
+		avatar gen1 > attractGaze
+		gen5 gen5 > attractGaze
+		avatar wall > bounceForward scoreChange=8
+		avatar gen2 > attractGaze
+		gen4 EOS > wrapAround
+		gen2 EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen1 gen3 > reverseDirection scoreChange=8
+		gen2 EOS > cloneSprite scoreChange=9
+		gen2 gen3 > killSprite
+		gen5 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

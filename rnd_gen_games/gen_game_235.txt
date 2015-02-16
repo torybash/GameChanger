@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > Passive img=wall
+		gen2 > OrientedFlicker limit=15 orientation=LEFT img=key
+	InteractionSet
+		gen1 wall > transformTo stype=gen1
+		avatar gen1 > bounceForward
+		avatar gen2 > transformTo stype=avatar
+		avatar EOS > reverseDirection scoreChange=1
+		gen2 avatar > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 wall > cloneSprite
+		gen1 gen1 > bounceForward
+		avatar wall > pullWithIt scoreChange=3
+		gen2 wall > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

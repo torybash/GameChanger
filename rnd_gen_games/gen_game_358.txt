@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Flicker limit=8 img=water
+		gen2 > Bomber orientation=RIGHT stype=gen6 img=camel prob=0.17639999999999997
+		gen3 > Missile orientation=LEFT img=mana
+		gen4 > Flicker limit=18 img=sword
+		gen5 > Resource limit=16 value=1 img=virus
+		gen6 > Flicker limit=41 singleton=TRUE img=gold
+		gen7 > Chaser fleeing=TRUE stype=gen6 singleton=TRUE img=log cooldown=1
+	InteractionSet
+		avatar gen7 > bounceForward scoreChange=4
+		gen5 gen5 > killSprite
+		gen3 gen5 > stepBack
+		gen6 gen6 > killIfHasMore limit=12 resource=gen5
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen7 win=FALSE 

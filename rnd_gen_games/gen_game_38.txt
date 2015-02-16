@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > RandomNPC singleton=TRUE img=door
+		gen2 > Bomber orientation=RIGHT stype=gen1 img=honey cooldown=1
+		gen3 > Chaser stype=avatar img=door
+		gen4 > Immovable singleton=TRUE img=alien
+	InteractionSet
+		avatar gen1 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen3 gen4 > reverseDirection
+		gen3 gen4 > flipDirection
+		gen3 gen1 > attractGaze
+		avatar gen3 > spawnIfHasMore limit=0 stype=gen1 resource=null
+		gen3 gen4 > undoAll scoreChange=8
+		gen2 gen4 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		avatar wall > spawnIfHasMore limit=0 stype=gen3 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

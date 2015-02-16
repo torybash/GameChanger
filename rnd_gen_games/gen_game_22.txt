@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar speed=0.30250000000000005 stype=gen1 img=avatar
+		gen1 > Portal stype=gen2 img=hole
+		gen2 > AlternateChaser fleeing=TRUE stype1=gen1 stype2=gen1 img=portal
+	InteractionSet
+		gen2 gen2 > attractGaze
+		avatar gen1 > transformTo stype=avatar scoreChange=9
+		avatar gen1 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 gen1 > transformTo stype=gen2 scoreChange=4
+		gen2 avatar > cloneSprite scoreChange=6
+		avatar wall > transformTo stype=avatar
+		gen1 avatar > killIfFromAbove
+		gen2 wall > killIfFromAbove
+		gen2 wall > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

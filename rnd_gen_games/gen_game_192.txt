@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=2
+		gen1 > Passive img=mushroom
+		gen2 > Missile orientation=LEFT singleton=TRUE img=butterfly
+		gen3 > Portal stype=gen2 img=bee
+		gen4 > Immovable img=goal
+	InteractionSet
+		gen3 avatar > bounceForward
+		gen4 gen4 > undoAll
+		gen4 avatar > pullWithIt
+		avatar gen2 > wallStop
+		gen4 EOS > wrapAround
+		gen2 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=5
+		gen1 > RandomMissile img=bomb
+		gen2 > Fleeing stype=gen3 img=fire
+		gen3 > Resource limit=12 value=2 img=goal
+		gen4 > RandomMissile img=zombie
+		gen5 > Missile orientation=LEFT img=diamond
+		gen6 > AlternateChaser fleeing=TRUE stype1=gen1 singleton=TRUE stype2=gen3 img=frog
+		gen7 > RandomAltChaser stype1=gen5 stype2=avatar img=key epsilon=0.6994433460888562
+	InteractionSet
+		gen7 gen4 > attractGaze
+		gen3 wall > killIfOtherHasMore limit=5 resource=gen3 scoreChange=6
+		avatar wall > spawnIfHasMore limit=6 stype=gen2 resource=gen3 scoreChange=-2
+		gen4 gen3 > changeResource value=0 resource=gen3
+		gen7 wall > transformTo stype=gen3 scoreChange=5
+		gen3 gen3 > killIfHasMore limit=12 resource=gen3 scoreChange=3
+		gen2 EOS > turnAround
+		gen4 gen3 > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=gen6 win=FALSE 

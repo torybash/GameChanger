@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=7
+		gen1 > Spreader limit=29 stype=gen2 img=diamond
+		gen2 > AlternateChaser fleeing=TRUE stype1=gen3 stype2=gen3 img=bee cooldown=8
+		gen3 > Flicker limit=4 img=mushroom
+		gen4 > Passive img=cocoon
+	InteractionSet
+		gen4 gen3 > stepBack scoreChange=-2
+		gen2 gen4 > turnAround
+		gen2 EOS > cloneSprite scoreChange=2
+		gen2 gen1 > undoAll
+		gen4 EOS > transformTo stype=gen2
+		gen2 gen1 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

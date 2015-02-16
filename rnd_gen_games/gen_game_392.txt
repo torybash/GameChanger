@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > AlternateChaser stype1=avatar stype2=gen3 img=diamond
+		gen2 > OrientedFlicker limit=48 orientation=RIGHT singleton=TRUE img=powerpill
+		gen3 > RandomAltChaser stype1=gen4 stype2=gen6 img=hole epsilon=0.9206191490856593
+		gen4 > Flicker limit=39 img=powerpill
+		gen5 > OrientedFlicker limit=19 orientation=UP img=log
+		gen6 > Chaser stype=gen5 img=missile cooldown=3
+		gen7 > Resource limit=5 value=4 img=hole
+	InteractionSet
+		gen5 gen6 > killIfHasMore limit=2 resource=gen7
+		avatar gen5 > bounceForward
+		gen1 gen2 > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen7 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

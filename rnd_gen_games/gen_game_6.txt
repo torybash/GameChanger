@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.0256 img=avatar cooldown=8
+		gen1 > AlternateChaser stype1=gen2 stype2=avatar img=virus cooldown=3
+		gen2 > Missile orientation=UP img=goal
+	InteractionSet
+		gen2 avatar > attractGaze
+		gen1 gen2 > attractGaze
+		avatar gen2 > attractGaze scoreChange=5
+		avatar EOS > killSprite
+		gen2 EOS > turnAround scoreChange=-5
+		gen2 wall > killSprite
+		gen1 avatar > attractGaze
+		gen2 avatar > attractGaze scoreChange=-4
+		gen2 gen2 > attractGaze scoreChange=-2
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

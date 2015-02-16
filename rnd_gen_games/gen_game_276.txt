@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen4 img=avatar
+		gen1 > Immovable img=ghost
+		gen2 > Flicker limit=10 img=carcass
+		gen3 > RandomMissile img=bullet
+		gen4 > SpawnPoint stype=gen3 img=bullet prob=0.4900000000000001
+		gen5 > Immovable img=mana
+	InteractionSet
+		gen5 EOS > spawnIfHasMore limit=0 stype=gen5 resource=null scoreChange=-1
+		gen4 gen1 > stepBack
+		gen1 gen1 > pullWithIt
+		gen4 EOS > cloneSprite
+		avatar gen3 > attractGaze scoreChange=-5
+		gen3 EOS > spawnIfHasMore limit=0 stype=gen4 resource=null scoreChange=7
+		gen3 avatar > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

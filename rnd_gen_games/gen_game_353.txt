@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen5 img=avatar ammo=gen5
+		gen1 > Missile orientation=UP img=base cooldown=6
+		gen2 > RandomMissile singleton=TRUE img=door
+		gen3 > Spreader limit=48 spreadprob=0.22090000000000004 stype=gen4 img=hole
+		gen4 > Flicker limit=28 img=explosion
+		gen5 > Resource limit=6 value=4 img=hell
+	InteractionSet
+		avatar gen5 > undoAll
+		avatar EOS > undoAll
+		avatar EOS > changeResource value=-3 resource=gen5
+		gen4 EOS > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen4 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=avatar win=FALSE 

@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Portal stype=gen4 img=shovel
+		gen2 > Missile orientation=LEFT img=honey cooldown=2
+		gen3 > Chaser stype=gen2 img=sword cooldown=5
+		gen4 > RandomNPC img=flower
+		gen5 > Chaser fleeing=TRUE stype=gen2 img=portal
+		gen6 > Immovable img=camel
+	InteractionSet
+		gen3 wall > wallStop
+		gen2 gen1 > reverseDirection
+		gen3 EOS > transformTo stype=gen2
+		gen2 gen5 > attractGaze scoreChange=3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

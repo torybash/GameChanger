@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen3 img=avatar
+		gen1 > RandomAltChaser stype1=gen5 stype2=avatar img=zombie epsilon=0.5832308267563484
+		gen2 > Bomber orientation=LEFT stype=gen4 img=flower prob=0.7395999999999999
+		gen3 > Bomber total=15 orientation=UP stype=gen5 img=zombie prob=0.7569
+		gen4 > Passive img=spaceship
+		gen5 > SpawnPoint stype=gen3 singleton=TRUE img=butterfly cooldown=10
+	InteractionSet
+		gen5 avatar > killIfFromAbove scoreChange=2
+		gen2 gen3 > attractGaze
+		gen3 gen2 > attractGaze
+		gen4 gen1 > pullWithIt
+		gen1 gen3 > attractGaze
+		gen5 gen2 > wallStop
+		gen5 EOS > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen5 stype2=gen3 win=FALSE 

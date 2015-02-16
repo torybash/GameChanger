@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Bomber orientation=RIGHT stype=gen6 img=butterfly prob=0.6241000000000001
+		gen2 > Bomber orientation=UP stype=gen4 img=portal prob=0.6889000000000001
+		gen3 > Passive img=water
+		gen4 > Bomber orientation=RIGHT stype=gen6 img=hole cooldown=1
+		gen5 > Flicker limit=42 img=boulder
+		gen6 > Portal stype=gen5 img=diamond
+		gen7 > Passive img=diamond
+	InteractionSet
+		gen1 gen2 > attractGaze
+		gen3 gen2 > pullWithIt
+		gen3 gen1 > cloneSprite scoreChange=9
+		gen7 avatar > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

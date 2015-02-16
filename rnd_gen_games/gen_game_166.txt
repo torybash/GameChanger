@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > OrientedFlicker limit=17 orientation=RIGHT img=city
+		gen2 > Resource limit=19 value=5 img=camel
+		gen3 > RandomAltChaser stype1=avatar stype2=gen2 img=butterfly epsilon=0.7317032592362679
+		gen4 > RandomMissile img=mana
+		gen5 > Resource limit=1 singleton=TRUE value=0 img=shovel
+		gen6 > RandomAltChaser stype1=gen3 stype2=gen2 img=log epsilon=0.9682964130976358
+		gen7 > Missile orientation=UP singleton=TRUE img=powerpill cooldown=8
+	InteractionSet
+		gen7 gen1 > bounceForward
+		avatar gen3 > attractGaze
+		gen4 gen2 > killIfHasLess limit=15 resource=gen2 scoreChange=1
+		gen4 gen3 > attractGaze
+		gen5 gen1 > changeResource value=3 resource=gen2
+		gen5 gen1 > transformTo stype=gen1
+		gen2 wall > killIfHasMore limit=6 resource=gen5 scoreChange=4
+		gen4 gen5 > killIfFromAbove
+		avatar gen5 > bounceForward
+		gen4 gen5 > flipDirection scoreChange=-2
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

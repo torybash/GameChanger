@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Portal stype=gen2 img=dirt
+		gen2 > Missile orientation=UP img=boulder
+	InteractionSet
+		gen1 gen1 > transformTo stype=gen2
+		avatar gen1 > killIfFromAbove
+		gen2 wall > spawnIfHasMore limit=0 stype=gen1 resource=null
+		avatar gen1 > killSprite
+		gen1 gen1 > teleportToExit
+		gen1 wall > wallStop scoreChange=8
+		gen1 avatar > undoAll
+		avatar gen2 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

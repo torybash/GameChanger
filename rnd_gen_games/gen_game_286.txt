@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > Missile orientation=UP img=water
+		gen2 > RandomNPC img=frog cooldown=1
+	InteractionSet
+		gen2 wall > turnAround scoreChange=-2
+		gen1 EOS > stepBack scoreChange=8
+		gen2 gen1 > attractGaze
+		gen1 avatar > attractGaze scoreChange=-5
+		avatar gen2 > attractGaze
+		gen1 avatar > attractGaze
+		avatar EOS > wrapAround
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

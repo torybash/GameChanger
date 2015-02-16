@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.12250000000000003 img=avatar
+		gen1 > Portal stype=gen2 img=diamond
+		gen2 > Portal stype=gen6 img=pellet
+		gen3 > Fleeing fleeing=TRUE stype=gen4 img=frog
+		gen4 > Passive singleton=TRUE img=diamond
+		gen5 > Spreader limit=38 stype=gen7 img=hole
+		gen6 > OrientedFlicker limit=37 orientation=DOWN img=wall
+		gen7 > SpawnPoint stype=gen4 img=mushroom prob=0.6889000000000001
+	InteractionSet
+		gen4 gen7 > spawnIfHasMore limit=0 stype=gen7 resource=null
+		gen7 gen1 > wallStop
+		gen2 avatar > undoAll scoreChange=1
+		avatar wall > flipDirection scoreChange=4
+		gen7 gen4 > cloneSprite
+		gen1 avatar > pullWithIt
+		gen6 gen1 > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

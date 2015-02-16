@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Missile orientation=DOWN img=fire
+		gen2 > SpawnPoint stype=gen1 singleton=TRUE img=boulder prob=0.028900000000000006
+		gen3 > Missile orientation=UP img=wall
+	InteractionSet
+		gen1 avatar > reverseDirection scoreChange=-3
+		gen3 gen3 > attractGaze scoreChange=-4
+		avatar EOS > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

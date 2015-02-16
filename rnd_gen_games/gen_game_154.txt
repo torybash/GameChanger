@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen6 img=avatar cooldown=5
+		gen1 > Passive img=portal
+		gen2 > RandomAltChaser speed=0.0576 stype1=gen7 stype2=gen1 img=sword epsilon=0.3193781223419918
+		gen3 > Chaser fleeing=TRUE stype=gen4 img=honey cooldown=5
+		gen4 > Chaser fleeing=TRUE stype=gen1 singleton=TRUE img=diamond
+		gen5 > Immovable img=bee
+		gen6 > RandomAltChaser stype1=gen2 stype2=gen4 img=gold epsilon=0.7018774566799617
+		gen7 > Resource limit=17 value=0 img=hole
+	InteractionSet
+		gen7 EOS > cloneSprite
+		gen4 gen2 > attractGaze
+		gen6 gen7 > pullWithIt scoreChange=-3
+		gen2 avatar > killIfHasLess limit=4 resource=gen7
+		gen5 EOS > changeResource value=3 resource=gen7 scoreChange=10
+		gen7 gen5 > spawnIfHasMore limit=2 stype=gen7 resource=gen7 scoreChange=10
+		gen7 gen5 > killIfHasMore limit=14 resource=gen7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

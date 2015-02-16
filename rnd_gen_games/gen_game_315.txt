@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > Flicker limit=29 img=virus
+		gen2 > RandomAltChaser stype1=gen3 stype2=avatar img=mushroom epsilon=0.730070911207591
+		gen3 > AlternateChaser fleeing=TRUE stype1=avatar stype2=avatar img=butterfly
+	InteractionSet
+		gen3 avatar > wallStop
+		gen2 wall > cloneSprite
+		gen3 gen1 > spawnIfHasMore limit=0 stype=gen1 resource=null
+		gen2 gen3 > attractGaze
+		gen1 EOS > transformTo stype=gen1 scoreChange=-4
+		avatar EOS > transformTo stype=avatar
+		avatar gen1 > spawnIfHasMore limit=0 stype=gen1 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

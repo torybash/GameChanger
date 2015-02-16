@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar cooldown=6
+		gen1 > AlternateChaser stype1=gen5 stype2=gen4 img=hell
+		gen2 > Spreader limit=21 stype=gen1 img=wall
+		gen3 > Passive singleton=TRUE img=explosion
+		gen4 > Flicker limit=50 singleton=TRUE img=explosion
+		gen5 > Missile orientation=DOWN img=zombie
+		gen6 > Fleeing fleeing=TRUE stype=avatar img=zombie
+	InteractionSet
+		gen6 avatar > attractGaze scoreChange=-3
+		gen3 gen3 > bounceForward scoreChange=9
+		gen1 wall > pullWithIt
+		gen3 gen3 > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

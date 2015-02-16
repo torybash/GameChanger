@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomNPC img=flower
+		gen2 > RandomAltChaser stype1=gen1 stype2=avatar img=explosion epsilon=0.9279128649251328 cooldown=5
+		gen3 > Chaser stype=gen2 img=marsh
+		gen4 > RandomAltChaser speed=0.36 stype1=gen2 stype2=gen2 img=bullet epsilon=0.6107097146791597
+	InteractionSet
+		gen4 gen1 > attractGaze
+		gen4 EOS > reverseDirection scoreChange=1
+		avatar EOS > undoAll
+		gen4 gen2 > attractGaze scoreChange=-5
+		avatar gen3 > attractGaze
+		gen4 wall > transformTo stype=gen1
+		avatar EOS > turnAround scoreChange=5
+		gen3 gen4 > attractGaze scoreChange=9
+		avatar wall > bounceForward scoreChange=-5
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

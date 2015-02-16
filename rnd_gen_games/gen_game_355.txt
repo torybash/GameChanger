@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar
+		gen1 > Fleeing stype=gen5 singleton=TRUE img=mana
+		gen2 > Missile orientation=LEFT img=pellet
+		gen3 > Bomber orientation=LEFT speed=0.6084 stype=gen4 img=door prob=0.0081
+		gen4 > Missile orientation=DOWN img=ghost
+		gen5 > Passive img=forest
+	InteractionSet
+		gen5 gen4 > undoAll
+		gen5 gen2 > transformTo stype=gen2
+		avatar EOS > killSprite
+		gen4 gen5 > pullWithIt
+		gen2 gen5 > killSprite
+		gen2 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Fleeing fleeing=TRUE stype=gen2 img=alien
+		gen2 > SpawnPoint stype=gen1 img=monster
+		gen3 > OrientedFlicker limit=44 orientation=LEFT img=box
+		gen4 > Spreader limit=10 stype=gen5 img=forest
+		gen5 > Chaser stype=gen2 img=mana
+	InteractionSet
+		gen4 gen2 > bounceForward
+		gen2 gen3 > undoAll
+		avatar gen2 > pullWithIt
+		avatar gen5 > stepBack
+		gen2 wall > killIfFromAbove
+		gen3 gen5 > spawnIfHasMore limit=0 stype=gen2 resource=null scoreChange=10
+		gen4 avatar > wallStop
+		gen3 EOS > spawnIfHasMore limit=0 stype=gen5 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

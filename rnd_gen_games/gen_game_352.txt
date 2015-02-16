@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen6 img=avatar
+		gen1 > Missile orientation=UP img=hole
+		gen2 > SpawnPoint stype=gen4 img=goal prob=0.2116
+		gen3 > OrientedFlicker limit=8 orientation=RIGHT img=goal
+		gen4 > Portal stype=gen2 img=mana
+		gen5 > RandomMissile img=virus
+		gen6 > SpawnPoint stype=gen2 img=virus prob=0.5929
+	InteractionSet
+		gen4 gen2 > stepBack
+		gen2 gen4 > bounceForward
+		gen1 gen4 > teleportToExit
+		gen1 gen3 > undoAll
+		gen5 gen1 > attractGaze scoreChange=-4
+		gen2 gen3 > killSprite scoreChange=6
+		gen4 avatar > pullWithIt
+		gen5 gen1 > attractGaze scoreChange=-3
+		gen5 gen6 > transformTo stype=gen6 scoreChange=5
+		gen3 avatar > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen6 win=FALSE 

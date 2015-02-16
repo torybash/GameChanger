@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=4
+		gen1 > AlternateChaser stype1=avatar stype2=gen3 img=missile
+		gen2 > Fleeing stype=gen1 img=pellet
+		gen3 > Bomber orientation=DOWN stype=gen5 img=frog prob=0.7921 cooldown=4
+		gen4 > SpawnPoint stype=gen1 img=forest prob=0.6084
+		gen5 > Portal stype=gen4 img=virus
+	InteractionSet
+		avatar EOS > spawnIfHasMore limit=0 stype=gen3 resource=null
+		gen1 gen1 > attractGaze
+		gen3 avatar > reverseDirection
+		gen4 gen3 > wallStop
+		gen5 gen4 > killSprite
+		gen4 gen4 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 wall > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

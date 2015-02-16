@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomNPC speed=0.30250000000000005 img=box
+		gen2 > RandomAltChaser stype1=gen1 singleton=TRUE stype2=avatar img=alien epsilon=0.817113710068723
+		gen3 > SpawnPoint stype=gen1 img=forest prob=0.2116
+	InteractionSet
+		avatar wall > turnAround
+		gen2 avatar > attractGaze scoreChange=7
+		gen2 gen3 > flipDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

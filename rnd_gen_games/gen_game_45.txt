@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomAltChaser stype1=gen2 stype2=gen3 img=mana epsilon=0.41591745039898564
+		gen2 > OrientedFlicker limit=15 orientation=UP img=monster
+		gen3 > Bomber total=6 orientation=RIGHT stype=gen2 img=water prob=0.81
+	InteractionSet
+		avatar gen3 > attractGaze
+		gen3 gen1 > attractGaze
+		gen2 avatar > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

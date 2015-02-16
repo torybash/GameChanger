@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > AlternateChaser stype1=gen3 stype2=gen6 img=gold
+		gen2 > RandomMissile img=dirt
+		gen3 > Bomber orientation=UP stype=gen5 img=bomb prob=0.7224999999999999 cooldown=9
+		gen4 > OrientedFlicker limit=41 orientation=DOWN img=bomb
+		gen5 > OrientedFlicker limit=25 orientation=UP singleton=TRUE img=wall
+		gen6 > RandomNPC img=truck
+	InteractionSet
+		gen5 avatar > pullWithIt
+		gen4 gen2 > transformTo stype=gen5
+		gen3 gen4 > spawnIfHasMore limit=0 stype=gen4 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen6 stype2=gen2 win=FALSE 

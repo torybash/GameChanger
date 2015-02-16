@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=9
+		gen1 > Portal stype=gen4 img=hell
+		gen2 > RandomMissile img=wall cooldown=4
+		gen3 > Portal stype=gen4 img=boulder
+		gen4 > Flicker limit=37 img=hole
+	InteractionSet
+		gen3 gen2 > stepBack
+		gen1 gen4 > killIfFromAbove scoreChange=4
+		avatar EOS > transformTo stype=avatar
+		avatar gen1 > teleportToExit scoreChange=5
+		gen1 gen3 > cloneSprite
+		gen3 gen4 > stepBack scoreChange=-2
+		avatar wall > killSprite
+		avatar gen3 > transformTo stype=avatar
+		gen1 gen4 > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

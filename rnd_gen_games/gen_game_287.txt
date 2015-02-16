@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar speed=0.42250000000000004 stype=gen1 img=avatar ammo=gen7
+		gen1 > RandomNPC speed=0.5184 img=alien
+		gen2 > Chaser fleeing=TRUE stype=gen7 img=bomb
+		gen3 > Immovable img=key
+		gen4 > Missile orientation=UP img=frog
+		gen5 > Bomber orientation=RIGHT stype=gen1 img=water prob=0.5328999999999999
+		gen6 > SpawnPoint stype=gen4 img=gold prob=0.0576
+		gen7 > Resource limit=1 value=5 img=goal
+	InteractionSet
+		avatar EOS > transformTo stype=avatar
+		gen6 gen6 > killIfFromAbove scoreChange=2
+		gen6 gen3 > cloneSprite
+		gen1 gen6 > killIfFromAbove scoreChange=4
+		gen2 gen4 > attractGaze
+		gen6 gen3 > killIfHasMore limit=2 resource=gen7
+		gen2 gen4 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Fleeing stype=gen2 img=mushroom
+		gen2 > RandomMissile singleton=TRUE img=portal
+		gen3 > SpawnPoint total=16 stype=gen5 img=key
+		gen4 > Missile orientation=RIGHT img=diamond
+		gen5 > RandomMissile img=sword cooldown=1
+		gen6 > Flicker limit=2 img=goal
+		gen7 > Fleeing stype=avatar img=forest
+	InteractionSet
+		gen6 gen1 > killIfFromAbove
+		gen1 gen5 > attractGaze scoreChange=4
+		gen7 gen4 > attractGaze
+		gen3 gen3 > cloneSprite
+		gen2 gen2 > attractGaze
+		gen6 gen6 > killSprite
+		gen1 gen1 > attractGaze
+		gen7 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

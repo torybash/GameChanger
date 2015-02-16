@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Passive img=mana
+		gen2 > Immovable img=goal
+		gen3 > Spreader limit=11 stype=gen1 img=log
+		gen4 > RandomMissile speed=0.6561000000000001 img=portal
+		gen5 > Missile orientation=RIGHT img=city
+	InteractionSet
+		gen4 gen4 > attractGaze
+		avatar gen4 > attractGaze
+		gen5 gen5 > attractGaze scoreChange=7
+		avatar EOS > transformTo stype=avatar
+		gen3 gen4 > stepBack
+		gen5 gen4 > attractGaze
+		gen2 gen5 > stepBack scoreChange=10
+		gen4 wall > flipDirection scoreChange=7
+		gen2 gen3 > spawnIfHasMore limit=0 stype=gen2 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

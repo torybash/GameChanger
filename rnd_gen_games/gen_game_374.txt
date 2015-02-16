@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen3 img=avatar
+		gen1 > Fleeing fleeing=TRUE stype=avatar img=truck
+		gen2 > RandomMissile img=city
+		gen3 > Flicker limit=7 img=spaceship
+		gen4 > RandomAltChaser stype1=gen3 stype2=gen5 img=butterfly epsilon=0.02670151247186181
+		gen5 > RandomNPC speed=0.2116 img=shovel
+	InteractionSet
+		gen2 wall > wallStop
+		gen5 gen2 > attractGaze
+		gen3 gen2 > spawnIfHasMore limit=0 stype=gen5 resource=null scoreChange=6
+		gen1 avatar > flipDirection scoreChange=3
+		gen4 gen1 > attractGaze
+		avatar gen5 > transformTo stype=avatar
+		gen1 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

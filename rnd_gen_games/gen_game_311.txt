@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > RandomNPC img=explosion
+		gen2 > Missile orientation=RIGHT img=forest
+		gen3 > Spreader limit=24 stype=gen5 img=zombie
+		gen4 > SpawnPoint stype=gen5 img=portal prob=0.16810000000000003
+		gen5 > Resource limit=15 value=1 img=gold
+		gen6 > Flicker limit=21 img=base
+		gen7 > Bomber total=28 orientation=RIGHT speed=0.09 stype=gen2 img=spaceship prob=0.6889000000000001
+	InteractionSet
+		gen1 gen5 > killSprite scoreChange=-1
+		gen5 EOS > spawnIfHasMore limit=7 stype=gen1 resource=gen5
+		gen5 gen5 > stepBack
+		gen2 wall > changeResource value=-2 resource=gen5
+		gen7 gen5 > reverseDirection scoreChange=8
+		gen3 gen6 > wallStop
+		gen7 avatar > turnAround
+		avatar gen3 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen7 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

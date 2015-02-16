@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Passive img=city
+		gen2 > SpawnPoint stype=gen3 img=forest
+		gen3 > Flicker limit=9 img=city
+		gen4 > RandomNPC speed=0.0576 img=virus
+		gen5 > Missile orientation=UP img=truck
+	InteractionSet
+		avatar gen1 > transformTo stype=avatar
+		gen1 EOS > transformTo stype=gen2 scoreChange=-5
+		gen5 gen5 > attractGaze scoreChange=2
+		gen3 wall > transformTo stype=gen1
+		gen5 gen3 > transformTo stype=gen3 scoreChange=2
+		gen4 EOS > turnAround
+		gen2 gen2 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=gen3 win=FALSE 

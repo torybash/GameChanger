@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar
+		gen1 > RandomNPC img=monster
+		gen2 > RandomNPC img=log
+		gen3 > Spreader limit=38 stype=gen1 singleton=TRUE img=mushroom
+		gen4 > Spreader limit=4 stype=gen1 img=marsh
+	InteractionSet
+		gen3 gen2 > killSprite
+		gen1 gen3 > wallStop
+		avatar EOS > spawnIfHasMore limit=0 stype=gen1 resource=null
+		gen1 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

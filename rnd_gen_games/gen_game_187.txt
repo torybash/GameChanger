@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > RandomAltChaser stype1=gen2 stype2=gen2 img=camel epsilon=0.00469204544376034 cooldown=10
+		gen2 > Portal stype=gen1 img=diamond
+		gen3 > Portal stype=gen1 img=bomb
+	InteractionSet
+		gen2 EOS > stepBack
+		avatar gen1 > bounceForward scoreChange=10
+		avatar wall > killSprite scoreChange=6
+		avatar gen3 > wallStop
+		gen3 gen3 > teleportToExit
+		avatar gen3 > pullWithIt scoreChange=2
+		avatar gen1 > stepBack scoreChange=10
+		gen1 wall > flipDirection
+		gen2 gen2 > wallStop scoreChange=-1
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

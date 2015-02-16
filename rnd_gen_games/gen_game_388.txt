@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.0961 img=avatar
+		gen1 > RandomAltChaser fleeing=TRUE stype1=avatar singleton=TRUE stype2=avatar img=truck epsilon=0.9971886542858055
+		gen2 > RandomAltChaser stype1=avatar stype2=avatar img=wall epsilon=0.47753910313128267 cooldown=4
+	InteractionSet
+		gen1 wall > reverseDirection scoreChange=3
+		gen2 avatar > attractGaze scoreChange=5
+		avatar EOS > flipDirection
+		gen1 gen1 > attractGaze
+		gen1 wall > wallStop
+		gen1 wall > undoAll
+		avatar gen2 > attractGaze
+		gen2 wall > transformTo stype=gen1 scoreChange=3
+		gen1 avatar > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

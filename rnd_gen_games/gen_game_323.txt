@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > Chaser fleeing=TRUE stype=gen4 img=mana cooldown=6
+		gen2 > Portal stype=gen3 img=missile
+		gen3 > Bomber total=2 orientation=LEFT stype=gen1 singleton=TRUE img=gold prob=0.5625
+		gen4 > Flicker limit=34 img=key
+	InteractionSet
+		gen4 gen2 > stepBack
+		gen2 wall > cloneSprite scoreChange=4
+		gen4 gen1 > pullWithIt
+		gen3 gen1 > attractGaze
+		gen3 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen4 stype2=gen2 win=FALSE 

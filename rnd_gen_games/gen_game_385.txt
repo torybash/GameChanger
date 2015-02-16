@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Fleeing speed=0.17639999999999997 stype=gen2 img=key cooldown=8
+		gen2 > AlternateChaser stype1=gen1 stype2=gen1 img=ghost
+		gen3 > Spreader limit=25 stype=gen1 img=city
+	InteractionSet
+		avatar gen1 > bounceForward
+		gen3 avatar > pullWithIt
+		avatar EOS > stepBack scoreChange=7
+		gen2 wall > undoAll
+		gen3 avatar > undoAll
+		avatar gen1 > transformTo stype=avatar
+		gen3 avatar > bounceForward
+		gen2 EOS > undoAll
+		avatar gen3 > pullWithIt scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

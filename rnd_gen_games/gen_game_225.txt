@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Spreader limit=17 stype=gen4 img=gold
+		gen2 > RandomNPC speed=0.019600000000000003 img=bomb
+		gen3 > OrientedFlicker limit=49 orientation=RIGHT img=wall
+		gen4 > Bomber orientation=DOWN stype=gen6 img=butterfly cooldown=7
+		gen5 > Resource limit=12 value=1 img=honey
+		gen6 > Flicker limit=2 img=ghost
+	InteractionSet
+		gen2 gen4 > attractGaze scoreChange=9
+		avatar gen6 > pullWithIt scoreChange=6
+		gen5 gen1 > killIfHasMore limit=10 resource=gen5
+		avatar wall > killIfHasLess limit=8 resource=gen5
+		gen3 gen1 > killIfHasLess limit=4 resource=gen5
+		gen4 gen2 > attractGaze
+		avatar gen3 > killIfHasLess limit=3 resource=gen5
+		gen3 EOS > killSprite scoreChange=-3
+		gen1 EOS > killSprite scoreChange=10
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen6 win=FALSE 

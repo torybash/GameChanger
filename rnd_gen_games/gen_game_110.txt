@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Chaser stype=gen2 img=monster
+		gen2 > RandomMissile img=sword
+		gen3 > Portal stype=gen2 img=ghost
+	InteractionSet
+		avatar wall > stepBack scoreChange=-2
+		gen2 gen1 > attractGaze
+		avatar EOS > wrapAround
+		gen2 gen1 > attractGaze scoreChange=-5
+		avatar EOS > undoAll
+		gen3 avatar > pullWithIt
+		gen3 gen2 > undoAll
+		avatar gen1 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar
+		gen1 > RandomNPC img=monster
+		gen2 > Chaser stype=gen6 img=carcass
+		gen3 > AlternateChaser stype1=avatar stype2=gen4 img=marsh
+		gen4 > Missile orientation=RIGHT img=carcass cooldown=2
+		gen5 > Spreader limit=2 stype=gen6 img=shovel
+		gen6 > RandomNPC img=spaceship cooldown=5
+	InteractionSet
+		gen3 wall > bounceForward
+		avatar gen2 > stepBack
+		gen1 gen5 > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 gen1 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

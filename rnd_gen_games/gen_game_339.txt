@@ -1,0 +1,18 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Flicker limit=17 img=fire
+		gen2 > Portal stype=avatar img=pellet
+	InteractionSet
+		gen1 gen2 > killSprite
+		avatar gen1 > pullWithIt
+		gen2 wall > pullWithIt
+		gen2 EOS > wrapAround
+		avatar gen2 > killSprite
+		gen2 avatar > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

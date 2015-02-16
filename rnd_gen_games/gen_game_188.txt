@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar
+		gen1 > SpawnPoint stype=gen2 img=goal prob=0.010000000000000002
+		gen2 > Passive img=box
+		gen3 > Resource limit=2 value=4 img=honey
+		gen4 > SpawnPoint stype=gen1 img=truck prob=0.39690000000000003 cooldown=4
+		gen5 > Fleeing stype=gen1 img=cocoon cooldown=2
+		gen6 > Resource limit=6 value=3 img=wall
+		gen7 > Missile orientation=DOWN img=missile cooldown=6
+	InteractionSet
+		gen6 gen6 > transformTo stype=gen1
+		gen7 gen2 > killIfFromAbove scoreChange=9
+		gen2 gen3 > changeResource value=-3 resource=gen3
+		gen2 gen1 > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen7 stype2=gen7 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

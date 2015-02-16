@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Flicker limit=8 img=monster
+		gen2 > Bomber orientation=LEFT stype=gen1 img=door prob=0.3249000000000001 cooldown=3
+	InteractionSet
+		gen1 EOS > cloneSprite
+		gen2 gen2 > attractGaze scoreChange=-2
+		gen2 EOS > stepBack
+		avatar gen2 > attractGaze
+		gen2 wall > flipDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

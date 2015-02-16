@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=3
+		gen1 > Resource limit=2 value=2 img=city
+		gen2 > RandomNPC img=diamond
+		gen3 > Flicker limit=28 img=portal
+		gen4 > Fleeing fleeing=TRUE stype=avatar img=alien
+	InteractionSet
+		gen1 EOS > wrapAround
+		avatar gen1 > transformTo stype=avatar
+		avatar EOS > undoAll
+		avatar gen3 > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

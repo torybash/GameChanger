@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > RandomMissile img=forest
+		gen2 > Missile orientation=DOWN img=bomb cooldown=4
+		gen3 > Passive img=bullet
+		gen4 > RandomAltChaser stype1=avatar stype2=gen3 img=marsh epsilon=0.6101886790498253
+		gen5 > RandomAltChaser fleeing=TRUE stype1=gen3 stype2=gen1 img=powerpill epsilon=0.1687667941983365 cooldown=8
+	InteractionSet
+		gen1 gen5 > attractGaze
+		gen3 gen5 > undoAll scoreChange=6
+		avatar EOS > wrapAround
+		gen4 gen4 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

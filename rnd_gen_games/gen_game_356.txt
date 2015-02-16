@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > SpawnPoint stype=gen2 singleton=TRUE img=boulder prob=0.2601 cooldown=2
+		gen2 > Missile orientation=LEFT img=hole
+	InteractionSet
+		gen1 gen1 > pullWithIt
+		gen1 wall > stepBack
+		gen2 gen1 > wallStop scoreChange=5
+		avatar EOS > stepBack
+		gen2 EOS > killSprite
+		gen1 EOS > stepBack
+		avatar EOS > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen2 EOS > wrapAround
+		gen2 EOS > reverseDirection scoreChange=6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

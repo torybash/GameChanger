@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > RandomMissile img=fire
+		gen2 > Chaser fleeing=TRUE stype=avatar singleton=TRUE img=goal
+		gen3 > Flicker limit=30 img=key
+		gen4 > Immovable singleton=TRUE img=base
+	InteractionSet
+		gen2 gen2 > attractGaze
+		gen3 gen1 > pullWithIt
+		avatar gen4 > bounceForward
+		gen3 EOS > killSprite scoreChange=5
+		gen1 avatar > attractGaze
+		gen2 gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

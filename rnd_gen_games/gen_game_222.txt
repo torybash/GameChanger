@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > OrientedFlicker limit=16 orientation=DOWN img=box
+		gen2 > Missile orientation=UP img=explosion
+		gen3 > OrientedFlicker limit=9 orientation=UP singleton=TRUE img=sword
+	InteractionSet
+		gen2 avatar > killIfFromAbove scoreChange=-1
+		gen2 gen3 > flipDirection
+		gen1 wall > spawnIfHasMore limit=0 stype=gen3 resource=null
+		avatar EOS > stepBack
+		gen2 gen3 > turnAround scoreChange=8
+		avatar wall > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen2 avatar > spawnIfHasMore limit=0 stype=gen2 resource=null
+		gen1 gen2 > wallStop
+		gen3 gen1 > pullWithIt
+		avatar EOS > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

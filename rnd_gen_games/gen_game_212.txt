@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Missile orientation=RIGHT speed=0.5625 img=dirt
+		gen2 > RandomAltChaser fleeing=TRUE stype1=gen1 stype2=avatar img=key epsilon=0.8421457607969742 cooldown=8
+		gen3 > Immovable img=door
+	InteractionSet
+		gen3 EOS > undoAll
+		gen3 gen2 > transformTo stype=gen1
+		avatar EOS > transformTo stype=avatar
+		gen1 avatar > attractGaze
+		gen3 gen2 > cloneSprite
+		gen3 EOS > stepBack
+		gen3 avatar > cloneSprite scoreChange=-1
+		avatar gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

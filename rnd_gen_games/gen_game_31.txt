@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=3
+		gen1 > Spreader limit=10 stype=gen3 img=flower
+		gen2 > Resource limit=1 value=3 img=fire
+		gen3 > RandomNPC img=explosion
+		gen4 > Spreader limit=26 stype=gen1 img=boulder
+	InteractionSet
+		gen3 avatar > spawnIfHasMore limit=14 stype=gen2 resource=gen2
+		gen2 EOS > transformTo stype=gen2
+		gen2 gen1 > killIfFromAbove scoreChange=-1
+		gen4 gen3 > pullWithIt
+		gen2 gen2 > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

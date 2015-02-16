@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > OrientedFlicker limit=30 orientation=UP singleton=TRUE img=mushroom
+		gen2 > Fleeing stype=avatar img=truck
+		gen3 > SpawnPoint stype=gen5 img=water prob=0.4489000000000001 cooldown=3
+		gen4 > Missile orientation=DOWN img=butterfly
+		gen5 > RandomAltChaser stype1=gen3 singleton=TRUE stype2=avatar img=hell epsilon=0.6449611668239477
+	InteractionSet
+		avatar wall > killSprite
+		gen2 avatar > wallStop scoreChange=5
+		gen5 wall > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

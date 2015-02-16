@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=9
+		gen1 > Bomber orientation=DOWN stype=gen3 img=hell
+		gen2 > Missile orientation=RIGHT img=honey
+		gen3 > SpawnPoint stype=gen5 img=zombie prob=0.5184
+		gen4 > RandomAltChaser stype1=gen5 stype2=gen6 img=flower epsilon=0.6520271102111652
+		gen5 > Chaser fleeing=TRUE stype=avatar img=bullet
+		gen6 > Portal stype=gen5 img=carcass
+		gen7 > RandomAltChaser stype1=avatar stype2=gen2 img=forest epsilon=0.6578822269082484
+	InteractionSet
+		gen5 avatar > killIfFromAbove
+		gen2 wall > bounceForward
+		gen6 EOS > spawnIfHasMore limit=0 stype=gen4 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen7 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

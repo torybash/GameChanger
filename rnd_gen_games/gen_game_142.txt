@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen5 img=avatar
+		gen1 > Bomber orientation=UP stype=gen3 img=truck prob=0.019600000000000003 cooldown=6
+		gen2 > RandomMissile img=dirt
+		gen3 > Flicker limit=7 img=box
+		gen4 > Chaser stype=gen5 img=bullet
+		gen5 > Passive img=honey
+	InteractionSet
+		gen3 gen3 > pullWithIt scoreChange=7
+		gen3 EOS > killSprite
+		gen5 gen2 > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen3 stype2=gen1 win=FALSE 

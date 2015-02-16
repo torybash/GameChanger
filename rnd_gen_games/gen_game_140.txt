@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen6 img=avatar
+		gen1 > Flicker limit=49 img=marsh
+		gen2 > Fleeing stype=gen5 img=gold
+		gen3 > SpawnPoint stype=gen6 img=monster prob=0.81 cooldown=1
+		gen4 > Immovable img=boulder
+		gen5 > Resource limit=14 singleton=TRUE value=2 img=zombie
+		gen6 > Resource limit=18 value=1 img=missile
+	InteractionSet
+		gen3 gen4 > undoAll scoreChange=1
+		gen3 gen5 > bounceForward
+		gen6 gen5 > pullWithIt
+		gen5 gen5 > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=avatar win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen3 stype2=gen2 win=FALSE 

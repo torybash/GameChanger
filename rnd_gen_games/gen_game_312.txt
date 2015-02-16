@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Chaser fleeing=TRUE stype=gen3 singleton=TRUE img=camel cooldown=3
+		gen2 > Portal stype=gen1 img=truck
+		gen3 > Fleeing stype=gen1 img=butterfly
+		gen4 > OrientedFlicker limit=19 orientation=RIGHT img=zombie
+		gen5 > Passive img=dirt
+	InteractionSet
+		gen4 gen1 > killIfFromAbove
+		gen3 gen2 > flipDirection
+		gen1 gen4 > turnAround scoreChange=10
+		gen2 gen4 > cloneSprite
+		gen3 gen2 > teleportToExit
+		gen4 wall > pullWithIt scoreChange=10
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

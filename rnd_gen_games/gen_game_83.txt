@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar cooldown=5
+		gen1 > Missile orientation=UP img=diamond
+		gen2 > Passive img=portal
+		gen3 > Missile orientation=DOWN img=shovel cooldown=8
+		gen4 > Chaser stype=gen2 img=boulder cooldown=8
+		gen5 > Chaser stype=gen4 img=monster
+	InteractionSet
+		gen2 gen3 > killSprite
+		gen1 avatar > undoAll
+		gen2 wall > undoAll
+		gen3 gen1 > attractGaze
+		avatar EOS > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

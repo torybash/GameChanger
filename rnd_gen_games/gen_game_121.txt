@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Missile orientation=DOWN img=goal
+		gen2 > Bomber orientation=LEFT stype=gen4 img=mana
+		gen3 > AlternateChaser fleeing=TRUE stype1=avatar stype2=gen5 img=goal
+		gen4 > OrientedFlicker limit=4 orientation=LEFT img=mana
+		gen5 > Missile orientation=LEFT img=carcass
+	InteractionSet
+		gen2 EOS > undoAll
+		gen5 avatar > undoAll scoreChange=2
+		gen4 gen1 > killIfFromAbove scoreChange=-2
+		avatar gen5 > killSprite scoreChange=-4
+		gen4 gen4 > killSprite scoreChange=9
+		gen4 gen1 > killIfFromAbove
+		gen2 wall > bounceForward scoreChange=3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen2 win=FALSE 

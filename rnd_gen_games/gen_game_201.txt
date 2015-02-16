@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomMissile img=dirt
+		gen2 > Missile orientation=LEFT img=fire
+		gen3 > SpawnPoint stype=gen4 singleton=TRUE img=hole prob=0.0576
+		gen4 > Missile orientation=LEFT img=portal
+	InteractionSet
+		gen3 avatar > killIfFromAbove scoreChange=10
+		gen4 gen1 > attractGaze
+		gen2 gen4 > attractGaze
+		gen3 gen1 > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

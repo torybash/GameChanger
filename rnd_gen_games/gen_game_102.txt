@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Flicker limit=37 img=explosion
+		gen2 > Resource limit=18 value=4 img=bee
+		gen3 > Bomber orientation=RIGHT speed=0.0625 stype=gen5 img=hell prob=0.8836000000000002
+		gen4 > RandomAltChaser fleeing=TRUE stype1=gen5 stype2=gen1 img=alien epsilon=0.8511809770095076
+		gen5 > OrientedFlicker limit=13 orientation=UP img=wall
+	InteractionSet
+		gen1 gen5 > wallStop
+		gen5 wall > killSprite
+		gen4 gen3 > attractGaze scoreChange=3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=avatar win=FALSE 

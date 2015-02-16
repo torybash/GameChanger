@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > RandomNPC img=water
+		gen2 > Missile orientation=UP img=butterfly
+		gen3 > RandomAltChaser stype1=gen1 stype2=gen2 img=monster epsilon=0.8169555634331845
+	InteractionSet
+		avatar gen2 > undoAll
+		gen1 wall > undoAll
+		avatar wall > pullWithIt scoreChange=7
+		gen2 gen3 > attractGaze
+		gen1 gen3 > attractGaze
+		gen3 gen3 > attractGaze
+		gen1 EOS > reverseDirection scoreChange=6
+		gen1 avatar > wallStop
+		gen3 EOS > undoAll
+		gen1 wall > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=gen3 win=FALSE 

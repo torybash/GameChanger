@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Bomber total=28 orientation=DOWN stype=gen6 singleton=TRUE img=bee
+		gen2 > Fleeing fleeing=TRUE stype=gen6 img=base
+		gen3 > RandomMissile speed=0.4624000000000001 img=truck
+		gen4 > Immovable img=gold
+		gen5 > OrientedFlicker limit=23 orientation=LEFT img=camel
+		gen6 > Immovable img=missile
+	InteractionSet
+		gen4 gen5 > undoAll
+		gen3 gen1 > attractGaze scoreChange=3
+		avatar gen4 > spawnIfHasMore limit=0 stype=gen4 resource=null scoreChange=5
+		gen2 wall > killSprite
+		gen6 wall > undoAll
+		gen2 gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=FALSE 

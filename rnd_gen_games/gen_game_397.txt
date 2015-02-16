@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > RandomAltChaser stype1=avatar stype2=gen2 img=carcass epsilon=0.9257019906744576
+		gen2 > RandomMissile img=alien
+	InteractionSet
+		gen2 gen1 > attractGaze scoreChange=2
+		avatar wall > pullWithIt
+		avatar EOS > transformTo stype=avatar
+		avatar gen2 > bounceForward
+		avatar EOS > stepBack
+		gen1 gen1 > attractGaze
+		avatar gen1 > bounceForward scoreChange=1
+		gen2 gen1 > attractGaze scoreChange=4
+		gen2 gen2 > attractGaze
+		gen2 EOS > killSprite scoreChange=10
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

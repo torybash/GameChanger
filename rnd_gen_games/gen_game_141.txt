@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar
+		gen1 > RandomAltChaser stype1=gen4 stype2=avatar img=sword epsilon=0.8950609582746375
+		gen2 > Chaser speed=0.2601 stype=gen5 img=carcass cooldown=2
+		gen3 > Bomber total=17 orientation=DOWN speed=0.5041 stype=gen2 img=dirt prob=0.6400000000000001 cooldown=3
+		gen4 > Chaser fleeing=TRUE stype=avatar img=pellet
+		gen5 > AlternateChaser stype1=gen4 stype2=gen3 img=butterfly
+		gen6 > Missile orientation=UP img=door
+	InteractionSet
+		gen4 gen1 > attractGaze
+		gen3 gen6 > attractGaze
+		gen6 gen2 > attractGaze scoreChange=8
+		gen3 wall > killIfFromAbove scoreChange=10
+		gen1 EOS > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

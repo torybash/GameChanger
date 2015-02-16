@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar speed=0.6241000000000001 img=avatar
+		gen1 > Immovable img=frog
+		gen2 > Missile orientation=RIGHT singleton=TRUE img=missile
+		gen3 > Passive img=bullet
+		gen4 > Portal stype=avatar img=diamond
+		gen5 > Chaser stype=gen2 img=mushroom
+		gen6 > Portal stype=gen2 img=forest
+	InteractionSet
+		avatar EOS > wrapAround
+		avatar gen6 > transformTo stype=avatar
+		gen5 wall > bounceForward
+		avatar gen5 > transformTo stype=avatar scoreChange=-5
+		gen1 gen3 > bounceForward scoreChange=-5
+		gen1 EOS > cloneSprite
+		avatar gen4 > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

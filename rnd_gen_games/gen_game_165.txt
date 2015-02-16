@@ -1,0 +1,31 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Fleeing speed=0.1024 stype=gen3 img=gold cooldown=2
+		gen2 > Spreader limit=25 spreadprob=0.019600000000000003 stype=gen4 img=gold
+		gen3 > Missile orientation=LEFT img=box
+		gen4 > Flicker limit=11 img=zombie
+		gen5 > Portal stype=gen6 singleton=TRUE img=wall
+		gen6 > Immovable img=portal
+		gen7 > RandomAltChaser stype1=gen1 stype2=gen6 img=zombie epsilon=0.37580324735649295
+	InteractionSet
+		gen1 gen5 > cloneSprite
+		gen1 EOS > reverseDirection
+		gen1 gen1 > attractGaze
+		gen1 wall > reverseDirection
+		gen7 gen3 > attractGaze
+		gen2 gen1 > undoAll
+		gen1 avatar > spawnIfHasMore limit=0 stype=gen1 resource=null scoreChange=5
+		avatar EOS > killSprite
+		avatar wall > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen4 stype2=gen5 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen6 win=FALSE 

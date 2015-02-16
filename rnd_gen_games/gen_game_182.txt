@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.04000000000000001 img=avatar cooldown=5
+		gen1 > Missile orientation=DOWN img=honey
+		gen2 > Missile orientation=LEFT img=flower
+		gen3 > AlternateChaser stype1=gen4 stype2=gen2 img=missile
+		gen4 > Resource limit=9 value=3 img=box
+		gen5 > Passive img=hole
+	InteractionSet
+		gen1 gen5 > stepBack
+		gen2 gen2 > attractGaze
+		gen2 gen2 > attractGaze
+		gen3 gen5 > killSprite
+		gen3 EOS > flipDirection
+		gen3 wall > undoAll scoreChange=-1
+		gen4 EOS > killIfHasLess limit=7 resource=gen4
+		gen5 gen5 > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen1 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

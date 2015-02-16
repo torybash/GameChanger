@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > RandomMissile singleton=TRUE img=alien
+		gen2 > OrientedFlicker limit=41 orientation=LEFT img=ghost
+		gen3 > RandomMissile img=key cooldown=10
+		gen4 > Flicker limit=18 img=pellet
+		gen5 > Bomber orientation=RIGHT stype=gen6 img=spaceship prob=0.2304
+		gen6 > Missile orientation=LEFT img=wall cooldown=5
+		gen7 > Resource limit=10 value=1 img=camel
+	InteractionSet
+		gen7 gen4 > cloneSprite scoreChange=8
+		gen2 wall > wallStop
+		gen7 gen1 > cloneSprite scoreChange=6
+		gen7 avatar > killIfOtherHasMore limit=12 resource=gen7
+		gen3 gen1 > attractGaze
+		gen4 gen6 > killIfOtherHasMore limit=1 resource=gen7
+		gen2 gen1 > killIfHasMore limit=7 resource=gen7 scoreChange=5
+		avatar gen5 > attractGaze
+		gen2 gen5 > stepBack scoreChange=6
+		gen1 gen7 > reverseDirection
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen6 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

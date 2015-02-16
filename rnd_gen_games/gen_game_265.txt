@@ -1,0 +1,31 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar speed=0.1296 stype=gen5 img=avatar cooldown=1
+		gen1 > OrientedFlicker limit=20 orientation=LEFT img=mana
+		gen2 > OrientedFlicker limit=20 orientation=DOWN img=diamond
+		gen3 > Spreader limit=44 spreadprob=0.0529 stype=gen5 img=sword
+		gen4 > Missile orientation=LEFT img=fire
+		gen5 > Flicker limit=15 img=cocoon
+		gen6 > OrientedFlicker limit=9 orientation=LEFT img=marsh
+		gen7 > Missile orientation=RIGHT img=box
+	InteractionSet
+		gen4 gen4 > attractGaze
+		gen3 wall > bounceForward scoreChange=3
+		gen3 gen7 > killIfFromAbove
+		gen6 gen6 > killIfFromAbove
+		gen3 wall > cloneSprite scoreChange=-3
+		gen6 gen2 > cloneSprite scoreChange=-1
+		gen3 gen2 > stepBack
+		gen5 gen3 > spawnIfHasMore limit=0 stype=gen5 resource=null
+		gen4 EOS > spawnIfHasMore limit=0 stype=gen5 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=FALSE 

@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > Passive img=city
+		gen2 > Fleeing stype=gen3 singleton=TRUE img=bee
+		gen3 > SpawnPoint stype=gen2 img=portal prob=0.2601
+	InteractionSet
+		gen1 gen2 > killSprite scoreChange=-3
+		gen2 gen3 > turnAround
+		gen2 gen2 > attractGaze scoreChange=3
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen1 win=FALSE 

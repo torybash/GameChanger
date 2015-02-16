@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen3 img=avatar
+		gen1 > SpawnPoint total=23 stype=gen6 img=bullet
+		gen2 > Immovable img=city
+		gen3 > RandomMissile img=bullet
+		gen4 > RandomMissile img=spaceship cooldown=2
+		gen5 > Immovable img=bee
+		gen6 > Portal stype=gen2 img=camel
+		gen7 > SpawnPoint stype=gen4 img=honey prob=0.7395999999999999
+	InteractionSet
+		gen7 EOS > spawnIfHasMore limit=0 stype=gen6 resource=null
+		gen1 gen3 > undoAll
+		gen1 gen4 > bounceForward
+		gen4 gen3 > attractGaze
+		gen4 gen1 > spawnIfHasMore limit=0 stype=gen7 resource=null
+		gen6 gen3 > cloneSprite
+		gen7 wall > killIfFromAbove
+		gen2 gen7 > killSprite
+		avatar wall > wallStop
+		gen1 avatar > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen7 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

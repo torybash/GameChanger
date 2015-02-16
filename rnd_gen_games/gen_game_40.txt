@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen3 img=avatar
+		gen1 > Immovable img=truck
+		gen2 > Portal stype=gen1 singleton=TRUE img=frog
+		gen3 > Immovable img=alien
+		gen4 > SpawnPoint stype=gen2 img=key prob=0.2304 cooldown=7
+	InteractionSet
+		gen2 EOS > stepBack
+		gen1 EOS > undoAll
+		gen3 wall > killIfFromAbove
+		gen2 wall > spawnIfHasMore limit=0 stype=gen4 resource=null
+		avatar gen4 > wallStop scoreChange=-5
+		gen2 EOS > undoAll
+		gen3 gen1 > transformTo stype=gen2 scoreChange=5
+		avatar EOS > undoAll
+		avatar wall > stepBack scoreChange=4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen4 stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

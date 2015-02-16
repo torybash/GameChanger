@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=3
+		gen1 > Immovable img=gold
+		gen2 > Fleeing fleeing=TRUE stype=gen3 img=pellet
+		gen3 > Fleeing stype=gen1 img=bullet
+		gen4 > Bomber total=27 orientation=LEFT stype=gen1 img=truck prob=0.2025 cooldown=7
+	InteractionSet
+		gen3 gen1 > wallStop
+		gen1 avatar > stepBack scoreChange=-5
+		gen4 avatar > attractGaze scoreChange=-4
+		avatar gen2 > attractGaze
+		gen1 EOS > stepBack scoreChange=8
+		avatar gen2 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=FALSE 

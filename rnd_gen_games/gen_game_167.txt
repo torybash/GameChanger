@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen2 img=avatar
+		gen1 > RandomNPC img=key
+		gen2 > RandomAltChaser speed=0.7395999999999999 stype1=gen3 singleton=TRUE stype2=gen5 img=wall epsilon=0.5017320558060677
+		gen3 > Chaser stype=gen2 img=bomb cooldown=3
+		gen4 > Spreader limit=37 stype=gen2 img=hole
+		gen5 > Spreader limit=43 stype=gen4 img=sword
+		gen6 > Spreader limit=26 stype=gen2 img=monster
+	InteractionSet
+		gen1 gen4 > cloneSprite scoreChange=-5
+		gen6 gen3 > bounceForward
+		gen4 gen1 > killIfFromAbove
+		gen4 gen5 > cloneSprite
+		gen1 gen2 > attractGaze
+		gen5 avatar > wallStop scoreChange=1
+		gen4 EOS > killSprite scoreChange=1
+		gen6 gen1 > pullWithIt scoreChange=-3
+		gen5 gen6 > transformTo stype=gen3 scoreChange=8
+		gen2 EOS > spawnIfHasMore limit=0 stype=gen2 resource=null
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=gen2 win=FALSE 

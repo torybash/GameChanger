@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen3 img=avatar
+		gen1 > Chaser fleeing=TRUE stype=gen3 img=camel
+		gen2 > Portal stype=gen4 singleton=TRUE img=sword
+		gen3 > Immovable img=bee
+		gen4 > Spreader limit=43 spreadprob=0.3249000000000001 stype=gen1 img=bee
+		gen5 > Chaser fleeing=TRUE stype=gen1 img=explosion cooldown=5
+	InteractionSet
+		avatar gen1 > attractGaze scoreChange=3
+		gen5 gen2 > killSprite
+		avatar gen4 > undoAll scoreChange=3
+		gen1 EOS > stepBack scoreChange=8
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

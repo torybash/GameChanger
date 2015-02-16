@@ -1,0 +1,21 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Spreader limit=7 spreadprob=0.1369 stype=gen3 img=honey
+		gen2 > SpawnPoint stype=gen1 img=wall prob=0.010000000000000002
+		gen3 > AlternateChaser stype1=avatar stype2=gen1 img=forest
+		gen4 > Passive img=boulder
+	InteractionSet
+		gen3 gen3 > attractGaze scoreChange=1
+		gen1 wall > undoAll
+		avatar EOS > spawnIfHasMore limit=0 stype=gen4 resource=null
+		avatar gen4 > stepBack
+		gen3 gen4 > pullWithIt scoreChange=-4
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

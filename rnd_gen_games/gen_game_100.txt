@@ -1,0 +1,15 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > Passive img=cocoon
+		gen2 > Chaser stype=avatar img=flower cooldown=3
+	InteractionSet
+		avatar gen1 > stepBack
+		gen2 wall > stepBack
+		avatar gen1 > stepBack scoreChange=1
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

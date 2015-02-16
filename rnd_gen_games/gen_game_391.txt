@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar cooldown=9
+		gen1 > Fleeing stype=gen4 img=marsh
+		gen2 > Fleeing stype=gen5 img=boulder cooldown=6
+		gen3 > Fleeing stype=gen1 img=forest
+		gen4 > RandomMissile img=marsh
+		gen5 > AlternateChaser stype1=gen4 singleton=TRUE stype2=avatar img=flower
+	InteractionSet
+		gen1 gen1 > attractGaze
+		gen3 gen1 > attractGaze scoreChange=-2
+		avatar wall > bounceForward scoreChange=9
+		gen5 avatar > attractGaze scoreChange=9
+		gen1 wall > pullWithIt
+		gen3 wall > reverseDirection
+		gen5 gen5 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

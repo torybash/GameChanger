@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=6
+		gen1 > Resource limit=9 value=2 img=door
+		gen2 > RandomMissile img=fire
+		gen3 > RandomMissile img=boulder cooldown=1
+	InteractionSet
+		gen2 gen3 > attractGaze
+		avatar EOS > reverseDirection
+		avatar EOS > killIfHasMore limit=0 resource=gen1 scoreChange=4
+		gen3 gen1 > wallStop
+		gen2 wall > spawnIfHasMore limit=3 stype=gen3 resource=gen1
+		gen1 gen2 > killSprite
+		gen2 EOS > killSprite
+		gen1 avatar > bounceForward
+		gen2 gen3 > attractGaze scoreChange=2
+		gen3 gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar cooldown=7
+		gen1 > Bomber orientation=RIGHT stype=gen4 img=spaceship prob=0.0361
+		gen2 > Flicker limit=29 img=alien
+		gen3 > OrientedFlicker limit=45 orientation=RIGHT img=spaceship
+		gen4 > Immovable img=fire
+		gen5 > RandomAltChaser stype1=avatar stype2=gen3 img=virus epsilon=0.4390281547920112 cooldown=4
+	InteractionSet
+		avatar gen3 > transformTo stype=avatar
+		gen5 gen4 > turnAround
+		gen1 EOS > turnAround
+		gen1 gen1 > attractGaze scoreChange=-1
+		gen3 gen2 > wallStop
+		gen3 wall > cloneSprite
+		gen2 gen1 > undoAll scoreChange=8
+		gen3 avatar > pullWithIt
+		gen3 gen2 > pullWithIt
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen6 img=avatar
+		gen1 > Immovable img=spaceship
+		gen2 > Resource limit=11 value=1 img=bomb
+		gen3 > RandomMissile speed=0.9801 img=alien
+		gen4 > OrientedFlicker limit=27 orientation=LEFT singleton=TRUE img=missile
+		gen5 > Spreader limit=31 stype=gen3 img=key
+		gen6 > RandomMissile img=bee
+	InteractionSet
+		gen5 gen3 > killIfFromAbove scoreChange=-4
+		gen3 gen4 > undoAll
+		avatar gen5 > spawnIfHasMore limit=10 stype=gen5 resource=gen2 scoreChange=3
+		gen1 avatar > killSprite scoreChange=-2
+		gen3 gen1 > transformTo stype=gen1
+		gen2 gen1 > pullWithIt scoreChange=7
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

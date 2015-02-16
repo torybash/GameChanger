@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > RandomAltChaser fleeing=TRUE speed=0.5625 stype1=gen3 stype2=gen2 img=hole epsilon=0.8431726324908733
+		gen2 > Resource limit=18 value=2 img=door
+		gen3 > Fleeing stype=gen1 img=goal
+		gen4 > Immovable img=bomb
+	InteractionSet
+		gen1 EOS > stepBack scoreChange=4
+		gen4 avatar > killIfHasMore limit=13 resource=gen2
+		avatar gen3 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

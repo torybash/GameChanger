@@ -1,0 +1,31 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Immovable img=mana
+		gen2 > Flicker limit=11 img=powerpill
+		gen3 > RandomAltChaser fleeing=TRUE speed=0.04000000000000001 stype1=gen5 stype2=gen4 img=log epsilon=0.039592043921758635
+		gen4 > Fleeing stype=avatar img=hell
+		gen5 > Missile orientation=RIGHT img=explosion
+		gen6 > RandomNPC img=forest
+		gen7 > RandomAltChaser stype1=gen2 stype2=gen1 img=carcass epsilon=0.759279549630192
+	InteractionSet
+		gen2 EOS > transformTo stype=gen3
+		gen2 gen3 > transformTo stype=gen3
+		avatar EOS > stepBack scoreChange=-5
+		gen3 gen6 > attractGaze
+		gen6 gen7 > attractGaze scoreChange=10
+		gen1 EOS > undoAll scoreChange=-3
+		gen5 gen3 > attractGaze scoreChange=-5
+		gen3 gen2 > spawnIfHasMore limit=0 stype=gen5 resource=null
+		avatar wall > bounceForward
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

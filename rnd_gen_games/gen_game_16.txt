@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Resource limit=4 value=0 img=bomb
+		gen2 > Resource limit=15 value=0 img=door
+		gen3 > Flicker limit=44 img=boulder
+		gen4 > OrientedFlicker limit=11 orientation=LEFT img=fire
+		gen5 > Missile orientation=DOWN img=hole
+		gen6 > OrientedFlicker limit=5 orientation=UP img=ghost
+		gen7 > OrientedFlicker limit=16 orientation=LEFT img=mushroom
+	InteractionSet
+		gen1 gen4 > bounceForward
+		avatar gen6 > killSprite
+		gen7 gen6 > bounceForward scoreChange=7
+		avatar gen4 > killSprite scoreChange=5
+		gen4 gen7 > killIfHasMore limit=15 resource=gen1 scoreChange=-4
+		gen7 gen7 > killIfOtherHasMore limit=15 resource=gen2 scoreChange=10
+		gen2 wall > stepBack scoreChange=6
+		gen2 gen5 > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=gen7 win=FALSE 

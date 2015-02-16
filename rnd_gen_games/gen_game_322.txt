@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar
+		gen1 > Resource limit=15 singleton=TRUE value=3 img=camel
+		gen2 > Chaser stype=gen5 img=shovel cooldown=8
+		gen3 > AlternateChaser speed=0.5776 stype1=gen1 stype2=gen4 img=box
+		gen4 > Portal stype=gen2 img=honey
+		gen5 > Bomber total=27 orientation=UP stype=gen4 img=hell prob=0.0529
+		gen6 > Portal stype=gen2 img=ghost
+	InteractionSet
+		gen2 gen2 > attractGaze
+		gen5 gen4 > turnAround
+		gen5 gen5 > attractGaze
+		gen4 gen3 > spawnIfHasMore limit=5 stype=gen6 resource=gen1
+		avatar gen4 > killIfOtherHasMore limit=6 resource=gen1
+		gen4 gen1 > killIfHasMore limit=14 resource=gen1
+		gen6 EOS > cloneSprite
+		avatar gen3 > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar win=FALSE 

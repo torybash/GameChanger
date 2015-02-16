@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar speed=0.11560000000000002 stype=gen1 img=avatar cooldown=5
+		gen1 > Immovable img=sword
+		gen2 > AlternateChaser stype1=avatar stype2=gen1 img=water
+		gen3 > Portal stype=gen2 img=dirt
+		gen4 > Immovable img=camel
+		gen5 > Resource limit=17 value=0 img=gold
+		gen6 > AlternateChaser stype1=gen4 stype2=gen1 img=camel cooldown=6
+	InteractionSet
+		gen4 EOS > wrapAround
+		gen6 gen3 > pullWithIt
+		avatar gen6 > spawnIfHasMore limit=2 stype=gen1 resource=gen5
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen4 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen6 win=FALSE 

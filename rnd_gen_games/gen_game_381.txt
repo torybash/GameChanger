@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Spreader limit=8 spreadprob=0.0324 stype=gen4 img=zombie
+		gen2 > RandomNPC img=honey
+		gen3 > SpawnPoint stype=gen1 img=carcass prob=0.2601
+		gen4 > RandomMissile img=goal
+		gen5 > Missile orientation=RIGHT speed=0.24009999999999998 img=gold
+		gen6 > RandomMissile img=powerpill cooldown=6
+	InteractionSet
+		avatar gen6 > attractGaze
+		gen4 gen3 > flipDirection
+		gen5 gen5 > attractGaze scoreChange=-5
+		gen4 gen4 > attractGaze
+		gen3 wall > transformTo stype=gen4 scoreChange=10
+		gen3 gen4 > cloneSprite scoreChange=9
+		gen1 gen2 > stepBack
+		gen5 gen1 > wallStop
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > OrientedFlicker limit=41 orientation=DOWN img=zombie
+		gen2 > Flicker limit=38 img=carcass
+		gen3 > Passive img=carcass
+		gen4 > Passive img=powerpill
+		gen5 > Spreader limit=38 stype=gen3 img=diamond
+		gen6 > Portal stype=gen1 img=fire
+	InteractionSet
+		gen3 wall > transformTo stype=gen3
+		avatar gen3 > bounceForward
+		avatar gen5 > undoAll
+		gen1 EOS > killSprite
+		gen5 gen1 > cloneSprite
+		gen1 gen4 > spawnIfHasMore limit=0 stype=gen5 resource=null scoreChange=10
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

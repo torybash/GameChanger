@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar
+		gen1 > Immovable img=gold
+		gen2 > OrientedFlicker limit=4 orientation=LEFT singleton=TRUE img=portal
+		gen3 > Fleeing stype=avatar img=gold cooldown=1
+		gen4 > Portal stype=gen1 img=goal
+		gen5 > Passive img=zombie
+	InteractionSet
+		gen1 gen1 > killIfFromAbove
+		gen5 gen5 > killSprite
+		gen4 gen5 > wallStop
+		gen5 gen5 > wallStop
+		avatar gen1 > pullWithIt
+		avatar gen3 > bounceForward scoreChange=-2
+		gen3 gen4 > flipDirection
+		gen3 gen4 > spawnIfHasMore limit=0 stype=gen1 resource=null
+		gen1 EOS > stepBack scoreChange=1
+		gen3 EOS > wrapAround
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

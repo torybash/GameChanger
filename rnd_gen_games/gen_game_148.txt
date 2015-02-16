@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=1
+		gen1 > Fleeing stype=avatar img=wall cooldown=10
+		gen2 > RandomNPC img=camel
+		gen3 > Chaser stype=gen1 img=bullet
+		gen4 > Chaser speed=0.81 stype=gen5 img=carcass cooldown=1
+		gen5 > Passive img=explosion
+		gen6 > RandomNPC img=carcass
+	InteractionSet
+		avatar gen4 > bounceForward
+		avatar gen2 > stepBack scoreChange=4
+		gen3 gen3 > attractGaze
+		gen4 wall > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

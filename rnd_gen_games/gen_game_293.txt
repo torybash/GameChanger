@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > OrientedFlicker limit=41 orientation=UP img=frog
+		gen2 > RandomMissile img=zombie
+		gen3 > Portal stype=gen1 img=alien
+		gen4 > Passive img=marsh
+		gen5 > Chaser stype=gen2 img=goal cooldown=5
+	InteractionSet
+		avatar EOS > undoAll scoreChange=6
+		avatar gen2 > transformTo stype=avatar scoreChange=7
+		gen5 wall > wallStop
+		gen1 gen3 > transformTo stype=gen5
+		gen3 wall > bounceForward
+		avatar gen1 > undoAll
+		gen2 avatar > killIfFromAbove
+		gen2 wall > turnAround
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

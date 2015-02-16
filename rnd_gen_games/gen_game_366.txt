@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=8
+		gen1 > Fleeing speed=0.28090000000000004 stype=gen3 img=bomb
+		gen2 > Missile orientation=RIGHT speed=0.8281000000000001 img=pellet
+		gen3 > Fleeing fleeing=TRUE speed=0.2025 stype=gen1 img=carcass
+		gen4 > Flicker limit=11 singleton=TRUE img=gold
+		gen5 > Missile orientation=LEFT img=dirt cooldown=1
+		gen6 > OrientedFlicker limit=21 orientation=DOWN img=forest
+	InteractionSet
+		gen1 EOS > turnAround scoreChange=3
+		gen2 EOS > cloneSprite
+		gen5 gen1 > attractGaze scoreChange=-5
+		gen4 gen5 > killIfFromAbove
+		gen1 gen4 > spawnIfHasMore limit=0 stype=gen3 resource=null scoreChange=-3
+		gen1 gen6 > transformTo stype=gen5
+		gen6 gen6 > transformTo stype=gen6
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen5 stype2=gen5 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

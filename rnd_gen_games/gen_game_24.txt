@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen1 img=avatar
+		gen1 > RandomMissile img=missile cooldown=4
+		gen2 > Fleeing stype=gen5 singleton=TRUE img=marsh
+		gen3 > Immovable img=camel
+		gen4 > Spreader limit=47 stype=gen3 img=virus
+		gen5 > Spreader limit=45 stype=gen2 img=zombie
+		gen6 > Portal stype=gen1 img=sword
+	InteractionSet
+		avatar wall > stepBack scoreChange=-4
+		gen3 gen1 > transformTo stype=gen2
+		gen5 gen2 > spawnIfHasMore limit=0 stype=gen1 resource=null
+		gen3 avatar > pullWithIt
+		gen1 gen5 > bounceForward
+		gen4 gen5 > pullWithIt
+		gen4 wall > wallStop scoreChange=4
+		gen1 gen3 > cloneSprite
+		gen1 wall > undoAll
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

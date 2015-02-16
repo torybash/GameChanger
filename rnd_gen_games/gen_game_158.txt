@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > OrientedFlicker limit=50 orientation=LEFT img=fire
+		gen2 > Bomber orientation=LEFT stype=gen1 img=bee prob=0.36
+		gen3 > Passive img=door
+		gen4 > AlternateChaser fleeing=TRUE stype1=avatar singleton=TRUE stype2=gen5 img=monster
+		gen5 > RandomMissile singleton=TRUE img=diamond
+	InteractionSet
+		gen4 gen4 > attractGaze scoreChange=-5
+		avatar gen2 > attractGaze
+		avatar gen3 > flipDirection
+		avatar wall > killIfFromAbove scoreChange=3
+		gen1 wall > undoAll
+		gen1 wall > transformTo stype=gen4 scoreChange=4
+		gen2 gen2 > attractGaze scoreChange=7
+		avatar gen3 > transformTo stype=avatar
+		gen3 gen1 > bounceForward
+		gen4 wall > killIfFromAbove
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen3 stype2=gen3 win=TRUE 
+		SpriteCounter limit=0 stype=avatar win=FALSE 

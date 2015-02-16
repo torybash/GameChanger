@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Portal stype=gen7 img=city
+		gen2 > RandomAltChaser stype1=avatar stype2=gen4 img=city epsilon=0.6090020568053637
+		gen3 > SpawnPoint stype=gen5 singleton=TRUE img=gold prob=0.4624000000000001
+		gen4 > AlternateChaser fleeing=TRUE stype1=gen7 stype2=gen3 img=mushroom cooldown=2
+		gen5 > SpawnPoint stype=gen3 img=gold
+		gen6 > Bomber orientation=LEFT stype=gen3 img=wall prob=0.3364
+		gen7 > RandomMissile img=powerpill
+	InteractionSet
+		gen4 gen1 > bounceForward scoreChange=6
+		gen2 avatar > flipDirection scoreChange=-4
+		gen6 gen4 > attractGaze
+		gen5 gen2 > killSprite scoreChange=-4
+		gen1 wall > transformTo stype=gen3 scoreChange=2
+		gen1 avatar > killSprite
+		gen7 gen4 > attractGaze
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen4 stype2=gen4 win=FALSE 

@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > HorizontalAvatar img=avatar
+		gen1 > Immovable img=powerpill
+		gen2 > Passive img=frog
+		gen3 > Flicker limit=14 img=monster
+		gen4 > Portal stype=gen1 img=carcass
+		gen5 > Chaser stype=gen6 img=cocoon
+		gen6 > Fleeing stype=gen1 img=mana
+	InteractionSet
+		gen4 gen6 > killSprite
+		avatar EOS > undoAll scoreChange=8
+		gen3 EOS > transformTo stype=gen1 scoreChange=9
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=TRUE 
+		SpriteCounter limit=0 stype=gen2 win=FALSE 

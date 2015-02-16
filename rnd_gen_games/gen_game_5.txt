@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen4 img=avatar
+		gen1 > Spreader limit=24 stype=gen4 img=fire
+		gen2 > OrientedFlicker limit=39 orientation=DOWN img=bullet
+		gen3 > SpawnPoint stype=gen5 img=alien prob=0.2025
+		gen4 > Spreader limit=23 stype=gen3 img=flower
+		gen5 > AlternateChaser stype1=avatar stype2=gen7 img=cocoon
+		gen6 > Spreader limit=13 spreadprob=0.1936 stype=gen1 img=city
+		gen7 > Spreader limit=11 spreadprob=0.0081 stype=gen5 img=sword
+	InteractionSet
+		gen5 avatar > spawnIfHasMore limit=0 stype=gen6 resource=null
+		gen1 wall > bounceForward
+		gen6 gen3 > bounceForward
+		gen3 gen1 > stepBack scoreChange=-3
+		gen5 wall > pullWithIt
+		gen2 gen1 > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+		* > gen7 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen6 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen4 win=FALSE 

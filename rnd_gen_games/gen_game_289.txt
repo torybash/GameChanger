@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Fleeing stype=gen2 img=explosion
+		gen2 > RandomMissile img=bomb cooldown=6
+		gen3 > Resource limit=7 value=0 img=water
+	InteractionSet
+		gen3 gen2 > undoAll scoreChange=-5
+		gen3 gen1 > spawnIfHasMore limit=14 stype=gen1 resource=gen3
+		avatar wall > killIfFromAbove
+		gen3 EOS > changeResource value=5 resource=gen3
+		avatar gen3 > bounceForward
+		gen1 EOS > killIfHasMore limit=13 resource=gen3
+		gen3 avatar > pullWithIt
+		gen3 gen3 > changeResource value=-1 resource=gen3 scoreChange=-3
+		gen2 gen3 > stepBack
+		gen2 wall > killSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen3 win=FALSE 

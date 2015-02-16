@@ -1,0 +1,17 @@
+BasicGame
+	SpriteSet
+		avatar > ShootAvatar stype=gen1 img=avatar
+		gen1 > AlternateChaser stype1=avatar stype2=gen2 img=honey
+		gen2 > RandomMissile img=honey cooldown=9
+	InteractionSet
+		avatar gen1 > attractGaze scoreChange=2
+		gen2 wall > wallStop
+		gen2 gen2 > attractGaze
+		gen2 avatar > attractGaze scoreChange=-1
+		gen1 avatar > attractGaze scoreChange=1
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=gen2 win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=avatar win=FALSE 

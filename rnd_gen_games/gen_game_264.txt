@@ -1,0 +1,24 @@
+BasicGame
+	SpriteSet
+		avatar > FlakAvatar stype=gen2 img=avatar cooldown=8
+		gen1 > Fleeing stype=gen6 img=spaceship
+		gen2 > Fleeing stype=gen1 img=alien
+		gen3 > SpawnPoint total=3 stype=gen2 img=fire prob=0.6400000000000001
+		gen4 > RandomMissile img=diamond
+		gen5 > Missile orientation=UP img=shovel
+		gen6 > Resource limit=15 value=5 img=base
+	InteractionSet
+		gen2 gen3 > cloneSprite
+		gen1 gen5 > attractGaze
+		avatar EOS > changeResource value=0 resource=gen6 scoreChange=-5
+		gen1 gen6 > cloneSprite
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+		' > gen4 
+		( > gen5 
+		) > gen6 
+	TerminationSet
+		SpriteCounter limit=0 stype=avatar win=TRUE 
+		MultiSpriteCounter limit=0 stype1=avatar stype2=gen5 win=FALSE 
