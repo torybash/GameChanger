@@ -18,7 +18,7 @@ public class SpritesChanger {
 	private static final HashMap<String, String[]> possibeSpriteParameters = new HashMap<String, String[]>();
 	static{
 		possibeSpriteParameters.put("FlakAvatar", 		new String[]{"img", "cooldown", "speed", "stype", "ammo"});
-		possibeSpriteParameters.put("HorizontalAvatar", new String[]{"img", "cooldown", "speed"});
+//		possibeSpriteParameters.put("HorizontalAvatar", new String[]{"img", "cooldown", "speed"});
 		possibeSpriteParameters.put("MovingAvatar", 	new String[]{"img", "cooldown", "speed"});
 		possibeSpriteParameters.put("OrientedAvatar", 	new String[]{"img", "cooldown", "speed"});
 		possibeSpriteParameters.put("ShootAvatar", 		new String[]{"img", "cooldown", "speed", "stype", "ammo"});

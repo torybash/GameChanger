@@ -13,7 +13,7 @@ public class LevelMappingMaker {
 
 	static Random r = new Random();
 	
-	static double haveMappingChance = 0.9;
+	static double haveMappingChance = 1.0;
 	
 	
 	public static void makeMapping(ArrayList<LevelMapping> mappings, ArrayList<Sprite> sprites) {	
@@ -69,16 +69,16 @@ public class LevelMappingMaker {
 		}
 		
 		//wall mapping
-		LevelMapping wallMapping = new LevelMapping();;
-		wallMapping.charID = "w".charAt(0);
-		wallMapping.references = new ArrayList<String>();
-		wallMapping.references.add("wall");
-		mappings.add(wallMapping);
+//		LevelMapping wallMapping = new LevelMapping();;
+//		wallMapping.charID = "w".charAt(0);
+//		wallMapping.references = new ArrayList<String>();
+//		wallMapping.references.add("wall");
+//		mappings.add(wallMapping);
 		
 		int totalAmountPut = 0;
 		for (LevelMapping lm : mappings) {
 			int amount = GameChanger.range(1, 50);
-			amount = 1 + (amount * amount * amount * amount)/1000000; // 1 - 8
+			amount = 1 + (amount * amount * amount * amount)/250000; // 1 - 8
 			int amountPut = 0;
 			
 			if (lm.charID == "w".charAt(0)) amount *= 5;

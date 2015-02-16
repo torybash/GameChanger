@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
+import ontology.effects.unary.StepBack;
+
 public class InteractionsChanger {
 
 	static Random r = new Random();
@@ -135,9 +137,9 @@ public class InteractionsChanger {
 	static String getNewSprite2(String sprite1, ArrayList<Sprite> sprites){
 		String result = "";
 		while (result.length() < 1 || (result.equals(GameChanger.avatarNames.get(0)) && sprite1.equals(GameChanger.avatarNames.get(0)))){
-			int idx = GameChanger.range(0, sprites.size() + 1);
-			if (idx == sprites.size()) result = "EOS";
-			else if (idx == sprites.size() + 1) result = "wall";
+			int idx = GameChanger.range(0, sprites.size() * 2);
+			if (idx >= sprites.size()) result = "EOS";
+//			else if (idx == sprites.size() + 1) result = "wall";
 			else result = sprites.get(idx).identifier;
 		}
 		return result;
@@ -257,5 +259,18 @@ public class InteractionsChanger {
 	private static boolean isUnaryOrientationEffect(String func){
 		if (func.equals("flipDirection") || func.equals("reverseDirection") || func.equals("turnAround")) return true;
 		return false;
+	}
+
+
+	public static void makeEOSStepBacks(ArrayList<Sprite> sprites, ArrayList<Interaction> interacts) {
+		
+		for (Sprite sp : sprites) {
+			Interaction sb = new Interaction();
+			sb.function = "stepBack";
+			sb.sprite1 = sp.identifier;
+			sb.sprite2 = "EOS";
+			interacts.add(sb);
+		}
+		
 	}
 }

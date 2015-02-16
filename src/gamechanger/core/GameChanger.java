@@ -42,7 +42,10 @@ public class GameChanger {
 	
 	//ONLY CONTAINS AVATAR SPRITES WITH IMPLEMENTATION (-AimedAvatar.class, AimedFlakAvatar.class, InertialAvatar.class, MarioAvatar.class, 
 	//NoisyRotatingFlippingAvatar.class, RotatingFlippingAvatar.class, VerticalAvatar.class
-	static final Class [] possibleAvatarClasses = {FlakAvatar.class, HorizontalAvatar.class, MovingAvatar.class,
+//	static final Class [] possibleAvatarClasses = {FlakAvatar.class, HorizontalAvatar.class, MovingAvatar.class,
+//	OrientedAvatar.class, ShootAvatar.class};
+	
+	static final Class [] possibleAvatarClasses = {FlakAvatar.class, MovingAvatar.class,
 	OrientedAvatar.class, ShootAvatar.class};
 	
 	//private static final Class[] possibleSpriteClasses = {Conveyor.class, Door.class, Flicker.class,
@@ -144,12 +147,14 @@ public class GameChanger {
 		
 		int amountSprites = range(3,8);
 		int amountInteractions = range(3,10);
-		int amountTerminations = range(1,2);
+		int amountTerminations = range(2,2);
 		
 		SpritesChanger.changeSprites(sprites, amountSprites);
 		InteractionsChanger.changeInteractions(sprites, interacts, amountInteractions);
 		TerminationsChanger.changeTerminations(sprites, terms, amountTerminations);
 		LevelMappingMaker.makeMapping(mappings, sprites);
+		
+		InteractionsChanger.makeEOSStepBacks(sprites, interacts);
 		
 		return Writer.writeGameOutput(elements);
 	}

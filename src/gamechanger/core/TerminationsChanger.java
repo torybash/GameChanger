@@ -54,9 +54,9 @@ public class TerminationsChanger {
 		for (Termination term : terms) {
 			if (changeTerminationClassChance > r.nextDouble()){
 				term.term = getRandomTerminationClass(sprites);
-				term.parameters = getRandomTerminationParameters(term, sprites, term.parameters.get("win").equalsIgnoreCase("TRUE"));
+				term.parameters = getRandomTerminationParameters(term, sprites, terms, term.parameters.get("win").equalsIgnoreCase("TRUE"));
 			}else if (changeTerminationParametersChance > r.nextDouble()){
-				term.parameters = getRandomTerminationParameters(term, sprites, term.parameters.get("win").equalsIgnoreCase("TRUE"));
+				term.parameters = getRandomTerminationParameters(term, sprites, terms, term.parameters.get("win").equalsIgnoreCase("TRUE"));
 			}
 		}
 		
@@ -65,22 +65,33 @@ public class TerminationsChanger {
 		for (int i = 0; i < terminationsToMake; i++) {
 			Termination term = new Termination();
 			term.term = getRandomTerminationClass(sprites);
-			term.parameters = getRandomTerminationParameters(term, sprites, i%2==0);
+			term.parameters = getRandomTerminationParameters(term, sprites, terms, i%2==0);
 			terms.add(term);
 		}
 	}
 
 	static double loseTerminationIsWithAvatarChance = 0.9;
-	static double haveType2Chance = 0.9;
-	static HashMap<String, String> getRandomTerminationParameters(Termination term, ArrayList<Sprite> sprites, boolean win) {
+	static double multiCounterIsExistCheck = 0.8;
+	static double haveType2Chance = 0.5;
+	static HashMap<String, String> getRandomTerminationParameters(Termination term, ArrayList<Sprite> sprites, ArrayList<Termination> terms, boolean win) {
 		HashMap<String, String> result = new HashMap<String, String>();
 
 		String[] possibleParams = possibeTerminationParameters.get(term.term);
 		
 		boolean existTermination = false;
-		if (haveType2Chance <= r.nextDouble() && term.term.equals("MultiSpriteCounter")){
+		if (multiCounterIsExistCheck <= r.nextDouble() && term.term.equals("MultiSpriteCounter")){
 			existTermination = true;
 		}
+		
+		ArrayList<String> forbiddenStyps = new ArrayList<String>();
+		for (Termination t : terms) {
+			if (t!=term){
+				if (t.parameters.get("stype") != null) forbiddenStyps.add(t.parameters.get("stype"));
+				if (t.parameters.get("stype1") != null) forbiddenStyps.add(t.parameters.get("stype1"));
+				if (t.parameters.get("stype2") != null) forbiddenStyps.add(t.parameters.get("stype2"));
+			}
+		}
+		
 		
 		for (int i = 0; i < possibleParams.length; i++) {
 			String paramType = possibleParams[i];
@@ -89,19 +100,20 @@ public class TerminationsChanger {
 				if (!win && loseTerminationIsWithAvatarChance > r.nextDouble()){
 					result.put(paramType, GameChanger.avatarNames.get(0));
 				}else{
-					result.put(paramType, GameChanger.getRandomSprite(sprites));
+					result.put(paramType, getRandomSprite(sprites, forbiddenStyps));
 				}
 				break;
 			case "stype1":
 				if (!win && !existTermination && loseTerminationIsWithAvatarChance > r.nextDouble()){
 					result.put(paramType, GameChanger.avatarNames.get(0));
 				}else{
-					result.put(paramType, GameChanger.getRandomSprite(sprites));
+					result.put(paramType, getRandomSprite(sprites, forbiddenStyps));
 				}
 				break;
 			case "stype2":
-				if (haveType2Chance > r.nextDouble()){
-					result.put(paramType, GameChanger.getRandomSprite(sprites));
+				if (haveType2Chance <= r.nextDouble()){
+					forbiddenStyps.add(term.parameters.get("stype1"));
+					result.put(paramType, getRandomSprite(sprites, forbiddenStyps));
 				}
 				break;
 			case "limit":
@@ -128,6 +140,33 @@ public class TerminationsChanger {
 			}
 		}
 		return result;
+	}
+
+	private static String getRandomSprite(ArrayList<Sprite> sprites, ArrayList<String> forbiddenStyps) {
+
+		int idx = GameChanger.range(0, sprites.size()-1);
+		boolean isGood = false;
+		String newSpriteName = sprites.get(idx).identifier;
+		while (!isGood){
+			isGood = true;
+			for (String styp : forbiddenStyps) {
+				if (styp != null && styp.equals(newSpriteName)){
+					idx = GameChanger.range(0, sprites.size()-1);
+					newSpriteName = sprites.get(idx).identifier;
+					isGood = false;
+					break;
+				}
+			}
+		}
+		return newSpriteName;
+	}
+
+	private static String getRandomSprite2(ArrayList<Sprite> sprites, String notThisSprite) {
+		int idx = GameChanger.range(0, sprites.size()-1);
+		while (sprites.get(idx).identifier.equals(notThisSprite)){
+			idx = GameChanger.range(0, sprites.size()-1);
+		}
+		return null;
 	}
 
 	static String getRandomTerminationClass(ArrayList<Sprite> sprites) {
