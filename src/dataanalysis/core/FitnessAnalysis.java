@@ -46,24 +46,13 @@ public class FitnessAnalysis {
     
     public GameFitness getFitnessForSingleGame(Controller[] controllers){
     	ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, true);
-    	boolean hasDisqualified = false;
-    	for (GameData[] gds : gameDatas) {
-			for (GameData gd : gds) {
-				for (LevelPlay lp : gd.levelsPlayed) {
-					if (lp.won < 0){
-						hasDisqualified = true;
-						break;
-					}
-				}
-			}
-		}
-    	if (hasDisqualified) return new GameFitness("", -1);
+    	 gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
+
+    	if (gameDatas.size() == 0) return new GameFitness("", -1);
     	
 		FitnessCalculator.setWeights(null);
-
-		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);		
+		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);	
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
-
     	
     	return fitnessValues.get(0);
     }

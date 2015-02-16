@@ -11,13 +11,35 @@ import dataanalysis.core.GameDataAnalysis;
 
 public class AMain {
 	public static void main(String[] args) {
+		
+		
+		
 		GameDataAnalysis gda = new GameDataAnalysis();
 		FitnessAnalysis fa = new FitnessAnalysis();
 		CMAEvolStrat cmaes = new CMAEvolStrat();
 		
 		String dataFolder = "gamedata/";
-		Controller[] controllers = ControllerHelper.getMainControllers();
+		Controller[] controllers = ControllerHelper.getOldControllers();
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+        Controller[] designedDataControllers = ControllerHelper.copyControllers(controllers);
+        Controller[] mutatedDataControllers = ControllerHelper.copyControllers(controllers);
+        Controller[] generatedDataControllers = ControllerHelper.copyControllers(controllers);
+        ControllerHelper.setControllerDataFolders(designedDataControllers, dataFolder, "800t25pt_designed");
+        ControllerHelper.setControllerDataFolders(mutatedDataControllers, dataFolder, "800t25pt_mutation_");
+        ControllerHelper.setControllerDataFolders(generatedDataControllers, dataFolder, "800t25pt_gengames");
+		
+        
+//        gda.makeFeatureTypeCountCSV(designedDataControllers, mutatedDataControllers, generatedDataControllers);
 		
 		
 		//*********************************
@@ -32,13 +54,25 @@ public class AMain {
 //		gda.analyzeAllGamesAverage(controllers, false);
 //		fa.analyzeFitness(controllers, false);
 		
+//		
+		
+		//*********************************
+		//******10 P.T./2000 TICKS TEST*****
+		//*********************************
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_designed");
+//		gda.countGamesHaveCondition(controllers, true);
+//		gda.analyzeGameDifference(controllers, true, true);
+//		gda.analyzeAllGamesAverage(controllers, true);
+//		fa.analyzeFitness(controllers, false);
+		
 		
 		//*********************************
 		//******25 P.T./800 TICKS TEST*****
 		//*********************************
+//		controllers = ControllerHelper.getOldControllers();
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
-		gda.countGamesHaveCondition(controllers, true);
-//		gda.analyzeGameDifference(controllers, true, true);
+//		gda.countGamesHaveCondition(controllers, true);
+		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
 //		fa.analyzeFitness(controllers, false);
 
@@ -47,8 +81,8 @@ public class AMain {
 //		fa.analyzeFitness(controllers, false);              
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
-		gda.countGamesHaveCondition(controllers, true);
-//		gda.analyzeGameDifference(controllers, true, true);
+//		gda.countGamesHaveCondition(controllers, true);
+		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
 //		fa.analyzeFitness(controllers, false);
 		

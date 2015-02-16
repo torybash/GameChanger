@@ -23,4 +23,11 @@ public class GameFitness implements Comparable{
 		if (fitness-otherFitness == 0) return 0;
 		return fitness-otherFitness > 0 ? -1 : 1;
 	}
+
+	public GameFitness copy() {
+		GameFitness result = new GameFitness(gameTitle, fitness);
+		if (fitnessVals != null) result.fitnessVals = fitnessVals.clone();
+		if (fitnessValsString != null) result.fitnessValsString = fitnessValsString.clone();
+		return result;
+	}
 }

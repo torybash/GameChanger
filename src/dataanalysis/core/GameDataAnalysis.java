@@ -236,7 +236,7 @@ public class GameDataAnalysis {
 		//Extract data from data folders
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, readActionFiles);
 		//Don't accept bad games
-		ArrayList<GameData[]> acceptedGameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
+		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 
@@ -262,11 +262,60 @@ public class GameDataAnalysis {
 		for (GameData[] gds : gameAverages) { // fore game
 			float ctrl1Val = gds[ctrl1Id].gameValues.get(dataTyp);
 			float ctrl2Val = gds[ctrl2Id].gameValues.get(dataTyp);
-			if (ctrl1Val > ctrl2Val) count++;
+			if (ctrl1Val >= ctrl2Val) count++;
 		}
-		System.out.println(count + " games (out of " + gameAverages.size() + ") fulfil the condition: " + dataTyp + " " + controllers[ctrl1Id].name + ">" + controllers[ctrl2Id].name);
+//		System.out.println(count + " games (out of " + gameAverages.size() + ") fulfil the condition: " + dataTyp + " " + controllers[ctrl1Id].name + ">" + controllers[ctrl2Id].name);
 		
 		return count;
+	}
+
+	public void makeFeatureTypeCountCSV(Controller[] designedDataControllers, Controller[] mutatedDataControllers, Controller[] generatedDataControllers) {
+		String result = "datatype,count1,fraction1,count2,fraction2,count3,fraction3\n";
+		
+		ArrayList<GameData[]> designedGameDatas = ExtractGameData.extractGameDatas(designedDataControllers, false);
+		designedGameDatas = GameDataCalculator.getAcceptedGames(designedGameDatas);
+		ArrayList<GameData[]> mutatedGameDatas = ExtractGameData.extractMutatedGameDatas(mutatedDataControllers, 10, false);
+		mutatedGameDatas = GameDataCalculator.getAcceptedGames(mutatedGameDatas);
+		ArrayList<GameData[]> generatedGameDatas = ExtractGameData.extractGameDatas(generatedDataControllers, false);
+		generatedGameDatas = GameDataCalculator.getAcceptedGames(generatedGameDatas);
+
+		ArrayList<GameData[]> designedGameAverages = GameDataCalculator.getAverageForEachGame(designedGameDatas);
+		ArrayList<GameData[]> mutatedGameAverages = GameDataCalculator.getAverageForEachGame(mutatedGameDatas);
+		ArrayList<GameData[]> generatedGameAverages = GameDataCalculator.getAverageForEachGame(generatedGameDatas);
+		
+		
+		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.MEDI};
+		
+		int[] ctrl1s = new int[]{0};
+		int[] ctrl2s = new int[]{5,6};
+		
+		int totDesCount = designedGameAverages.size();
+		int totMutCount = mutatedGameAverages.size();
+		int totGenCount = generatedGameAverages.size();
+		
+		for (int t = 0; t < datTyps.length; t++) {
+			for (int c1 = 0; c1 < ctrl1s.length; c1++) {
+				for (int c2 = 0; c2 < ctrl2s.length; c2++) {
+					int desCount = countGamesHaveCondition(designedDataControllers, designedGameAverages, datTyps[t], ctrl1s[c1], ctrl2s[c2]);
+					int mutCount = countGamesHaveCondition(mutatedDataControllers, mutatedGameAverages, datTyps[t], ctrl1s[c1], ctrl2s[c2]);
+					int genCount = countGamesHaveCondition(generatedDataControllers, generatedGameAverages, datTyps[t], ctrl1s[c1], ctrl2s[c2]);
+					
+					result += designedDataControllers[ctrl1s[c1]].name + "." + datTyps[t] + ">=" + designedDataControllers[ctrl2s[c2]].name + "." + datTyps[t] + ",";
+					
+					result += desCount + " (of " + totDesCount + "),";
+					result += String.format("%.1f", 100*desCount/(float)totDesCount) + ",";
+					result += mutCount + " (of " + totMutCount + "),";
+					result += String.format("%.1f", 100*mutCount/(float)totMutCount) + ",";
+					result += genCount + " (of " + totGenCount + "),";
+					result += String.format("%.1f", 100*genCount/(float)totGenCount) + "";
+					result += "\n";
+				}
+			}
+		}
+		
+		
+		
+		System.out.println(result);
 	}
 
 
