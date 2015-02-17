@@ -61,7 +61,7 @@ public class GameGenerator {
 	}
 	
 	public static void evolveGameFromScratch(String gameTitle){
-		String gameDesc = GameChanger.makeGame();
+		String gameDesc = GameChanger.makeArcadeGame();
 		String lvlDesc = GameChanger.makeLevel(gameDesc);
 		
 		storeLvlDesc(lvlDesc, gameTitle);

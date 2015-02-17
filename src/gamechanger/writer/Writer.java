@@ -51,7 +51,7 @@ public class Writer {
     public static void storeGameDescription(String game_desc, String folderPath, String gameTitle){
         String[] lines = game_desc.split("\\n");
         PrintWriter writer;
-        String path = folderPath + gameTitle + "_genlvl.txt";
+        String path = folderPath + gameTitle + ".txt";
         try {
             writer = new PrintWriter(path, "UTF-8");
             for (int i = 0; i < lines.length; i++) {

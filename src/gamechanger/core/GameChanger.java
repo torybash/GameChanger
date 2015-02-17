@@ -1,17 +1,9 @@
 package gamechanger.core;
 
-import gamechanger.parsing.Interaction;
-import gamechanger.parsing.LevelMapping;
-import gamechanger.parsing.Parser;
-import gamechanger.parsing.Sprite;
-import gamechanger.parsing.Termination;
-import gamechanger.writer.Writer;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 import fastVGDL.ontology.avatar.FlakAvatar;
-import fastVGDL.ontology.avatar.HorizontalAvatar;
 import fastVGDL.ontology.avatar.MovingAvatar;
 import fastVGDL.ontology.avatar.oriented.OrientedAvatar;
 import fastVGDL.ontology.avatar.oriented.ShootAvatar;
@@ -31,6 +23,13 @@ import fastVGDL.ontology.sprites.npc.RandomNPC;
 import fastVGDL.ontology.sprites.producer.Bomber;
 import fastVGDL.ontology.sprites.producer.Portal;
 import fastVGDL.ontology.sprites.producer.SpawnPoint;
+import gamechanger.parsing.Element;
+import gamechanger.parsing.Interaction;
+import gamechanger.parsing.LevelMapping;
+import gamechanger.parsing.Parser;
+import gamechanger.parsing.Sprite;
+import gamechanger.parsing.Termination;
+import gamechanger.writer.Writer;
 
 public class GameChanger {
 	
@@ -63,9 +62,12 @@ public class GameChanger {
             Fleeing.class, RandomAltChaser.class, RandomNPC.class,
             Bomber.class, Portal.class, SpawnPoint.class, Resource.class, Spreader.class};
         
-        static final Class[] possiblePuzzleSpriteClasses = {Flicker.class,
-            Immovable.class, OrientedFlicker.class, Passive.class, 
-            Portal.class, Resource.class, Spreader.class};
+//    static final Class[] possiblePuzzleSpriteClasses = {Flicker.class,
+//        Immovable.class, OrientedFlicker.class, Passive.class, 
+//        Portal.class, Resource.class, Spreader.class};
+    static final Class[] possiblePuzzleSpriteClasses = {
+        Immovable.class, Passive.class, 
+        Portal.class, Resource.class};
         static final Class [] possiblePuzzleAvatarClasses = {MovingAvatar.class, OrientedAvatar.class};
 	
 	
@@ -125,13 +127,8 @@ public class GameChanger {
 	 * Generate a VGDL game description
 	 * @return A VGDL game description
 	 */
-	public static String makeGame(){
+	public static ArrayList[] makeGame(){
 		resourceSprites.clear();
-                
-                
-        if (avatarClasses == null)avatarClasses = possibleAvatarClasses;
-        if (spriteClasses == null)spriteClasses = possibleSpriteClasses;
-                
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		ArrayList<Interaction> interacts = new ArrayList<Interaction>();
 		ArrayList<LevelMapping> mappings = new ArrayList<LevelMapping>();
@@ -145,26 +142,43 @@ public class GameChanger {
 		elements[2] = mappings;
 		elements[3] = terms;
 		
-		int amountSprites = range(3,8);
-		int amountInteractions = range(3,10);
+		int amountSprites = range(4,8);
+		int amountInteractions = range(4,10);
 		int amountTerminations = range(2,2);
 		
 		SpritesChanger.changeSprites(sprites, amountSprites);
 		InteractionsChanger.changeInteractions(sprites, interacts, amountInteractions);
 		TerminationsChanger.changeTerminations(sprites, terms, amountTerminations);
 		LevelMappingMaker.makeMapping(mappings, sprites);
-		
-		InteractionsChanger.makeEOSStepBacks(sprites, interacts);
-		
-		return Writer.writeGameOutput(elements);
+				
+		return elements;
 	}
         
+	
+	
+    public static String makeArcadeGame(){
+        avatarClasses = possibleAvatarClasses;
+        spriteClasses = possibleSpriteClasses;
         
-        public static String makePuzzleGame(){
-            avatarClasses = possiblePuzzleAvatarClasses;
-            spriteClasses = possiblePuzzleSpriteClasses;
-            return makeGame();
-        }
+        InteractionsChanger.setFunctions(false);
+        
+        ArrayList[] elements = makeGame();
+        InteractionsChanger.makeEOSStepBacks(elements[0], elements[1]);
+       
+        return  Writer.writeGameOutput(elements);
+    }
+
+    public static String makePuzzleGame(){
+        avatarClasses = possiblePuzzleAvatarClasses;
+        spriteClasses = possiblePuzzleSpriteClasses;
+        
+        InteractionsChanger.setFunctions(true);
+        
+        ArrayList[] elements = makeGame();
+        InteractionsChanger.makeWallStepBacks(elements[0], elements[1]);
+
+        return  Writer.writeGameOutput(elements);
+    }
         
         
     public static void setSpriteClasses(){

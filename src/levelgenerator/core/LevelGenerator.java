@@ -80,7 +80,7 @@ public class LevelGenerator {
 			levelMap.calculateSpriteMappings(mappings);
 		}
 		
-		System.out.println(getLevelString(levelMap.map));
+//		System.out.println(getLevelString(levelMap.map));
 		
 		LevelMap[] levelMaps = new LevelMap[mutations];
 		
@@ -89,7 +89,7 @@ public class LevelGenerator {
 			char[][] mutatedMap = mutateLevel(levelMap, mappings);
 			levelMaps[m] = new LevelMap(mutatedMap);
 			
-			System.out.println(getLevelString(levelMaps[m].map));
+//			System.out.println(getLevelString(levelMaps[m].map));
 //			int amountChangedSprites = 5, amountRemoves = 2, amountNewWall = 2, amountNewSprites = 2;
 //			levelMaps[m] = mutateLevel(levelMap, mappings, amountRemoves, amountChangedSprites, amountNewWall, amountNewSprites);
 		}
@@ -180,6 +180,8 @@ public class LevelGenerator {
 			System.out.println("---------------------------");
 			System.out.println("---------------------------");
 			
+			
+			if (lastGameInfos[0].results.numberSpritesMoved < 1 || lastGameInfos[0].results.actions <= 1) return;
 		}
     }
     
@@ -192,16 +194,31 @@ public class LevelGenerator {
 //		System.out.println("++++++++++");
 //		System.out.println(getLevelString(levelMap2.map));
 		
+		boolean passedAnAvatar = false;
+		
 		char[][] newLevel = new char[levelMap.map.length][];
 		for (int i = 0; i < newLevel.length; i++) newLevel[i] = new char[levelMap.map[i].length];
 		
 		for (int i = 0; i < levelMap.map.length; i++) {
 			for (int j = 0; j < levelMap.map[i].length; j++) {
 				double prob = r.nextDouble();
-				if (prob > 0.5){
-					newLevel[i][j] = levelMap.map[i][j];
+				
+				if (passedAnAvatar && (levelMap.map[i][j] == "A".charAt(0) || levelMap2.map[i][j] == "A".charAt(0))){ //set avatar here not matter what
+					newLevel[i][j] = "A".charAt(0);
 				}else{
-					newLevel[i][j] = levelMap2.map[i][j];
+					
+				
+				
+					if (prob > 0.5){
+						newLevel[i][j] = levelMap.map[i][j];
+										
+						if (levelMap2.map[i][j] == "A".charAt(0)) passedAnAvatar = true;
+					}else{
+						newLevel[i][j] = levelMap2.map[i][j];
+						
+						if (levelMap.map[i][j] == "A".charAt(0)) passedAnAvatar = true;
+					}
+				
 				}
 			}
 		}
@@ -212,95 +229,10 @@ public class LevelGenerator {
 		//Remove duplicates for singleton sprites
 		removeSingletonDuplicates(mappings, newLevel);
 		
-//		System.out.println("--------->");
+//		System.out.println("---------> (after removeSingletonDuplicates)");
 //		System.out.println(getLevelString(newLevel));
 		
 		return newLevel;
-	}
-
-	public void generateLevel(int width, int height, char[][] initMap){	
-//		
-//		System.out.println("Generating level for game: " + gameTitle);
-//
-//		boolean addLastGameInfosToNewIterations = true;		
-//		String gameDescPath = gameFolder + gameTitle + ".txt";
-//		ArrayList[] gameElements = Parser.readGameOutput(gameDescPath);
-//		ArrayList<Sprite> sprites = gameElements[0];
-//		ArrayList<LevelMapping> levelMappings = gameElements[2];
-//		ArrayList<Mapping> mappings = getMappings(sprites, levelMappings);
-//		
-//		GameChanger.setSpriteClasses();
-//		GameChanger.setAvatar(sprites);
-//		
-//		char[][] levelMap = initMap;
-//		if (levelMap == null) levelMap = makeLevel(mappings, width, height);
-//		
-//		char[][][] mutatedLevelMaps = new char[mutations + mutationsSurvive][][];
-//		char[][][] surivedMutatedLevelMaps = new char[mutationsSurvive][][];
-//		
-//		//Initialise with mutated levels
-//		for (int j = 0; j < mutations + mutationsSurvive; j++) {
-//			int amountChangedSprites = 5, amountRemoves = 2, amountNewWall = 2, amountNewSprites = 2;
-//			mutatedLevelMaps[j] = mutateLevel(levelMap, mappings, amountRemoves, amountChangedSprites, amountNewWall, amountNewSprites);
-//		}
-//
-//
-//		GameInfo[] lastGameInfos = new GameInfo[mutationsSurvive];
-//		for (int i = 0; i < iterations; i++) {
-//			
-//			if (i>0){ //Don't check for survived games in 1st iteration
-//				for (int j = 0; j < mutationsSurvive; j++) { //for each mutation that survived last iteration, generate (=mutations/mutationsSurvive) new mutations
-//					int amountNewMutations = mutations/mutationsSurvive;
-//										
-//					//Get game data
-//					GameInfo gi = lastGameInfos[j];
-//					
-//					//Mutate game accordingly a number of times
-//					for (int k = 0; k < amountNewMutations; k++) {
-//						int amountChangedSprites = 0, amountRemoves = 0, amountMoves = 0, amountNewSprites = 0;
-//						
-//						char[][] newLevelMap = mutateLevel(surivedMutatedLevelMaps[j], mappings, amountRemoves, amountChangedSprites, amountMoves, amountNewSprites);
-//						mutatedLevelMaps[j * amountNewMutations + k] = newLevelMap;
-//					}
-//					mutatedLevelMaps[mutations + j] = gi.levelMap.map;
-//				}
-//			}
-//
-//			
-//			//Play through all levels
-//			System.out.println("Finished mutating games ");
-//	        int mutatedGameCount = mutations;
-//	        if (addLastGameInfosToNewIterations) mutatedGameCount += mutationsSurvive;
-//	        
-//	        Comparator<GameInfo> comparator = new GameInfoComparator();
-//	        PriorityQueue<GameInfo> gameInfos = new PriorityQueue<GameInfo>(mutatedGameCount, comparator);
-//	        
-//			for (int j = 0; j < mutatedGameCount; j++) {	
-//				GameInfo gi = playGameGetData(gameDescPath, mutatedLevelMaps[j]);
-//				gameInfos.add(gi);
-//				
-//				System.out.println("Got gameInfo: + " + j + ", won: " + gi.won + " , timesteps: " + gi.timesteps + " , score: " + gi.score + " , action count: " + gi.actionCount);
-//				System.out.println(getLevelString(gi.levelMap.map));
-//			}
-//			
-//	        for (int s = 0; s < mutationsSurvive; s++) {
-//	        	GameInfo gi = gameInfos.poll();
-//	        	surivedMutatedLevelMaps[s] = gi.levelMap.map;
-//	        	lastGameInfos[s] = gi;
-//	        }
-//
-//		
-//	        System.out.println("---------------------------");
-//			System.out.println("Loop end - iteration: " + i);
-//			System.out.println("---------------------------");
-//			for (int j = 0; j < lastGameInfos.length; j++) {
-//				System.out.println("Survived GameInfo " + j + ", won: " + lastGameInfos[j].won + " , timesteps: " + lastGameInfos[j].timesteps + " , score: " + lastGameInfos[j].score + " , action count: " + lastGameInfos[j].actionCount);
-//				System.out.println(getLevelString(lastGameInfos[j].levelMap.map));
-//			}
-//			System.out.println("---------------------------");
-//			System.out.println("---------------------------");
-//			
-//		}
 	}
 	
 	
@@ -311,8 +243,8 @@ public class LevelGenerator {
 		
 		String actionFilePath = outputFolder + "actions.txt";
 
-		System.out.println("Playing game " + gameDescPath + " - level: ");
-		System.out.println(getLevelString(map.map));
+//		System.out.println("Playing game " + gameDescPath + " - level: ");
+//		System.out.println(getLevelString(map.map));
 		//Play map as it is now, and store output in file
 //        try {
 //			System.setOut(new PrintStream(new FileOutputStream(outputFolder + "gamedata.txt")));
@@ -327,6 +259,9 @@ public class LevelGenerator {
         
         GameInfo gi = new GameInfo(results, map);
         
+        
+//        System.out.println("Finished playing..");
+//        System.out.println(results);
         
 //		ArcadeMachine.runOneGame(gameDescPath, lvlPath, false, "controllers.puzzleSolverPlus.Agent", actionFilePath, r.nextInt());
 //		System.setOut(origOut);
@@ -648,14 +583,14 @@ public class LevelGenerator {
 	class GameInfo{
 		public GameResults results;;
 		
-		public float score = 0;
-		public int timesteps = 0;
-		public int won = 0;
-		
-		public int actionCount = 0;
-		
-		public int interactions = 0;
-		public int sprites = 0;
+//		public float score = 0;
+//		public int timesteps = 0;
+//		public int won = 0;
+//		
+//		public int actionCount = 0;
+//		
+//		public int interactions = 0;
+//		public int sprites = 0;
 		
 //		public char[][] levelMap;
 		public LevelMap levelMap;
@@ -675,38 +610,38 @@ public class LevelGenerator {
                         this.levelMap = levelMap;
 		}
 		
-		public GameInfo(String dataFolder, LevelMap levelMap){
-			String gameDataPath = dataFolder + "gamedata.txt";
-			String actionFilePath = dataFolder + "actions.txt";
-			
-			this.levelMap = levelMap;
-			
-			BufferedReader br;
-			try {
-				br = new BufferedReader(new FileReader(gameDataPath));
-				String line;
-				while ((line = br.readLine()) != null) {
-					Matcher matcher = patternResult.matcher(line);
-					while (matcher.find()) {
-						won = Integer.parseInt(matcher.group(1));
-						score = Float.parseFloat(matcher.group(2));
-						timesteps = Integer.parseInt(matcher.group(3));
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			try {
-				br = new BufferedReader(new FileReader(actionFilePath));
-				String line = br.readLine(); //<--Skip first line (seed)
-				while ((line = br.readLine()) != null) {
-					if (!line.contains("NIL")) actionCount++;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		public GameInfo(String dataFolder, LevelMap levelMap){
+//			String gameDataPath = dataFolder + "gamedata.txt";
+//			String actionFilePath = dataFolder + "actions.txt";
+//			
+//			this.levelMap = levelMap;
+//			
+//			BufferedReader br;
+//			try {
+//				br = new BufferedReader(new FileReader(gameDataPath));
+//				String line;
+//				while ((line = br.readLine()) != null) {
+//					Matcher matcher = patternResult.matcher(line);
+//					while (matcher.find()) {
+//						won = Integer.parseInt(matcher.group(1));
+//						score = Float.parseFloat(matcher.group(2));
+//						timesteps = Integer.parseInt(matcher.group(3));
+//					}
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
+//			try {
+//				br = new BufferedReader(new FileReader(actionFilePath));
+//				String line = br.readLine(); //<--Skip first line (seed)
+//				while ((line = br.readLine()) != null) {
+//					if (!line.contains("NIL")) actionCount++;
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		@Override
 		public String toString() {
@@ -727,12 +662,28 @@ public class LevelGenerator {
 	    		return 1;
 	    	}
 	    	
-	    	if (x.results.actions > y.results.actions){
+	    	
+	    	if (x.results.actions + x.results.numberSpritesMoved > y.results.actions + y.results.numberSpritesMoved){
 	    		return -1;
 	    	}
-	    	if (x.results.actions < y.results.actions){
+	    	if (x.results.actions + x.results.numberSpritesMoved < y.results.actions + y.results.numberSpritesMoved){
 	    		return 1;
 	    	}
+	    	
+//	    	if (x.results.numberSpritesMoved > y.results.numberSpritesMoved){
+//	    		return -1;
+//	    	}
+//	    	if (x.results.numberSpritesMoved < y.results.numberSpritesMoved){
+//	    		return 1;
+//	    	}
+//	    	
+//	    	
+//	    	if (x.results.actions > y.results.actions){
+//	    		return -1;
+//	    	}
+//	    	if (x.results.actions < y.results.actions){
+//	    		return 1;
+//	    	}
 	    	
 	    	if (x.results.numSpritesHasInteracted > y.results.numSpritesHasInteracted){
 	    		return -1;
@@ -741,6 +692,13 @@ public class LevelGenerator {
 	    		return 1;
 	    	}
 	    	
+	    	
+	    	if (x.results.ticks > y.results.ticks){
+	    		return -1;
+	    	}
+	    	if (x.results.ticks < y.results.ticks){
+	    		return 1;
+	    	}
 	    	
 //	    	if (x.won > y.won){
 //	    		return -1;

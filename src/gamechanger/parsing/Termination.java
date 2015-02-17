@@ -14,4 +14,9 @@ public class Termination extends Element {
 		}
 		return result;
 	}
+	
+	
+	public String toString() {
+		return getTerminationText();
+	}
 }

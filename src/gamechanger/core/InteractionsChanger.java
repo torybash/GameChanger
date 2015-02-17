@@ -19,9 +19,16 @@ public class InteractionsChanger {
 		"killIfOtherHasMore", "pullWithIt", "teleportToExit", "wallStop", "changeResource", "cloneSprite", "flipDirection", 
 		"killIfHasLess", "killIfHasMore", "killSprite", "reverseDirection", "spawnIfHasMore", "stepBack", "transformTo", 
 		"turnAround", "undoAll", "wrapAround"};
+	
+	private static final String[] possiblePuzzleFunctions = {"bounceForward", "collectResource",
+		"changeResource", "killIfHasLess", "killIfHasMore", "killSprite", 
+		"stepBack", "transformTo", 
+		"undoAll"};
 
 	private static final HashMap<String, String[]> possibleFunctionParameters = new HashMap<String, String[]>();
 	
+	
+	static String[] functions;
 
 	static{
 		possibleFunctionParameters.put("attractGaze", new String[]{"scoreChange"});
@@ -55,6 +62,15 @@ public class InteractionsChanger {
 	
 	//Parameter chances
 	static double chanceToHaveScoreChange = 0.3f;
+	
+	
+	static void setFunctions(boolean puzzles){
+		if (puzzles){
+			functions = possiblePuzzleFunctions;
+		}else{
+			functions = possibleFunctions;
+		}
+	}
 	
 	static void changeInteractions(ArrayList<Sprite> sprites, ArrayList<Interaction> interacts, int amountInteractions) {
 		int currAmount = interacts.size();
@@ -137,7 +153,8 @@ public class InteractionsChanger {
 	static String getNewSprite2(String sprite1, ArrayList<Sprite> sprites){
 		String result = "";
 		while (result.length() < 1 || (result.equals(GameChanger.avatarNames.get(0)) && sprite1.equals(GameChanger.avatarNames.get(0)))){
-			int idx = GameChanger.range(0, sprites.size() * 2);
+//			int idx = GameChanger.range(0, sprites.size() * 2);
+			int idx = GameChanger.range(0, sprites.size());
 			if (idx >= sprites.size()) result = "EOS";
 //			else if (idx == sprites.size() + 1) result = "wall";
 			else result = sprites.get(idx).identifier;
@@ -162,7 +179,7 @@ public class InteractionsChanger {
 				(func.equals("attractGaze") && (!GameChanger.isOrientedSprite(sprite1, sprites) || !GameChanger.isOrientedSprite(sprite2, sprites)))  ||
 				(isUnaryOrientationEffect(func) && !GameChanger.isOrientedSprite(sprite1, sprites))  ||
 				(isBinaryEffect(func) && sprite2.equals("EOS"))){ 
-			func = possibleFunctions[GameChanger.range(0, possibleFunctions.length-1)];
+			func = functions[GameChanger.range(0, functions.length-1)];
 		}
 		return func;
 	}
@@ -269,6 +286,18 @@ public class InteractionsChanger {
 			sb.function = "stepBack";
 			sb.sprite1 = sp.identifier;
 			sb.sprite2 = "EOS";
+			interacts.add(sb);
+		}
+		
+	}
+
+
+	public static void makeWallStepBacks(ArrayList<Sprite> sprites, ArrayList<Interaction> interacts) {
+		for (Sprite sp : sprites) {
+			Interaction sb = new Interaction();
+			sb.function = "stepBack";
+			sb.sprite1 = sp.identifier;
+			sb.sprite2 = "wall";
 			interacts.add(sb);
 		}
 		
