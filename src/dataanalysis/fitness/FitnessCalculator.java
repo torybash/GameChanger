@@ -1,13 +1,13 @@
 package dataanalysis.fitness;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import util.Utility;
 import dataanalysis.controller.Controller;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.core.DataTypes;
 import dataanalysis.core.GameData;
+import dataanalysis.core.LevelPlay;
 
 
 public class FitnessCalculator {
@@ -31,6 +31,9 @@ public class FitnessCalculator {
 	private static GameFitness calculateFitness(GameData[] gds, Controller[] controllers, boolean[] dataTypesToUse) {
 		GameFitness gf = new GameFitness(gds[0].gameTitle);
 		
+		
+		boolean hasLowTicksWin = false;
+		
 		int maxDataTypeCount = FeatureDataType.class.getEnumConstants().length;
 		int ctrlTypeCount = ControllerType.class.getEnumConstants().length;
 		
@@ -52,8 +55,13 @@ public class FitnessCalculator {
 			Controller ctrl = controllers[c];
 			for (int t = 0; t < maxDataTypeCount; t++) {
 				FeatureDataType typ = FeatureDataType.values()[t];
+				if (typ.dataType == null) continue;
 				double ctrlVal = gds[c].gameValues.get(typ.dataType); //highestValues[t][ctrl.type.id()];
 				if (ctrlVal > highestValues[t][ctrl.type.id()]) highestValues[t][ctrl.type.id()] = ctrlVal;
+			}
+			
+			for (LevelPlay lp: gds[c].levelsPlayed) {
+				if (lp.won == 1 && lp.timesteps < 50) hasLowTicksWin = true;
 			}
 		}
 		
@@ -102,7 +110,15 @@ public class FitnessCalculator {
 				fitnessValsString[cnt] = "reldiff(" + String.format("%.3f", highestValues[t][0]) + ", " + String.format("%.3f", highestValues[t][typ.ctrlTyp().id()]) + ") = " + val;
 				cnt++;
 			}else{
-				val = highestValues[t][typ.ctrlTyp().id()];
+				if (typ == FeatureDataType.HAS_LOW_TICKS){
+					val = hasLowTicksWin ? -1 : 1;
+				}else if (typ.dataType == DataTypes.AVTIC){
+					val = (highestValues[t][ControllerType.INTELLIGENT.id()] > 50) ? 1 : -1;
+				}else{
+					val = highestValues[t][typ.ctrlTyp().id()];
+				}
+				
+				
 				fitness += val * feature_weights[cnt];
 				fitnessVals[cnt] = val;
 				fitnessValsString[cnt] = "valueOf(" + String.format("%.3f", highestValues[t][typ.ctrlTyp().id()]) + ") = " + val;
@@ -190,20 +206,26 @@ public class FitnessCalculator {
 		REL_SCORE(DataTypes.AVE, true, null),
 		REL_WR(DataTypes.WRATE, true, null),
 //		MMSCORE_SD(DataTypes.MMSE),
-//		QUAR1(DataTypes.QUAR1, true, null),
-//		REL_MEDI(DataTypes.MEDI, true, null),
-//		QUAR3(DataTypes.QUAR3, true, null),
+		REL_QUAR1(DataTypes.QUAR1, true, null),
+		REL_MEDI(DataTypes.MEDI, true, null),
+		REL_QUAR3(DataTypes.QUAR3, true, null),
 //		REL_WR(DataTypes.WRATE, true),
 //		REL_TICKS(DataTypes.AVTIC, true, null),
 //		REL_TICKS_SD(DataTypes.SDTIC, true, null),
-		REL_MIN(DataTypes.MIN, true, null),
-		REL_MAX(DataTypes.MAX, true, null),
+//		REL_MIN(DataTypes.MIN, true, null),
+//		REL_MAX(DataTypes.MAX, true, null),
 		
 		REL_SCORE_SD(DataTypes.SD, true, ControllerType.DO_NOTHING),
 		REL_WR_SD(DataTypes.WRSE, true, ControllerType.DO_NOTHING),
 		
 		REL_ACTEN_SD(DataTypes.ACTEN, true, ControllerType.RANDOM),
 		
+		TICKS(DataTypes.AVTIC, false, ControllerType.INTELLIGENT),
+		
+		HAS_LOW_TICKS(null, false, ControllerType.INTELLIGENT),
+
+		
+
 //		INT_MMSCORE(DataTypes.MMAVE, false, ControllerType.INTELLIGENT),
 //		INT_WR(DataTypes.WRATE, false, ControllerType.INTELLIGENT),
 //		RND_MMSCORE(DataTypes.MMAVE, false, ControllerType.RANDOM),

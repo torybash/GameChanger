@@ -45,9 +45,9 @@ public class LevelGenerator {
 	
 	
 	
-	final int iterations = 1000;
-	final int mutations = 100;
-	final int mutationsSurvive = 20;
+	final int iterations = 50;
+	final int mutations = 50;
+	final int mutationsSurvive = 25;
 	
 	public LevelGenerator(String gameTitle){
 		this.gameTitle = gameTitle;
@@ -62,7 +62,7 @@ public class LevelGenerator {
 	
     
     
-    public void generateLevel(int width, int height, LevelMap initMap){
+    public String generateLevel(int width, int height, LevelMap initMap){
 		System.out.println("Generating level for game: " + gameTitle);
 
 		String gameDescPath = gameFolder + gameTitle + ".txt";
@@ -181,8 +181,15 @@ public class LevelGenerator {
 			System.out.println("---------------------------");
 			
 			
-			if (lastGameInfos[0].results.numberSpritesMoved < 1 || lastGameInfos[0].results.actions <= 1) return;
+			if (lastGameInfos[0].results.numberSpritesMoved < 1 || lastGameInfos[0].results.actions <= 1) return "";
+			
+			if (i > 5 && lastGameInfos[0].results.actions == lastGameInfos[mutationsSurvive-1].results.actions){
+				System.out.println("Returning early because best act count == worst act count");
+				return getLevelString(lastGameInfos[0].levelMap.map);
+			}
 		}
+		
+		return getLevelString(lastGameInfos[0].levelMap.map);
     }
     
 
@@ -303,7 +310,7 @@ public class LevelGenerator {
 	}
 
 	private char[][] mutateLevel(LevelMap levelMap, ArrayList<Mapping> mappings) {
-		return mutateLevel(levelMap.map, mappings, 1, 1, 1, 1);
+		return mutateLevel(levelMap.map, mappings, r.nextInt(2), r.nextInt(2), r.nextInt(2), r.nextInt(2));
 	}
 	
 	private char[][] mutateLevel(char[][] levelMap, ArrayList<Mapping> mappings, int amountRemoves, int amountChanges, int amountMoves, int amountNewSprites) {
@@ -663,12 +670,12 @@ public class LevelGenerator {
 	    	}
 	    	
 	    	
-	    	if (x.results.actions + x.results.numberSpritesMoved > y.results.actions + y.results.numberSpritesMoved){
-	    		return -1;
-	    	}
-	    	if (x.results.actions + x.results.numberSpritesMoved < y.results.actions + y.results.numberSpritesMoved){
-	    		return 1;
-	    	}
+//	    	if (x.results.actions + x.results.numberSpritesMoved > y.results.actions + y.results.numberSpritesMoved){
+//	    		return -1;
+//	    	}
+//	    	if (x.results.actions + x.results.numberSpritesMoved < y.results.actions + y.results.numberSpritesMoved){
+//	    		return 1;
+//	    	}
 	    	
 //	    	if (x.results.numberSpritesMoved > y.results.numberSpritesMoved){
 //	    		return -1;
@@ -678,12 +685,20 @@ public class LevelGenerator {
 //	    	}
 //	    	
 //	    	
-//	    	if (x.results.actions > y.results.actions){
-//	    		return -1;
-//	    	}
-//	    	if (x.results.actions < y.results.actions){
-//	    		return 1;
-//	    	}
+	    	if (x.results.actions > y.results.actions){
+	    		return -1;
+	    	}
+	    	if (x.results.actions < y.results.actions){
+	    		return 1;
+	    	}
+	    	
+	    	if (x.results.numberSpritesMoved > y.results.numberSpritesMoved){
+    		return -1;
+	    	}
+	    	if (x.results.numberSpritesMoved < y.results.numberSpritesMoved){
+	    		return 1;
+	    	}
+	    	
 	    	
 	    	if (x.results.numSpritesHasInteracted > y.results.numSpritesHasInteracted){
 	    		return -1;

@@ -2,6 +2,7 @@ package gamegenerator.core;
 
 import fastVGDL.tools.IO;
 import gamechanger.core.GameChanger;
+import gamechanger.core.InteractionsChanger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +18,7 @@ import dataanalysis.controller.Controller;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.controller.ControllerHelper;
 import dataanalysis.core.FitnessAnalysis;
+import dataanalysis.core.GameDataAnalysis;
 import dataanalysis.fitness.FitnessCalculator;
 import dataanalysis.fitness.GameFitness;
 
@@ -32,7 +34,12 @@ public class GameGenerator {
 	
 	public static void main(String[] args) {
 //		evolveGameFromExisting("../gvgai/examples/gridphysics/", "boulderdash");
-		evolveGameFromScratch("coolgame");
+
+		for (int i = 0; i < 50; i++) {
+			evolveGameFromScratch("coolgame" + i);
+		}
+		
+
 	}
 	
 	
@@ -57,21 +64,41 @@ public class GameGenerator {
 		String origGamePath = gameFolder + gameTitle + ".txt";
 		String origGameDesc = new IO().getDescFromFile(origGamePath);
 		
-		evolveGame(origGameDesc, gameTitle, gameFolder);
+		InteractionsChanger.setFunctions(false);
+		
+		
+		String bestGameDesc = evolveGame(origGameDesc, gameTitle, gameFolder);
 	}
 	
 	public static void evolveGameFromScratch(String gameTitle){
 		String gameDesc = GameChanger.makeArcadeGame();
-		String lvlDesc = GameChanger.makeLevel(gameDesc);
 		
+		String lvlDesc = GameChanger.makeLevel(gameDesc);
 		storeLvlDesc(lvlDesc, gameTitle);
 		
-		evolveGame(gameDesc, gameTitle, gameFolder);
+		boolean gameHasProblems = true;
+		while(gameHasProblems){
+			EvolveGameData gd = playGameGetData(gameDesc, gameTitle, gameFolder);
+			
+			int INDEX_FOR_WINRATE_OVER_DONOTHING = 5;
+			
+			if (gd.gf.fitness == -1 || gd.gf.fitnessVals[INDEX_FOR_WINRATE_OVER_DONOTHING] <= 0){
+				gameDesc = GameChanger.makeArcadeGame();
+				lvlDesc = GameChanger.makeLevel(gameDesc);
+				storeLvlDesc(lvlDesc, gameTitle);
+			}else{
+				System.out.println("Found well-formed game description -- evolving..");
+				gameHasProblems = false;
+			}
+		}		
+		
+		
+		String bestGameDesc = evolveGame(gameDesc, gameTitle, gameFolder);
 	}
 	
 	
-	public static void evolveGame(String gameDesc, String gameTitle, String levelFolder){
-		int iterations = 100, mutations = 50, mutationsSurvive = 30;
+	public static String evolveGame(String gameDesc, String gameTitle, String levelFolder){
+		int iterations = 100, mutations = 10, mutationsSurvive = 5;
 
 		EvolveGameData origData = playGameGetData(gameDesc, gameTitle, levelFolder);
 		
@@ -121,7 +148,7 @@ public class GameGenerator {
 					if (evolveGameDatas[m] == null){ //first iteratino
 						evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
 					}else{
-						evolveGameDatas[m] = survivedGameDatas[m];
+						evolveGameDatas[m] = survivedGameDatas[m].copy();
 					}
 				}else{
 					evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
@@ -132,11 +159,11 @@ public class GameGenerator {
 			Arrays.sort(evolveGameDatas);
 			
 			for (int j = 0; j < survivedGameDatas.length; j++) {
-				survivedGameDatas[j] = evolveGameDatas[j].copy();
+				survivedGameDatas[j] = evolveGameDatas[j];
 			}
 			
 			System.out.println("Top 3 fitness: ");
-			for (int j = 0; j < 3; j++) System.out.println(evolveGameDatas[j].gf.fitness);
+			for (int j = 0; j < 2; j++) System.out.println(evolveGameDatas[j].gf.fitness);
 			System.out.println("(Orig fitness: " + origData.gf.fitness + ")");
 			System.out.println("Best game desc:");
 			System.out.println(evolveGameDatas[0].gameDesc);
@@ -147,6 +174,8 @@ public class GameGenerator {
 			System.out.println();
 
 		}
+		
+		return evolveGameDatas[0].gameDesc;
 	}
 	
 
@@ -155,8 +184,8 @@ public class GameGenerator {
 		
         System.out.println("Playing game..");
         
-//        System.out.println(gameDesc);
-//        System.out.println();
+        System.out.println(gameDesc);
+        System.out.println();
         
         long tim = System.currentTimeMillis();
 		playGame(gameTitle, levelFolder);
@@ -167,6 +196,8 @@ public class GameGenerator {
         System.out.println(Arrays.toString(gf.fitnessVals));
         System.out.println(Arrays.toString(gf.fitnessValsString));
         System.out.println();
+        
+
 		
 		
 		return new EvolveGameData(gf, gameDesc);

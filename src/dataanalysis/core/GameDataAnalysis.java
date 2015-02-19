@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import javax.rmi.CORBA.Util;
+
+import util.Utility;
+
 import dataanalysis.controller.Controller;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.fitness.FitnessCalculator;
@@ -110,7 +114,7 @@ public class GameDataAnalysis {
     }
         
 
-	private void printGameDatas(GameData[] gds, Controller[] controllers) {
+	public static void printGameDatas(GameData[] gds, Controller[] controllers) {
 		int n = gds.length;
 		
 //		String seperator = ","; //"\t" 
@@ -268,9 +272,26 @@ public class GameDataAnalysis {
 		
 		return count;
 	}
+	
+	public float getAveragedRelativeDifference(Controller[] controllers, ArrayList<GameData[]> gameAverages, String dataTyp, int ctrl1Id, int ctrl2Id) {
+		float fitness = 0;
+		for (GameData[] gds : gameAverages) { // fore game
+			float ctrl1Val = gds[ctrl1Id].gameValues.get(dataTyp);
+			float ctrl2Val = gds[ctrl2Id].gameValues.get(dataTyp);
+
+
+			fitness += Utility.relDiff(ctrl1Val, ctrl2Val);
+		}
+		
+		fitness /= gameAverages.size();
+//		System.out.println(count + " games (out of " + gameAverages.size() + ") fulfil the condition: " + dataTyp + " " + controllers[ctrl1Id].name + ">" + controllers[ctrl2Id].name);
+		
+		return fitness;
+	}
+
 
 	public void makeFeatureTypeCountCSV(Controller[] designedDataControllers, Controller[] mutatedDataControllers, Controller[] generatedDataControllers) {
-		String result = "datatype,count1,fraction1,count2,fraction2,count3,fraction3\n";
+		String result = "datatype,count1,aveRelDiff1,count2,aveRelDiff2,count3,aveRelDiff3\n";
 		
 		ArrayList<GameData[]> designedGameDatas = ExtractGameData.extractGameDatas(designedDataControllers, false);
 		designedGameDatas = GameDataCalculator.getAcceptedGames(designedGameDatas);
@@ -284,10 +305,10 @@ public class GameDataAnalysis {
 		ArrayList<GameData[]> generatedGameAverages = GameDataCalculator.getAverageForEachGame(generatedGameDatas);
 		
 		
-		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.MEDI};
+		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.MEDI, DataTypes.QUAR1, DataTypes.QUAR3, DataTypes.MIN, DataTypes.MAX};
 		
 		int[] ctrl1s = new int[]{0};
-		int[] ctrl2s = new int[]{5,6};
+		int[] ctrl2s = new int[]{4,5,6};
 		
 		int totDesCount = designedGameAverages.size();
 		int totMutCount = mutatedGameAverages.size();
@@ -300,14 +321,21 @@ public class GameDataAnalysis {
 					int mutCount = countGamesHaveCondition(mutatedDataControllers, mutatedGameAverages, datTyps[t], ctrl1s[c1], ctrl2s[c2]);
 					int genCount = countGamesHaveCondition(generatedDataControllers, generatedGameAverages, datTyps[t], ctrl1s[c1], ctrl2s[c2]);
 					
-					result += designedDataControllers[ctrl1s[c1]].name + "." + datTyps[t] + ">=" + designedDataControllers[ctrl2s[c2]].name + "." + datTyps[t] + ",";
+					float desAveRelDiff = getAveragedRelativeDifference(designedDataControllers, designedGameAverages,  datTyps[t], ctrl1s[c1], ctrl2s[c2]);
+					float mutAveRelDiff = getAveragedRelativeDifference(mutatedDataControllers, mutatedGameAverages,  datTyps[t], ctrl1s[c1], ctrl2s[c2]);
+					float genAveRelDiff = getAveragedRelativeDifference(generatedDataControllers, generatedGameAverages,  datTyps[t], ctrl1s[c1], ctrl2s[c2]);
+					
+					result += "("+designedDataControllers[ctrl1s[c1]].name + ">=" + designedDataControllers[ctrl2s[c2]].name + ")." + datTyps[t] + ",";
 					
 					result += desCount + " (of " + totDesCount + "),";
-					result += String.format("%.1f", 100*desCount/(float)totDesCount) + ",";
+					result += String.format("%.3f", desAveRelDiff) + ",";
+//					result += String.format("%.1f", 100*desCount/(float)totDesCount) + ",";
 					result += mutCount + " (of " + totMutCount + "),";
-					result += String.format("%.1f", 100*mutCount/(float)totMutCount) + ",";
+					result += String.format("%.3f", mutAveRelDiff) + ",";
+//					result += String.format("%.1f", 100*mutCount/(float)totMutCount) + ",";
 					result += genCount + " (of " + totGenCount + "),";
-					result += String.format("%.1f", 100*genCount/(float)totGenCount) + "";
+					result += String.format("%.3f", genAveRelDiff);
+//					result += String.format("%.1f", 100*genCount/(float)totGenCount) + "";
 					result += "\n";
 				}
 			}

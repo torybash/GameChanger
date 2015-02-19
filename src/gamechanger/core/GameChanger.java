@@ -127,7 +127,7 @@ public class GameChanger {
 	 * Generate a VGDL game description
 	 * @return A VGDL game description
 	 */
-	public static ArrayList[] makeGame(){
+	public static ArrayList[] makeGame(int amountSprites, int amountInteractions, int amountTerminations){
 		resourceSprites.clear();
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		ArrayList<Interaction> interacts = new ArrayList<Interaction>();
@@ -142,9 +142,7 @@ public class GameChanger {
 		elements[2] = mappings;
 		elements[3] = terms;
 		
-		int amountSprites = range(4,8);
-		int amountInteractions = range(4,10);
-		int amountTerminations = range(2,2);
+
 		
 		SpritesChanger.changeSprites(sprites, amountSprites);
 		InteractionsChanger.changeInteractions(sprites, interacts, amountInteractions);
@@ -162,7 +160,10 @@ public class GameChanger {
         
         InteractionsChanger.setFunctions(false);
         
-        ArrayList[] elements = makeGame();
+		int amountSprites = range(4,8);
+		int amountInteractions = range(4,10);
+		int amountTerminations = range(2,2);
+        ArrayList[] elements = makeGame(amountSprites, amountInteractions, amountTerminations);
         InteractionsChanger.makeEOSStepBacks(elements[0], elements[1]);
        
         return  Writer.writeGameOutput(elements);
@@ -174,7 +175,10 @@ public class GameChanger {
         
         InteractionsChanger.setFunctions(true);
         
-        ArrayList[] elements = makeGame();
+		int amountSprites = range(3,4);
+		int amountInteractions = range(4,6);
+		int amountTerminations = range(1,1);
+		ArrayList[] elements = makeGame(amountSprites, amountInteractions, amountTerminations);
         InteractionsChanger.makeWallStepBacks(elements[0], elements[1]);
 
         return  Writer.writeGameOutput(elements);

@@ -21,7 +21,7 @@ public class InteractionsChanger {
 		"turnAround", "undoAll", "wrapAround"};
 	
 	private static final String[] possiblePuzzleFunctions = {"bounceForward", "collectResource",
-		"changeResource", "killIfHasLess", "killIfHasMore", "killSprite", 
+		"changeResource", "killIfHasLess", "teleportToExit", "killIfHasMore", "killSprite", 
 		"stepBack", "transformTo", 
 		"undoAll"};
 
@@ -64,7 +64,7 @@ public class InteractionsChanger {
 	static double chanceToHaveScoreChange = 0.3f;
 	
 	
-	static void setFunctions(boolean puzzles){
+	public static void setFunctions(boolean puzzles){
 		if (puzzles){
 			functions = possiblePuzzleFunctions;
 		}else{

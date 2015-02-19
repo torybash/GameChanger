@@ -43,8 +43,8 @@ public class GameDataCalculator {
 			for (int c = 0; c < n; c++) { //for each controller
 				ArrayList<LevelPlay> levelsPlayed = gameDatas.get(g)[c].levelsPlayed; 
 				if (hasDisqualified(levelsPlayed)
-						|| allScoresEqual(levelsPlayed, c, n)
-						|| allwaysLowTime(levelsPlayed, c, n)
+//						|| allScoresEqual(levelsPlayed, c, n)
+//						|| allwaysLowTime(levelsPlayed, c, n)
 				)
 					acceptedGame = false;
 			}

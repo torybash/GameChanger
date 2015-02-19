@@ -14,6 +14,8 @@ public class Test {
     	String generatedGamesFolder = "rnd_gen_games/";
     	String generatedPuzzleGamesFolder = "rnd_gen_puzzle_games/";
     	
+    	String evolvedPuzzleGamesFolder = "evolPuzzleGames/";
+    	
         String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
                 "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
                 "camelRace", "digdug", "firestorms", "infection", "firecaster",
@@ -124,17 +126,23 @@ public class Test {
             
         //4. Make a puzzle game, and evolve a level
         boolean gameIsGood = false;
+        int cnt = 0;
         while(!gameIsGood){
         	
         	//Make game description - assume that the resulting game can have puzzle game play features
             String new_desc = GameChanger.makePuzzleGame();
             System.out.println("Made new puzzle game description:\n" + new_desc);
             
-            Writer.storeGameDescription(new_desc, generatedPuzzleGamesFolder, "genpuzzler");
+            Writer.storeString(new_desc, generatedPuzzleGamesFolder, "genpuzzler");
             
             LevelGenerator lg = new LevelGenerator("genpuzzler", generatedPuzzleGamesFolder);
-            lg.generateLevel(8, 8, new LevelMap(null));
+            String genLvlDesc = lg.generateLevel(8, 8, new LevelMap(null));
             
+            if (genLvlDesc.length() > 0){
+            	Writer.storeString(new_desc, evolvedPuzzleGamesFolder, "genpuzzler" + cnt);
+            	Writer.storeString(genLvlDesc, evolvedPuzzleGamesFolder, "genpuzzler" + cnt + "_lvl0");
+            	cnt++;
+            }
         }
 
     }

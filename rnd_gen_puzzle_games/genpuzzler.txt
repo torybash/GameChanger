@@ -1,33 +1,18 @@
 BasicGame
 	SpriteSet
-		avatar > MovingAvatar img=avatar cooldown=2
-		gen1 > Passive img=box
-		gen2 > Immovable img=zombie
-		gen3 > Passive img=key
-		gen4 > Portal stype=gen2 img=virus
-		gen5 > Resource limit=19 value=5 img=boulder
+		avatar > MovingAvatar img=avatar
+		gen1 > Immovable img=bullet
+		gen2 > Immovable img=sword
 	InteractionSet
-		gen4 avatar > bounceForward
-		gen1 avatar > killIfHasMore limit=6 resource=gen5
-		avatar gen5 > bounceForward
-		gen3 gen4 > bounceForward
-		gen5 avatar > killSprite
-		gen5 gen3 > bounceForward
-		gen1 EOS > killIfHasMore limit=11 resource=gen5
-		gen5 avatar > transformTo stype=gen2
-		gen2 gen2 > killIfHasMore limit=2 resource=gen5 scoreChange=8
+		avatar gen2 > bounceForward scoreChange=3
+		avatar gen2 > undoAll
+		avatar EOS > killSprite
+		gen1 avatar > transformTo stype=gen1
 		avatar wall > stepBack
 		gen1 wall > stepBack
 		gen2 wall > stepBack
-		gen3 wall > stepBack
-		gen4 wall > stepBack
-		gen5 wall > stepBack
 	LevelMapping
 		$ > gen1 
 		% > gen2 
-		& > gen3 
-		' > gen4 
-		( > gen5 
 	TerminationSet
-		SpriteCounter limit=0 stype=gen5 win=TRUE 
-		MultiSpriteCounter limit=1 stype1=gen4 stype2=gen1 win=FALSE 
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=gen2 win=TRUE 

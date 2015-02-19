@@ -48,10 +48,10 @@ public class Writer {
     
     
     
-    public static void storeGameDescription(String game_desc, String folderPath, String gameTitle){
+    public static void storeString(String game_desc, String folderPath, String title){
         String[] lines = game_desc.split("\\n");
         PrintWriter writer;
-        String path = folderPath + gameTitle + ".txt";
+        String path = folderPath + title + ".txt";
         try {
             writer = new PrintWriter(path, "UTF-8");
             for (int i = 0; i < lines.length; i++) {

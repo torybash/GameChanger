@@ -70,6 +70,7 @@ public class TerminationsChanger {
 		}
 	}
 
+	static double winTerminationIsWithAvatarChance = 0.1;
 	static double loseTerminationIsWithAvatarChance = 0.9;
 	static double multiCounterIsExistCheck = 0.8;
 	static double haveType2Chance = 0.5;
@@ -82,7 +83,7 @@ public class TerminationsChanger {
 		String[] possibleParams = possibeTerminationParameters.get(term.term);
 		
 		boolean existTermination = false;
-		if (multiCounterIsExistCheck <= r.nextDouble() && term.term.equals("MultiSpriteCounter")){
+		if (r.nextDouble() < multiCounterIsExistCheck && term.term.equals("MultiSpriteCounter")){
 			existTermination = true;
 		}
 		
@@ -95,35 +96,65 @@ public class TerminationsChanger {
 			}
 		}
 		
-		System.out.println("making terms .. sprites: " + sprites);
-		System.out.println("terms: " + terms);
-		System.out.println("This term: " + term);
-		System.out.println("Forbidden from choosin types: "+ forbiddenStyps);
+		boolean avatarUsed = false;
+		for (String string : forbiddenStyps) {
+			if (string.equals("avatar")){
+				avatarUsed = true;
+				break;
+			}
+		}
+
+		
+//		System.out.println("making terms .. sprites: " + sprites);
+//		System.out.println("terms: " + terms);
+//		System.out.println("This term: " + term);
+//		System.out.println("Forbidden from choosin types: "+ forbiddenStyps);
+//		System.out.println("Avatar used? " + avatarUsed);
 		
 		for (int i = 0; i < possibleParams.length; i++) {
 			String paramType = possibleParams[i];
 			switch (paramType) {
 			case "stype":
-//				if (!win && loseTerminationIsWithAvatarChance > r.nextDouble()){
-//					result.put(paramType, GameChanger.avatarNames.get(0));
-//				}else{
+				
+				if (avatarUsed){
 					result.put(paramType, getRandomSprite(sprites, forbiddenStyps));
-//				}
+				}else{
+					if (win && r.nextDouble() < winTerminationIsWithAvatarChance){
+						result.put(paramType, GameChanger.avatarNames.get(0));
+						forbiddenStyps.add(GameChanger.avatarNames.get(0));
+					}else if (!win && r.nextDouble() < loseTerminationIsWithAvatarChance){
+						result.put(paramType, GameChanger.avatarNames.get(0));
+						forbiddenStyps.add(GameChanger.avatarNames.get(0));
+					}else{
+						forbiddenStyps.add("avatar");
+						result.put(paramType, getRandomSprite(sprites, forbiddenStyps));
+					}
+				}
+				
 				break;
 			case "stype1":
 				String styp1res = "";
-//				if (!win && !existTermination && loseTerminationIsWithAvatarChance > r.nextDouble()){
-//					styp1res =  GameChanger.avatarNames.get(0);
-//				}else{
-					styp1res =  getRandomSprite(sprites, forbiddenStyps);
-//				}
+
+				if (avatarUsed){
+					styp1res = getRandomSprite(sprites, forbiddenStyps);
+				}else{
+					if (win && r.nextDouble() < winTerminationIsWithAvatarChance){
+						styp1res = GameChanger.avatarNames.get(0);
+					}else if (!win && r.nextDouble() < loseTerminationIsWithAvatarChance){
+						styp1res = GameChanger.avatarNames.get(0);
+					}else{
+						forbiddenStyps.add("avatar");
+						styp1res = getRandomSprite(sprites, forbiddenStyps);
+					}
+				}
 				result.put(paramType, styp1res);
 				forbiddenStyps.add(styp1res);
 				break;
 			case "stype2":
-				if (haveType2Chance <= r.nextDouble()){
-					System.out.println("(getting stype2..) " + forbiddenStyps);
+				if (haveType2Chance <= r.nextDouble() && !existTermination){
 					result.put(paramType, getRandomSprite(sprites, forbiddenStyps));
+				}else{
+					result.put(paramType, "null");
 				}
 				break;
 			case "limit":

@@ -52,6 +52,9 @@ public class FitnessAnalysis {
     	
 		FitnessCalculator.setWeights(null);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);	
+		
+		GameDataAnalysis.printGameDatas(gameDatasAverages.get(0), controllers);
+		
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
     	
     	return fitnessValues.get(0);
