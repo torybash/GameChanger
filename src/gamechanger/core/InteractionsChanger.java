@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
-import ontology.effects.unary.StepBack;
 
 public class InteractionsChanger {
 
@@ -21,9 +20,8 @@ public class InteractionsChanger {
 		"turnAround", "undoAll", "wrapAround"};
 	
 	private static final String[] possiblePuzzleFunctions = {"bounceForward", "collectResource",
-		"changeResource", "killIfHasLess", "teleportToExit", "killIfHasMore", "killSprite", 
-		"stepBack", "transformTo", 
-		"undoAll"};
+		"changeResource", "killIfHasLess", "killIfOtherHasMore", "teleportToExit", "killIfHasMore", "killSprite", 
+		"stepBack", "transformTo", "undoAll"};
 
 	private static final HashMap<String, String[]> possibleFunctionParameters = new HashMap<String, String[]>();
 	
@@ -63,12 +61,15 @@ public class InteractionsChanger {
 	//Parameter chances
 	static double chanceToHaveScoreChange = 0.3f;
 	
+	static String levelLimitType = "";
 	
 	public static void setFunctions(boolean puzzles){
 		if (puzzles){
 			functions = possiblePuzzleFunctions;
+			levelLimitType = "wall";
 		}else{
 			functions = possibleFunctions;
+			levelLimitType = "EOS";
 		}
 	}
 	
@@ -155,7 +156,8 @@ public class InteractionsChanger {
 		while (result.length() < 1 || (result.equals(GameChanger.avatarNames.get(0)) && sprite1.equals(GameChanger.avatarNames.get(0)))){
 //			int idx = GameChanger.range(0, sprites.size() * 2);
 			int idx = GameChanger.range(0, sprites.size());
-			if (idx >= sprites.size()) result = "EOS";
+			if (idx >= sprites.size()) result = levelLimitType;
+//			if (idx >= sprites.size()-1) result = levelLimitType;
 //			else if (idx == sprites.size() + 1) result = "wall";
 			else result = sprites.get(idx).identifier;
 		}

@@ -66,9 +66,10 @@ public class GameChanger {
 //        Immovable.class, OrientedFlicker.class, Passive.class, 
 //        Portal.class, Resource.class, Spreader.class};
     static final Class[] possiblePuzzleSpriteClasses = {
-        Immovable.class, Passive.class, 
-        Portal.class, Resource.class};
-        static final Class [] possiblePuzzleAvatarClasses = {MovingAvatar.class, OrientedAvatar.class};
+        Passive.class,
+        Portal.class, Resource.class
+    };
+        static final Class [] possiblePuzzleAvatarClasses = {MovingAvatar.class};
 	
 	
 	private static Random r = new Random();
@@ -176,7 +177,7 @@ public class GameChanger {
         InteractionsChanger.setFunctions(true);
         
 		int amountSprites = range(3,4);
-		int amountInteractions = range(4,6);
+		int amountInteractions = range(8,14);
 		int amountTerminations = range(1,1);
 		ArrayList[] elements = makeGame(amountSprites, amountInteractions, amountTerminations);
         InteractionsChanger.makeWallStepBacks(elements[0], elements[1]);
