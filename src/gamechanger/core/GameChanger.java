@@ -89,6 +89,8 @@ public class GameChanger {
         avatarClasses = possibleAvatarClasses;
         spriteClasses = possibleSpriteClasses;
         
+        InteractionsChanger.setFunctions(false);
+        
 		ArrayList<Sprite> sprites = elements[0];
 		ArrayList<Interaction> interacts = elements[1];
 		ArrayList<LevelMapping> mappings = elements[2];

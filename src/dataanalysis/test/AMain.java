@@ -31,12 +31,12 @@ public class AMain {
 		
 		
 		
-        Controller[] designedDataControllers = ControllerHelper.copyControllers(controllers);
-        Controller[] mutatedDataControllers = ControllerHelper.copyControllers(controllers);
-        Controller[] generatedDataControllers = ControllerHelper.copyControllers(controllers);
-        ControllerHelper.setControllerDataFolders(designedDataControllers, dataFolder, "800t25pt_designed");
-        ControllerHelper.setControllerDataFolders(mutatedDataControllers, dataFolder, "800t25pt_mutation_");
-        ControllerHelper.setControllerDataFolders(generatedDataControllers, dataFolder, "800t25pt_gengames");
+//        Controller[] designedDataControllers = ControllerHelper.copyControllers(controllers);
+//        Controller[] mutatedDataControllers = ControllerHelper.copyControllers(controllers);
+//        Controller[] generatedDataControllers = ControllerHelper.copyControllers(controllers);
+//        ControllerHelper.setControllerDataFolders(designedDataControllers, dataFolder, "800t25pt_designed");
+//        ControllerHelper.setControllerDataFolders(mutatedDataControllers, dataFolder, "800t25pt_mutation_");
+//        ControllerHelper.setControllerDataFolders(generatedDataControllers, dataFolder, "800t25pt_gengames");
 		
         
 //        gda.makeFeatureTypeCountCSV(designedDataControllers, mutatedDataControllers, generatedDataControllers);
@@ -59,11 +59,33 @@ public class AMain {
 		//*********************************
 		//******10 P.T./2000 TICKS TEST*****
 		//*********************************
+		controllers = ControllerHelper.getMainControllers();
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_designed");
 //		gda.countGamesHaveCondition(controllers, true);
-//		gda.analyzeGameDifference(controllers, true, true);
-//		gda.analyzeAllGamesAverage(controllers, true);
+//		gda.analyzeGameDifference(controllers, false, false);
+//		gda.analyzeAllGamesAverage(controllers, false);
 //		fa.analyzeFitness(controllers, false);
+		
+		
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "2000ticks_mutation_");
+//		gda.analyzeAllMutationsAverage(controllers, 10, true);
+//		fa.analyzeMutationsFitness(controllers, 10, false);
+
+		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_rndgen");
+//		gda.countGamesHaveCondition(controllers, true);
+//		gda.analyzeGameDifference(controllers, false, false);
+//		gda.analyzeAllGamesAverage(controllers, false);
+//		fa.analyzeFitness(controllers, false);
+		
+        Controller[] designedDataControllers = ControllerHelper.copyControllers(controllers);
+        Controller[] mutatedDataControllers = ControllerHelper.copyControllers(controllers);
+        Controller[] generatedDataControllers = ControllerHelper.copyControllers(controllers);
+        ControllerHelper.setControllerDataFolders(designedDataControllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_designed");
+        ControllerHelper.setControllerDataFolders(mutatedDataControllers, dataFolder + "2000ticks,10pt test/", "2000ticks_mutation_");
+        ControllerHelper.setControllerDataFolders(generatedDataControllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_rndgen");
+		
+        
+        gda.makeFeatureTypeCountCSV(designedDataControllers, mutatedDataControllers, generatedDataControllers);
 		
 		
 		//*********************************
@@ -72,7 +94,7 @@ public class AMain {
 //		controllers = ControllerHelper.getOldControllers();
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_designed");
 //		gda.countGamesHaveCondition(controllers, true);
-		gda.analyzeGameDifference(controllers, true, true);
+//		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
 //		fa.analyzeFitness(controllers, false);
 
@@ -82,7 +104,7 @@ public class AMain {
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder, "800t25pt_gengames");
 //		gda.countGamesHaveCondition(controllers, true);
-		gda.analyzeGameDifference(controllers, true, true);
+//		gda.analyzeGameDifference(controllers, true, true);
 //		gda.analyzeAllGamesAverage(controllers, true);
 //		fa.analyzeFitness(controllers, false);
 		

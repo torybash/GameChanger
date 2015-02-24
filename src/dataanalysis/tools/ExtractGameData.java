@@ -93,7 +93,7 @@ public class ExtractGameData {
 		int n = controllers.length;
 		ArrayList<GameData>[] gameDatas = new ArrayList[n];
 		for (int c = 0; c < n; c++) {
-//			System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name);
+			System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name);
 			gameDatas[c] = extractData(controllers[c].dataFolder +"/", readActionFiles);
 		}
 		ArrayList<GameData[]> result = new ArrayList<GameData[]>();

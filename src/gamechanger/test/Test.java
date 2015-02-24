@@ -2,6 +2,12 @@ package gamechanger.test;
 
 import gamechanger.core.GameChanger;
 import gamechanger.writer.Writer;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import levelgenerator.core.LevelGenerator;
 import levelgenerator.map.LevelMap;
 
@@ -33,6 +39,9 @@ public class Test {
 		
 //        games = new String[]{"seaquest"};
         
+        games = new String[]{"aliens", "astroblast", "boulderdash", "centipede", "crackpots",
+        		"digdug", "eggomania", "frogs", "missilecommand", "pacman", "seaquest", 
+        		"solarfox", "zelda"};
         
         //1. Make a lot mutated games
 //        int mutationAmount = 10;
@@ -40,18 +49,12 @@ public class Test {
 //			String gamePath = "../gvgai/examples/gridphysics/" + games[i] + ".txt";
 //			
 //			for (int j = 0; j < mutationAmount; j++) {
-//				String new_desc = GameChanger.changeGame(gamePath, false, true, false);
+//				String new_desc = GameChanger.changeGameByPath(gamePath, false, true, false);
 //				String path = "mutatedgames/" + games[i] + "_mutation_" + j + ".txt";
 //				
 //				PrintWriter writer = null;
-//				try {
-//					writer = new PrintWriter(path, "UTF-8");
-//				} catch (FileNotFoundException e) {
-//					e.printStackTrace();
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				
+//				try { writer = new PrintWriter(path, "UTF-8"); } catch (IOException e) { e.printStackTrace();}
+//									
 //				writer.flush();
 //				writer.print(new_desc);
 //				writer.close();
@@ -123,8 +126,27 @@ public class Test {
 //			}
 //		}
         
-
-        
+            
+        //4. Make a puzzle game, and evolve a level
+//        boolean gameIsGood = false;
+//        int cnt = 0;
+//        while(!gameIsGood){
+//        	
+//        	//Make game description - assume that the resulting game can have puzzle game play features
+//            String new_desc = GameChanger.makePuzzleGame();
+//            System.out.println("Made new puzzle game description:\n" + new_desc);
+//            
+//            Writer.storeString(new_desc, generatedPuzzleGamesFolder, "genpuzzler");
+//            
+//            LevelGenerator lg = new LevelGenerator("genpuzzler", generatedPuzzleGamesFolder);
+//            String genLvlDesc = lg.generateLevel(8, 8, new LevelMap(null));
+//            
+//            if (genLvlDesc.length() > 0){
+//            	Writer.storeString(new_desc, evolvedPuzzleGamesFolder, "genpuzzler" + cnt);
+//            	Writer.storeString(genLvlDesc, evolvedPuzzleGamesFolder, "genpuzzler" + cnt + "_lvl0");
+//            	cnt++;
+//            }
+//        }
 
     }
         

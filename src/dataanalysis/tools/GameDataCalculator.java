@@ -12,7 +12,7 @@ import dataanalysis.core.LevelPlay;
 public class GameDataCalculator {
 
 	
-	private static final int LOWEST_TICKS_ALLOWED = 10;
+	private static final int LOWEST_TICKS_ALLOWED = 50;
 	private static final int MAX_ABS_SCORE = 10000;
 	
         static boolean scoresEqual = true;
@@ -43,8 +43,8 @@ public class GameDataCalculator {
 			for (int c = 0; c < n; c++) { //for each controller
 				ArrayList<LevelPlay> levelsPlayed = gameDatas.get(g)[c].levelsPlayed; 
 				if (hasDisqualified(levelsPlayed)
-//						|| allScoresEqual(levelsPlayed, c, n)
-//						|| allwaysLowTime(levelsPlayed, c, n)
+						|| allScoresEqual(levelsPlayed, c, n)
+						|| allwaysLowTime(levelsPlayed, c, n)
 				)
 					acceptedGame = false;
 			}

@@ -26,6 +26,7 @@ public class ControllerHelper {
 
 	public static Controller[] getMainControllers() {
 		Controller dontDieController = new Controller("Explorer", "dontDie", ControllerType.INTELLIGENT);
+		Controller explorerController = new Controller("Explorer", "Explorer", ControllerType.INTELLIGENT);
 		Controller mctsController = new Controller("MCTS", "sampleMCTS", ControllerType.INTELLIGENT);
 		Controller olMctsController = new Controller("MCTS", "sampleOLMCTS", ControllerType.INTELLIGENT);
 		Controller gaController = new Controller("GA", "sampleGA", ControllerType.INTELLIGENT);
@@ -34,7 +35,7 @@ public class ControllerHelper {
 		Controller randomController = new Controller("Random", "random", ControllerType.RANDOM);
 		Controller doNothingController = new Controller("Do Nothing", "doNothing", ControllerType.DO_NOTHING);
 		
-		Controller mctsishController = new Controller("MCTSish", "MCTSish", ControllerType.INTELLIGENT);
+		Controller mctsishController = new Controller("DeepSearch", "MCTSish", ControllerType.INTELLIGENT);
 		
 		return new Controller[]{dontDieController, mctsishController, olMctsController, rosController, randomController, doNothingController};
 	}

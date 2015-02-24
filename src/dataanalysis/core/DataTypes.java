@@ -2,7 +2,7 @@ package dataanalysis.core;
 
 public class DataTypes {
 
-	public static final String AVE = "Mean";
+	public static final String AVE = "Mean score";
 	public static final String NAVE = "BinaryN-Mean";
 	public static final String ZNAVE = "ZScoreN-Mean";
 	public static final String MMAVE = "MaxMinN-Mean";

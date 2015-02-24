@@ -11,26 +11,32 @@ public class Utility {
 
 	public static double relDiff(double d1, double d2){		
 		double division = Math.max(Math.abs(d1), Math.abs(d2));
-		double result = 0;
-		if (d1 > d2){
-			result = Math.abs(d1-d2)/division;
-		}else if (d1 < d2){
-			result = -Math.abs(d1-d2)/division;
-		}
-		if (result > 1) result = 1; if (result < -1) result = -1;
-		return result;
+		
+		return Math.abs(d1-d2/division);
+//		double division = Math.max(Math.abs(d1), Math.abs(d2));
+//		double result = 0;
+//		if (d1 > d2){
+//			result = Math.abs(d1-d2)/division;
+//		}else if (d1 < d2){
+//			result = -Math.abs(d1-d2)/division;
+//		}
+//		if (result > 1) result = 1; if (result < -1) result = -1;
+//		return result;
 	}
 	
 	public static float relDiff(float f1, float f2){
 		float division = Math.max(Math.abs(f1), Math.abs(f2));
-		float result = 0;
-		if (f1 > f2){
-			result = Math.abs(f1-f2)/division;
-		}else if (f1 < f2){
-			result = -Math.abs(f1-f2)/division;
-		}
-		if (result > 1) result = 1; if (result < -1) result = -1;
-		return result;
+		if (division == 0) return 0;
+		return (f1-f2)/division;
+//		float division = Math.max(Math.abs(f1), Math.abs(f2));
+//		float result = 0;
+//		if (f1 > f2){
+//			result = Math.abs(f1-f2)/division;
+//		}else if (f1 < f2){
+//			result = -Math.abs(f1-f2)/division;
+//		}
+//		if (result > 1) result = 1; if (result < -1) result = -1;
+//		return result;
 	}
 	
 	public static int getAmountOfActionsInGame(String gameTitle) {

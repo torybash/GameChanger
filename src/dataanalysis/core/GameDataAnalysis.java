@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import javax.rmi.CORBA.Util;
 
 import util.Utility;
-
 import dataanalysis.controller.Controller;
 import dataanalysis.controller.Controller.ControllerType;
 import dataanalysis.fitness.FitnessCalculator;
@@ -266,7 +266,7 @@ public class GameDataAnalysis {
 		for (GameData[] gds : gameAverages) { // fore game
 			float ctrl1Val = gds[ctrl1Id].gameValues.get(dataTyp);
 			float ctrl2Val = gds[ctrl2Id].gameValues.get(dataTyp);
-			if (ctrl1Val >= ctrl2Val) count++;
+			if (ctrl1Val > ctrl2Val) count++;
 		}
 //		System.out.println(count + " games (out of " + gameAverages.size() + ") fulfil the condition: " + dataTyp + " " + controllers[ctrl1Id].name + ">" + controllers[ctrl2Id].name);
 		
@@ -291,7 +291,8 @@ public class GameDataAnalysis {
 
 
 	public void makeFeatureTypeCountCSV(Controller[] designedDataControllers, Controller[] mutatedDataControllers, Controller[] generatedDataControllers) {
-		String result = "datatype,count1,aveRelDiff1,count2,aveRelDiff2,count3,aveRelDiff3\n";
+//		String result = "datatype,count1,aveRelDiff1,count2,aveRelDiff2,count3,aveRelDiff3\n";
+		String result = "datatype,count1,aveRelDiff1,count2,aveRelDiff2,count3,aveRelDiff3,desGenDiff\n";
 		
 		ArrayList<GameData[]> designedGameDatas = ExtractGameData.extractGameDatas(designedDataControllers, false);
 		designedGameDatas = GameDataCalculator.getAcceptedGames(designedGameDatas);
@@ -305,10 +306,10 @@ public class GameDataAnalysis {
 		ArrayList<GameData[]> generatedGameAverages = GameDataCalculator.getAverageForEachGame(generatedGameDatas);
 		
 		
-		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.MEDI, DataTypes.QUAR1, DataTypes.QUAR3, DataTypes.MIN, DataTypes.MAX};
+		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.AVTIC};
 		
-		int[] ctrl1s = new int[]{0};
-		int[] ctrl2s = new int[]{4,5,6};
+		int[] ctrl1s = new int[]{0,1};
+		int[] ctrl2s = new int[]{3,4,5};
 		
 		int totDesCount = designedGameAverages.size();
 		int totMutCount = mutatedGameAverages.size();
@@ -325,17 +326,24 @@ public class GameDataAnalysis {
 					float mutAveRelDiff = getAveragedRelativeDifference(mutatedDataControllers, mutatedGameAverages,  datTyps[t], ctrl1s[c1], ctrl2s[c2]);
 					float genAveRelDiff = getAveragedRelativeDifference(generatedDataControllers, generatedGameAverages,  datTyps[t], ctrl1s[c1], ctrl2s[c2]);
 					
-					result += "("+designedDataControllers[ctrl1s[c1]].name + ">=" + designedDataControllers[ctrl2s[c2]].name + ")." + datTyps[t] + ",";
+					float desGenDiff = desAveRelDiff-genAveRelDiff;
+					
+					result += datTyps[t] + ":"+designedDataControllers[ctrl1s[c1]].name + ">" + designedDataControllers[ctrl2s[c2]].name + ",";
 					
 					result += desCount + " (of " + totDesCount + "),";
-					result += String.format("%.3f", desAveRelDiff) + ",";
+					result += String.format(Locale.ENGLISH, "%.3f", desAveRelDiff) + ",";
 //					result += String.format("%.1f", 100*desCount/(float)totDesCount) + ",";
 					result += mutCount + " (of " + totMutCount + "),";
-					result += String.format("%.3f", mutAveRelDiff) + ",";
+					result += String.format(Locale.ENGLISH, "%.3f", mutAveRelDiff) + ",";
 //					result += String.format("%.1f", 100*mutCount/(float)totMutCount) + ",";
 					result += genCount + " (of " + totGenCount + "),";
-					result += String.format("%.3f", genAveRelDiff);
+					result += String.format(Locale.ENGLISH, "%.3f", genAveRelDiff);
 //					result += String.format("%.1f", 100*genCount/(float)totGenCount) + "";
+					
+					
+					result +=  "," + String.format(Locale.ENGLISH, "%.3f", desGenDiff);
+					
+					
 					result += "\n";
 				}
 			}

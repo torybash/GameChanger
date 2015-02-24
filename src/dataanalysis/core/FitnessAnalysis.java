@@ -84,9 +84,9 @@ public class FitnessAnalysis {
 
 
 
-	public void analyzeMutationsFitness(Controller[] controllers, int numberMutations, boolean matrixApproach) {
-		ArrayList<GameData[]> gameDatas = ExtractGameData.extractMutatedGameDatas(controllers, numberMutations, false);
-		gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
+	public void analyzeMutationsFitness(Controller[] controllers, int numberMutations, boolean acceptAllGames) {
+		ArrayList<GameData[]> gameDatas = ExtractGameData.extractMutatedGameDatas(controllers, numberMutations, true);
+		if (!acceptAllGames) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
 		FitnessCalculator.setWeights(null);
