@@ -1,0 +1,31 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Resource limit=6 singleton=TRUE value=1 img=hell
+		gen2 > Portal stype=gen3 img=sword
+		gen3 > Passive singleton=TRUE img=mana
+	InteractionSet
+		gen1 gen3 > undoAll scoreChange=-1
+		avatar gen3 > killIfOtherHasMore limit=7 resource=gen1 scoreChange=2
+		gen3 wall > bounceForward
+		gen3 gen2 > bounceForward
+		gen2 gen3 > bounceForward
+		gen2 gen2 > undoAll scoreChange=8
+		gen2 avatar > bounceForward
+		avatar gen3 > killIfHasLess limit=12 resource=gen1
+		gen2 gen1 > killIfHasLess limit=7 resource=gen1
+		gen3 gen1 > changeResource value=-1 resource=gen1 scoreChange=5
+		gen2 wall > bounceForward
+		gen1 gen1 > collectResource
+		gen3 gen2 > killIfHasMore limit=0 resource=gen1 scoreChange=-3
+		avatar gen1 > killSprite
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=null win=TRUE 

@@ -1,0 +1,18 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar speed=0.019600000000000003 img=avatar
+		gen1 > Immovable img=truck
+		gen2 > Passive img=base
+	InteractionSet
+		gen1 gen2 > undoAll
+		gen1 avatar > bounceForward scoreChange=-4
+		gen1 gen2 > killSprite
+		gen1 gen2 > bounceForward
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen1 stype2=null win=TRUE 

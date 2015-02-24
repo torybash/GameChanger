@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar speed=0.6889000000000001 img=avatar
+		gen1 > Passive img=zombie
+		gen2 > Portal stype=avatar singleton=TRUE img=ghost
+		gen3 > Portal stype=gen1 img=key
+	InteractionSet
+		gen1 avatar > stepBack
+		gen1 gen3 > undoAll
+		gen2 gen3 > stepBack
+		gen1 avatar > transformTo stype=gen2
+		gen2 gen1 > transformTo stype=gen1
+		gen2 avatar > bounceForward
+		avatar gen1 > stepBack
+		avatar wall > stepBack
+		avatar gen3 > undoAll
+		avatar gen2 > undoAll
+		gen3 gen3 > killSprite
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=null win=TRUE 

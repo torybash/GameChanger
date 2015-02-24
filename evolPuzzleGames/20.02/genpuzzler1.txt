@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=3
+		gen1 > Portal stype=gen2 img=truck
+		gen2 > Passive img=mana
+		gen3 > Portal stype=avatar img=frog
+	InteractionSet
+		gen2 EOS > undoAll scoreChange=10
+		avatar gen1 > undoAll scoreChange=6
+		gen3 gen2 > killSprite
+		gen3 avatar > bounceForward
+		gen2 EOS > stepBack
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 

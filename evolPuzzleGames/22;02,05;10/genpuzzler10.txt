@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Passive img=powerpill
+		gen2 > Portal stype=avatar img=flower
+		gen3 > Resource limit=13 value=3 img=mushroom
+	InteractionSet
+		gen3 gen2 > stepBack scoreChange=-1
+		gen2 avatar > killIfHasLess limit=9 resource=gen3
+		gen1 EOS > killIfHasMore limit=10 resource=gen3
+		gen1 avatar > transformTo stype=gen1 scoreChange=-4
+		gen3 gen3 > transformTo stype=gen2
+		gen2 gen1 > transformTo stype=gen3 scoreChange=10
+		gen2 gen3 > stepBack
+		gen1 gen1 > undoAll scoreChange=-4
+		gen1 EOS > killIfHasMore limit=7 resource=gen3
+		gen1 avatar > bounceForward
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

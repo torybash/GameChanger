@@ -1,0 +1,1 @@
+{GameResults: won true, ticks: 288, actions: 71, interactions: 27, numberSprites: 35, numSpritesHasInteracted: 8, numberWalls: 32, numSpritesCreated: 1, numSpritesKilled: 5, numberSpritesMoved: 21}

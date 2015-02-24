@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=6
+		gen1 > Immovable singleton=TRUE img=key
+		gen2 > Immovable img=spaceship
+	InteractionSet
+		avatar gen2 > bounceForward
+		avatar gen2 > transformTo stype=avatar
+		gen1 avatar > bounceForward scoreChange=10
+		gen2 avatar > killSprite
+		avatar gen1 > stepBack scoreChange=-4
+		gen2 gen1 > transformTo stype=gen1
+		gen2 gen1 > stepBack scoreChange=9
+		gen1 wall > killSprite
+		gen1 gen2 > killSprite
+		avatar wall > undoAll
+		gen2 gen1 > killSprite
+		avatar gen1 > bounceForward
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 

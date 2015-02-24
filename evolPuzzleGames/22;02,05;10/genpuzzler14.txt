@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar speed=0.0529 img=avatar
+		gen1 > Immovable singleton=TRUE img=door
+		gen2 > Passive img=mana
+	InteractionSet
+		gen1 EOS > transformTo stype=gen1
+		avatar EOS > stepBack scoreChange=2
+		gen1 avatar > transformTo stype=gen1
+		gen1 avatar > killSprite
+		gen2 EOS > stepBack
+		gen2 gen2 > killSprite
+		gen2 gen2 > transformTo stype=gen1
+		gen2 EOS > stepBack scoreChange=-5
+		gen2 EOS > transformTo stype=gen1
+		gen2 avatar > bounceForward
+		gen2 avatar > transformTo stype=gen1 scoreChange=2
+		gen2 gen1 > killSprite
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

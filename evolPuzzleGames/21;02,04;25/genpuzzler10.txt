@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar speed=0.3364 img=avatar
+		gen1 > Immovable img=portal
+		gen2 > Immovable img=bullet
+	InteractionSet
+		gen2 EOS > transformTo stype=gen2
+		gen1 avatar > bounceForward
+		gen2 gen1 > transformTo stype=gen1
+		gen2 gen1 > bounceForward
+		avatar gen2 > stepBack scoreChange=-3
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

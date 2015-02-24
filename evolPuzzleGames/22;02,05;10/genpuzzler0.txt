@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Immovable img=honey
+		gen2 > Portal stype=gen3 img=cocoon
+		gen3 > Portal stype=gen2 img=missile
+	InteractionSet
+		gen2 gen1 > killSprite
+		gen2 EOS > transformTo stype=gen3
+		gen1 avatar > stepBack
+		gen1 gen3 > undoAll
+		gen2 gen1 > transformTo stype=gen3 scoreChange=10
+		avatar EOS > transformTo stype=avatar scoreChange=10
+		gen1 avatar > bounceForward
+		avatar gen3 > teleportToExit
+		gen2 gen2 > undoAll
+		avatar EOS > undoAll scoreChange=-2
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

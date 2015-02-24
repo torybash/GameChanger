@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Portal stype=gen2 img=mushroom
+		gen2 > Passive img=powerpill
+		gen3 > Passive img=powerpill
+	InteractionSet
+		gen3 gen3 > undoAll scoreChange=-5
+		gen2 gen2 > killSprite
+		gen2 EOS > undoAll scoreChange=-4
+		gen2 avatar > bounceForward
+		gen2 EOS > transformTo stype=gen3
+		avatar EOS > transformTo stype=avatar
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=null win=TRUE 

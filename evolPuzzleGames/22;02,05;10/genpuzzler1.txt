@@ -1,0 +1,27 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Passive singleton=TRUE img=hell
+		gen2 > Passive img=honey
+		gen3 > Resource limit=2 value=2 img=zombie
+	InteractionSet
+		gen3 gen1 > killIfHasMore limit=2 resource=gen3
+		gen3 gen3 > bounceForward
+		gen1 avatar > killSprite
+		avatar EOS > transformTo stype=avatar scoreChange=-1
+		gen1 EOS > transformTo stype=gen1
+		gen3 avatar > bounceForward
+		gen2 EOS > transformTo stype=gen2
+		gen2 avatar > killIfHasMore limit=13 resource=gen3 scoreChange=3
+		gen1 gen1 > killSprite scoreChange=4
+		avatar gen2 > changeResource value=1 resource=gen3
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 

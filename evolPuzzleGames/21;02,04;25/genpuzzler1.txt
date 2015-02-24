@@ -1,0 +1,19 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar speed=0.7395999999999999 img=avatar
+		gen1 > Portal stype=avatar img=bomb
+		gen2 > Portal stype=gen1 img=monster
+	InteractionSet
+		gen1 avatar > transformTo stype=gen2
+		gen1 avatar > transformTo stype=gen1
+		gen2 avatar > bounceForward scoreChange=10
+		avatar gen2 > bounceForward
+		avatar gen2 > bounceForward
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=null win=TRUE 

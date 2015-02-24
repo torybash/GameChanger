@@ -1,0 +1,25 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Passive img=goal
+		gen2 > Passive img=frog
+	InteractionSet
+		avatar wall > bounceForward
+		gen2 avatar > bounceForward
+		gen1 gen1 > bounceForward
+		gen1 gen1 > bounceForward scoreChange=3
+		gen1 wall > stepBack
+		gen1 gen1 > bounceForward scoreChange=4
+		avatar wall > bounceForward
+		gen1 gen2 > killSprite
+		gen2 wall > killSprite
+		avatar gen1 > bounceForward
+		avatar gen1 > transformTo stype=avatar scoreChange=-3
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=null win=TRUE 

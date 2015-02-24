@@ -1,0 +1,26 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=9
+		gen1 > Resource limit=12 value=5 img=marsh
+		gen2 > Portal stype=avatar img=mana
+	InteractionSet
+		gen1 gen2 > teleportToExit
+		gen1 gen2 > killSprite scoreChange=1
+		avatar EOS > killIfHasMore limit=4 resource=gen1
+		gen2 EOS > changeResource value=4 resource=gen1
+		gen2 gen1 > killIfHasMore limit=10 resource=gen1
+		gen2 gen1 > killIfHasLess limit=14 resource=gen1
+		gen1 avatar > bounceForward
+		gen1 gen1 > killIfHasMore limit=5 resource=gen1
+		gen1 EOS > killIfHasLess limit=14 resource=gen1
+		gen1 gen1 > stepBack scoreChange=6
+		gen2 gen1 > transformTo stype=gen1
+		gen1 EOS > killSprite
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

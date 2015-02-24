@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Passive img=bee
+		gen2 > Passive img=city
+	InteractionSet
+		gen2 EOS > transformTo stype=gen2
+		gen2 avatar > bounceForward
+		gen1 avatar > killSprite
+		avatar gen2 > bounceForward
+		avatar gen2 > transformTo stype=avatar scoreChange=4
+		gen2 EOS > stepBack
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen1 win=TRUE 

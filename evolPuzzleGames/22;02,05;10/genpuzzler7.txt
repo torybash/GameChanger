@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Portal stype=avatar img=hell
+		gen2 > Immovable img=shovel
+	InteractionSet
+		gen1 gen2 > killSprite scoreChange=2
+		gen2 gen2 > killSprite scoreChange=-3
+		avatar gen2 > transformTo stype=avatar
+		gen2 EOS > undoAll scoreChange=-4
+		avatar EOS > stepBack
+		avatar EOS > undoAll
+		gen1 gen1 > teleportToExit scoreChange=8
+		gen2 avatar > bounceForward scoreChange=-1
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=null win=TRUE 

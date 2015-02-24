@@ -1,0 +1,20 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Passive img=portal
+		gen2 > Passive img=zombie
+	InteractionSet
+		gen2 gen1 > bounceForward
+		gen2 gen1 > bounceForward
+		avatar EOS > killSprite
+		gen2 gen1 > killSprite
+		gen2 avatar > bounceForward
+		avatar gen1 > killSprite
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=0 stype1=gen2 stype2=null win=TRUE 

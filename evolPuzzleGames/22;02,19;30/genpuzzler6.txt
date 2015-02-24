@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar cooldown=2
+		gen1 > Passive img=shovel
+		gen2 > Passive img=virus
+		gen3 > Passive img=spaceship
+	InteractionSet
+		avatar gen1 > killSprite scoreChange=1
+		avatar gen3 > bounceForward
+		gen3 avatar > bounceForward
+		gen3 gen3 > killSprite scoreChange=9
+		avatar gen1 > transformTo stype=avatar scoreChange=6
+		gen2 gen1 > stepBack
+		avatar gen1 > killSprite
+		gen1 gen3 > stepBack
+		gen2 wall > undoAll scoreChange=-5
+		gen3 wall > killSprite scoreChange=7
+		gen2 gen1 > bounceForward
+		gen2 gen3 > killSprite
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen3 stype2=null win=TRUE 

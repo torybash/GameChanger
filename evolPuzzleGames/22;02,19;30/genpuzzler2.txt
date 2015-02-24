@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar cooldown=9
+		gen1 > Passive img=virus
+		gen2 > Passive img=butterfly
+	InteractionSet
+		gen1 gen2 > bounceForward scoreChange=6
+		gen2 avatar > bounceForward scoreChange=-4
+		avatar wall > transformTo stype=avatar scoreChange=-1
+		gen2 wall > transformTo stype=gen2 scoreChange=3
+		gen2 gen1 > transformTo stype=gen1
+		gen2 wall > killSprite
+		gen2 gen1 > undoAll scoreChange=-4
+		gen2 gen1 > killSprite
+		gen1 gen1 > transformTo stype=gen1
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

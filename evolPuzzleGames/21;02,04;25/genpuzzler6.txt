@@ -1,0 +1,22 @@
+BasicGame
+	SpriteSet
+		avatar > OrientedAvatar img=avatar
+		gen1 > Portal stype=gen2 img=spaceship
+		gen2 > Immovable img=door
+		gen3 > Passive img=alien
+	InteractionSet
+		gen1 EOS > stepBack scoreChange=6
+		gen1 avatar > killSprite
+		gen2 avatar > bounceForward scoreChange=-4
+		gen2 gen2 > transformTo stype=gen3 scoreChange=7
+		gen3 avatar > stepBack
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=null win=TRUE 

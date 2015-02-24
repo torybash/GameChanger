@@ -1,0 +1,23 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Immovable img=log
+		gen2 > Portal stype=gen1 img=dirt
+	InteractionSet
+		gen1 avatar > undoAll
+		gen1 gen1 > bounceForward
+		avatar EOS > killSprite
+		gen2 avatar > bounceForward scoreChange=1
+		gen2 EOS > transformTo stype=gen2
+		gen2 avatar > killSprite scoreChange=-2
+		avatar EOS > stepBack
+		avatar EOS > undoAll scoreChange=3
+		avatar EOS > stepBack
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=null win=TRUE 
