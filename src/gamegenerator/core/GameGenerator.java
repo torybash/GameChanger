@@ -3,6 +3,7 @@ package gamegenerator.core;
 import fastVGDL.tools.IO;
 import gamechanger.core.GameChanger;
 import gamechanger.core.InteractionsChanger;
+import gamechanger.writer.Writer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +11,9 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 
 import core.ArcadeMachine;
@@ -32,49 +35,25 @@ public class GameGenerator {
 	
 	static Random r = new Random();
 	
-	public static void main(String[] args) {
-//		evolveGameFromExisting("../gvgai/examples/gridphysics/", "boulderdash");
 
-		for (int i = 0; i < 50; i++) {
-			evolveGameFromScratch("coolgame" + i);
-		}
-		
-
-	}
-	
-	
-	public static void evolveGames(){
-		String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
-                "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
-                "camelRace", "digdug", "firestorms", "infection", "firecaster",
-                "overload", "pacman", "seaquest", "whackamole", "eggomania"};
-                
-        
-		for (int i = 0; i < games.length; i++) {
-			String gameFolder = "../gvgai/examples/gridphysics/";
-			
-			
-//			evolveGame(gameFolder, games[i]);
-
-			
-		}
-	}
-	
-	public static void evolveGameFromExisting(String gameFolder, String gameTitle){
+	public static void evolveGameFromExisting(String gameFolder, String gameTitle, String outputFolderPath){
 		String origGamePath = gameFolder + gameTitle + ".txt";
 		String origGameDesc = new IO().getDescFromFile(origGamePath);
 		
 		InteractionsChanger.setFunctions(false);
 		
 		
-		String bestGameDesc = evolveGame(origGameDesc, gameTitle, gameFolder);
+		EvolveGameData bestGameData = evolveGame(origGameDesc, gameTitle, gameFolder);
+		
+		Writer.storeString(bestGameData.gameDesc, outputFolderPath, gameTitle);
 	}
 	
-	public static void evolveGameFromScratch(String gameTitle){
+	public static void evolveGameFromScratch(String gameTitle, String outputFolderPath){
 		String gameDesc = GameChanger.makeArcadeGame();
 		
 		String lvlDesc = GameChanger.makeLevel(gameDesc);
 		storeLvlDesc(lvlDesc, gameTitle);
+	
 		
 		boolean gameHasProblems = true;
 		while(gameHasProblems){
@@ -93,12 +72,16 @@ public class GameGenerator {
 		}		
 		
 		
-		String bestGameDesc = evolveGame(gameDesc, gameTitle, gameFolder);
+		EvolveGameData bestGameData = evolveGame(gameDesc, gameTitle, gameFolder);
+		
+		Writer.storeString(bestGameData.gameDesc, outputFolderPath, gameTitle);
+		Writer.storeString(lvlDesc, outputFolderPath, gameTitle + "_lvl0");
+		Writer.storeString(bestGameData.gf.toString(), outputFolderPath, gameTitle + "_results");
 	}
 	
 	
-	public static String evolveGame(String gameDesc, String gameTitle, String levelFolder){
-		int iterations = 100, mutations = 10, mutationsSurvive = 5;
+	public static EvolveGameData evolveGame(String gameDesc, String gameTitle, String levelFolder){
+		int iterations = 15, mutations = 6, mutationsSurvive = 3;
 
 		EvolveGameData origData = playGameGetData(gameDesc, gameTitle, levelFolder);
 		
@@ -159,11 +142,11 @@ public class GameGenerator {
 			Arrays.sort(evolveGameDatas);
 			
 			for (int j = 0; j < survivedGameDatas.length; j++) {
-				survivedGameDatas[j] = evolveGameDatas[j];
+				survivedGameDatas[j] = evolveGameDatas[j].copy();
 			}
 			
 			System.out.println("Top 3 fitness: ");
-			for (int j = 0; j < 2; j++) System.out.println(evolveGameDatas[j].gf.fitness);
+			for (int j = 0; j < 3; j++) System.out.println(evolveGameDatas[j].gf.fitness);
 			System.out.println("(Orig fitness: " + origData.gf.fitness + ")");
 			System.out.println("Best game desc:");
 			System.out.println(evolveGameDatas[0].gameDesc);
@@ -172,10 +155,16 @@ public class GameGenerator {
 	        System.out.println(Arrays.toString(evolveGameDatas[0].gf.fitnessVals));
 	        System.out.println(Arrays.toString(evolveGameDatas[0].gf.fitnessValsString));
 			System.out.println();
+			
+			
+			//Deciding if should stop
+			if (evolveGameDatas[0].gf.fitness > 0.98){
+				break;
+			}
 
 		}
 		
-		return evolveGameDatas[0].gameDesc;
+		return evolveGameDatas[0];
 	}
 	
 

@@ -1,4 +1,4 @@
-package aMain;
+package dataanalysis.test;
 
 import dataanalysis.controller.Controller;
 import dataanalysis.controller.ControllerHelper;

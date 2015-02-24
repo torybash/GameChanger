@@ -1,5 +1,6 @@
-package gamechanger.core;
+package gamechanger.test;
 
+import gamechanger.core.GameChanger;
 import gamechanger.writer.Writer;
 import levelgenerator.core.LevelGenerator;
 import levelgenerator.map.LevelMap;
@@ -9,19 +10,21 @@ import levelgenerator.map.LevelMap;
 
 public class Test {
 
+	final static String generatedGamesFolder = "rnd_gen_games/";
+
+	
+	static String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
+            "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
+            "camelRace", "digdug", "firestorms", "infection", "firecaster",
+            "overload", "pacman", "seaquest", "whackamole", "eggomania"};
+	
+	
     public static void main(String[] args) {
 		
-    	String generatedGamesFolder = "rnd_gen_games/";
-    	String generatedPuzzleGamesFolder = "rnd_gen_puzzle_games/";
-    	
-    	String evolvedPuzzleGamesFolder = "evolPuzzleGames/";
-    	
-        String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
-                "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
-                "camelRace", "digdug", "firestorms", "infection", "firecaster",
-                "overload", "pacman", "seaquest", "whackamole", "eggomania"};
+
+  
         
-//        String[] games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
+//        games = new String[]{"aliens", "boulderdash", "butterflies", "chase", "frogs",
 //                "missilecommand", "portals", "sokoban", "survivezombies", "zelda",
 //                "camelRace", "digdug", "firestorms", "infection", "firecaster",
 //                "overload", "pacman", "seaquest", "whackamole", "eggomania",
@@ -44,10 +47,8 @@ public class Test {
 //				try {
 //					writer = new PrintWriter(path, "UTF-8");
 //				} catch (FileNotFoundException e) {
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				} catch (UnsupportedEncodingException e) {
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
 //				
@@ -123,27 +124,7 @@ public class Test {
 //		}
         
 
-            
-        //4. Make a puzzle game, and evolve a level
-        boolean gameIsGood = false;
-        int cnt = 0;
-        while(!gameIsGood){
-        	
-        	//Make game description - assume that the resulting game can have puzzle game play features
-            String new_desc = GameChanger.makePuzzleGame();
-            System.out.println("Made new puzzle game description:\n" + new_desc);
-            
-            Writer.storeString(new_desc, generatedPuzzleGamesFolder, "genpuzzler");
-            
-            LevelGenerator lg = new LevelGenerator("genpuzzler", generatedPuzzleGamesFolder);
-            String genLvlDesc = lg.generateLevel(8, 8, new LevelMap(null));
-            
-            if (genLvlDesc.length() > 0){
-            	Writer.storeString(new_desc, evolvedPuzzleGamesFolder, "genpuzzler" + cnt);
-            	Writer.storeString(genLvlDesc, evolvedPuzzleGamesFolder, "genpuzzler" + cnt + "_lvl0");
-            	cnt++;
-            }
-        }
+        
 
     }
         

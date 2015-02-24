@@ -1,5 +1,7 @@
 package dataanalysis.fitness;
 
+import java.util.Arrays;
+
 public class GameFitness implements Comparable{
 
 	public String gameTitle = "";
@@ -28,6 +30,13 @@ public class GameFitness implements Comparable{
 		GameFitness result = new GameFitness(gameTitle, fitness);
 		if (fitnessVals != null) result.fitnessVals = fitnessVals.clone();
 		if (fitnessValsString != null) result.fitnessValsString = fitnessValsString.clone();
+		return result;
+	}
+	
+	@Override
+	public String toString() {
+		String result = "{GameFitness - gameTitle: " + gameTitle + ", fitness: " + fitness;
+		if (fitnessVals != null) result += "\nfitnessVals: " + Arrays.toString(fitnessVals) + "\nfitnessValsString: " + Arrays.toString(fitnessValsString);
 		return result;
 	}
 }
