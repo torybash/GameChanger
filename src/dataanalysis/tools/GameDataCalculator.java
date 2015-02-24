@@ -77,6 +77,7 @@ public class GameDataCalculator {
 		int amountPlaythroughs = gameDatas.get(0)[0].levelsPlayed.size();
 		
 		GameData[] aveGameDatas = new GameData[n];
+	
 		
 		float[][] allControllersGamePlaythroughMins = new float[amountGames][];
 		float[][] allControllersGamePlaythroughMaxs = new float[amountGames][];
@@ -329,6 +330,13 @@ public class GameDataCalculator {
 			aveGds[c].gameValues.put(DataTypes.NWALS, nwals); 
 	        
 	        aveGameDatas[c] = aveGds[c];
+		}
+		
+		
+		if (gameDatas.size() == 1) {
+			for (int c = 0; c < n; c++) {
+				aveGameDatas[c].levelsPlayed = (ArrayList<LevelPlay>) gameDatas.get(0)[c].levelsPlayed.clone();
+			}
 		}
 		
 		return aveGameDatas;

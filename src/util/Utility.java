@@ -12,7 +12,8 @@ public class Utility {
 	public static double relDiff(double d1, double d2){		
 		double division = Math.max(Math.abs(d1), Math.abs(d2));
 		
-		return Math.abs(d1-d2/division);
+		if (division == 0) return 0;
+		return (d1-d2)/division;
 //		double division = Math.max(Math.abs(d1), Math.abs(d2));
 //		double result = 0;
 //		if (d1 > d2){

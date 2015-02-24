@@ -59,23 +59,23 @@ public class AMain {
 		//*********************************
 		//******10 P.T./2000 TICKS TEST*****
 		//*********************************
-		controllers = ControllerHelper.getMainControllers();
+		controllers = ControllerHelper.getMainFourControllers();
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_designed");
 //		gda.countGamesHaveCondition(controllers, true);
 //		gda.analyzeGameDifference(controllers, false, false);
 //		gda.analyzeAllGamesAverage(controllers, false);
-//		fa.analyzeFitness(controllers, false);
+		fa.analyzeFitness(controllers, false);
 		
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "2000ticks_mutation_");
 //		gda.analyzeAllMutationsAverage(controllers, 10, true);
-//		fa.analyzeMutationsFitness(controllers, 10, false);
+		fa.analyzeMutationsFitness(controllers, 10, false);
 
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_rndgen");
 //		gda.countGamesHaveCondition(controllers, true);
 //		gda.analyzeGameDifference(controllers, false, false);
 //		gda.analyzeAllGamesAverage(controllers, false);
-//		fa.analyzeFitness(controllers, false);
+		fa.analyzeFitness(controllers, false);
 		
         Controller[] designedDataControllers = ControllerHelper.copyControllers(controllers);
         Controller[] mutatedDataControllers = ControllerHelper.copyControllers(controllers);
@@ -85,7 +85,7 @@ public class AMain {
         ControllerHelper.setControllerDataFolders(generatedDataControllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_rndgen");
 		
         
-        gda.makeFeatureTypeCountCSV(designedDataControllers, mutatedDataControllers, generatedDataControllers);
+//        gda.makeFeatureTypeCountCSV(designedDataControllers, mutatedDataControllers, generatedDataControllers);
 		
 		
 		//*********************************

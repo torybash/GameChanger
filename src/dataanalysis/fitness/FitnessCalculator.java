@@ -67,6 +67,8 @@ public class FitnessCalculator {
 		
 		if (VERBOSE) System.out.println(gds[0].gameTitle);
 		
+//		System.out.println("game: " + gds[0].gameTitle + ", hasLowTicksWin: " + hasLowTicksWin);
+		
 		int cnt = 0;
 		for (int t = 0; t < maxDataTypeCount; t++) {
 			if (!dataTypesToUse[t]) continue;
@@ -90,7 +92,7 @@ public class FitnessCalculator {
 						cnt++;
 					}
 				}
-			}else if (typ.relDiffs){
+			}else if (typ.relDiffs){ //compare controller 0 with a specific other
 				if (typ.dataType.equals(DataTypes.ACTEN)){ //special case for entropy comparison
 					//f(int => random) = 1
 					//f(int=0.5, random=1) = 0
@@ -109,7 +111,7 @@ public class FitnessCalculator {
 				fitnessVals[cnt] = val;
 				fitnessValsString[cnt] = "reldiff(" + String.format("%.3f", highestValues[t][0]) + ", " + String.format("%.3f", highestValues[t][typ.ctrlTyp().id()]) + ") = " + val;
 				cnt++;
-			}else{
+			}else{ //just use value as fitness (or special cases)
 				if (typ == FeatureDataType.HAS_LOW_TICKS){
 					val = hasLowTicksWin ? -1 : 1;
 				}else if (typ.dataType == DataTypes.AVTIC){
@@ -203,24 +205,24 @@ public class FitnessCalculator {
 	
 	
 	public enum FeatureDataType{
-		REL_SCORE(DataTypes.AVE, true, null),
-		REL_WR(DataTypes.WRATE, true, null),
+		REL_SCORE(DataTypes.AVE, true, ControllerType.DO_NOTHING),
+		REL_WR(DataTypes.WRATE, true, ControllerType.DO_NOTHING),
 //		MMSCORE_SD(DataTypes.MMSE),
-		REL_QUAR1(DataTypes.QUAR1, true, null),
-		REL_MEDI(DataTypes.MEDI, true, null),
-		REL_QUAR3(DataTypes.QUAR3, true, null),
+//		REL_QUAR1(DataTypes.QUAR1, true, null),
+//		REL_MEDI(DataTypes.MEDI, true, null),
+//		REL_QUAR3(DataTypes.QUAR3, true, null),
 //		REL_WR(DataTypes.WRATE, true),
 //		REL_TICKS(DataTypes.AVTIC, true, null),
 //		REL_TICKS_SD(DataTypes.SDTIC, true, null),
 //		REL_MIN(DataTypes.MIN, true, null),
 //		REL_MAX(DataTypes.MAX, true, null),
 		
-		REL_SCORE_SD(DataTypes.SD, true, ControllerType.DO_NOTHING),
-		REL_WR_SD(DataTypes.WRSE, true, ControllerType.DO_NOTHING),
+//		REL_SCORE_SD(DataTypes.SD, true, ControllerType.DO_NOTHING),
+		REL_WR_SD(DataTypes.WRSE, true, ControllerType.DO_NOTHING),     //<-- compares first controller with doNothing
 		
-		REL_ACTEN_SD(DataTypes.ACTEN, true, ControllerType.RANDOM),
+		REL_ACTEN(DataTypes.ACTEN, true, ControllerType.RANDOM),
 		
-		TICKS(DataTypes.AVTIC, false, ControllerType.INTELLIGENT),
+//		TICKS(DataTypes.AVTIC, false, ControllerType.INTELLIGENT),
 		
 		HAS_LOW_TICKS(null, false, ControllerType.INTELLIGENT),
 
