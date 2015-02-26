@@ -27,63 +27,92 @@ import dataanalysis.fitness.GameFitness;
 
 public class GameGenerator {
 
-	final static String mainFolder = "game_generator/";
-	final static String gameFolder = "game_generator/game_descs/";
-	final static String gameDataFolder = "game_generator/game_data/";
+//	final static String mainFolder = "game_generator/";
+	final static String gameDescFolder = "game_descs/";
+	final static String gameDataFolder = "game_data/";
+	final static String resultsFolder = "results/";
 	
 	static FitnessAnalysis fa = new FitnessAnalysis();
+	static GameDataAnalysis gda = new GameDataAnalysis();
 	
 	static Random r = new Random();
 	
 
-	public static void evolveGameFromExisting(String gameFolder, String gameTitle, String outputFolderPath){
+	public static void evolveGameFromExisting(String gameFolder, String gameTitle, String outputFolderPath, int id){
 		String origGamePath = gameFolder + gameTitle + ".txt";
 		String origGameDesc = new IO().getDescFromFile(origGamePath);
-		
 		InteractionsChanger.setFunctions(false);
 		
+		String title = gameTitle + "_mut" + id;
+		String levelPath = gameFolder + gameTitle + "_lvl0.txt";
 		
-		EvolveGameData bestGameData = evolveGame(origGameDesc, gameTitle, gameFolder);
+	    File folder = new File(outputFolderPath + gameDescFolder);
+	    folder.mkdirs();		
+	    folder = new File(outputFolderPath + gameDataFolder);
+	    folder.mkdirs();	
+	    
+		EvolveGameData bestGameData = evolveGame(origGameDesc, title, levelPath, outputFolderPath);
 		
-		Writer.storeString(bestGameData.gameDesc, outputFolderPath, gameTitle);
+
+	    folder = new File(outputFolderPath + resultsFolder);
+	    folder.mkdirs();		
+		
+		
+		Writer.storeString(bestGameData.gameDesc, outputFolderPath + resultsFolder, title);
+		Writer.storeString(bestGameData.gf.toString(), outputFolderPath + resultsFolder, title + "_results");	
 	}
 	
 	public static void evolveGameFromScratch(String gameTitle, String outputFolderPath){
+	    File folder = new File(outputFolderPath + gameDescFolder);
+	    folder.mkdirs();		
+	    folder = new File(outputFolderPath + gameDataFolder);
+	    folder.mkdirs();		
+
+		
 		String gameDesc = GameChanger.makeArcadeGame();
 		
 		String lvlDesc = GameChanger.makeLevel(gameDesc);
-		storeLvlDesc(lvlDesc, gameTitle);
+		storeLvlDesc(lvlDesc, gameTitle, outputFolderPath);
 	
+		String levelFolderPath = outputFolderPath + gameDescFolder + gameTitle + "_lvl0.txt";
+		
+		
+
 		
 		boolean gameHasProblems = true;
+		int problemCount = 0;
+		long tim = System.currentTimeMillis();
 		while(gameHasProblems){
-			EvolveGameData gd = playGameGetData(gameDesc, gameTitle, gameFolder);
+			EvolveGameData gd = playGameGetData(gameDesc, gameTitle, levelFolderPath, outputFolderPath);
 			
-			int INDEX_FOR_WINRATE_OVER_DONOTHING = 5;
+			int INDEX_FOR_WINRATE_OVER_DONOTHING = 1;
 			
 			if (gd.gf.fitness == -1 || gd.gf.fitnessVals[INDEX_FOR_WINRATE_OVER_DONOTHING] <= 0){
 				gameDesc = GameChanger.makeArcadeGame();
 				lvlDesc = GameChanger.makeLevel(gameDesc);
-				storeLvlDesc(lvlDesc, gameTitle);
+				storeLvlDesc(lvlDesc, gameTitle, outputFolderPath);
+				problemCount++;
 			}else{
-				System.out.println("Found well-formed game description -- evolving..");
+				System.out.println("Found well-formed game description after " + problemCount + " tries, and " + ((System.currentTimeMillis()-tim)*1000) + "s -- evolving..");
 				gameHasProblems = false;
 			}
 		}		
 		
+	    folder = new File(outputFolderPath + resultsFolder);
+	    folder.mkdirs();	
 		
-		EvolveGameData bestGameData = evolveGame(gameDesc, gameTitle, gameFolder);
+		EvolveGameData bestGameData = evolveGame(gameDesc, gameTitle, levelFolderPath, outputFolderPath);
 		
-		Writer.storeString(bestGameData.gameDesc, outputFolderPath, gameTitle);
-		Writer.storeString(lvlDesc, outputFolderPath, gameTitle + "_lvl0");
-		Writer.storeString(bestGameData.gf.toString(), outputFolderPath, gameTitle + "_results");
+		Writer.storeString(bestGameData.gameDesc, outputFolderPath + resultsFolder, gameTitle);
+		Writer.storeString(lvlDesc, outputFolderPath + resultsFolder, gameTitle + "_lvl0");
+		Writer.storeString(bestGameData.gf.toString(), outputFolderPath + resultsFolder, gameTitle + "_results");
 	}
 	
 	
-	public static EvolveGameData evolveGame(String gameDesc, String gameTitle, String levelFolder){
-		int iterations = 15, mutations = 6, mutationsSurvive = 3;
+	public static EvolveGameData evolveGame(String gameDesc, String gameTitle, String levelPath, String outputFolderPath){
+		int iterations = 15, mutations = 50, mutationsSurvive = 25;
 
-		EvolveGameData origData = playGameGetData(gameDesc, gameTitle, levelFolder);
+		EvolveGameData origData = playGameGetData(gameDesc, gameTitle, levelPath, outputFolderPath);
 		
 		
 		String[] gameDescs = new String[mutations];
@@ -129,12 +158,12 @@ public class GameGenerator {
 			for (int m = 0; m < mutations; m++) {
 				if (m < mutationsSurvive){
 					if (evolveGameDatas[m] == null){ //first iteratino
-						evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
+						evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelPath, outputFolderPath);
 					}else{
 						evolveGameDatas[m] = survivedGameDatas[m].copy();
 					}
 				}else{
-					evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelFolder);
+					evolveGameDatas[m] = playGameGetData(gameDescs[m], gameTitle, levelPath, outputFolderPath);
 				}
 			}
 			
@@ -168,48 +197,49 @@ public class GameGenerator {
 	}
 	
 
-	private static EvolveGameData playGameGetData(String gameDesc, String gameTitle, String levelFolder) {
-		storeGameDesc(gameDesc, gameTitle);
+	private static EvolveGameData playGameGetData(String gameDesc, String gameTitle, String levelPath, String outputFolderPath) {
+		storeGameDesc(gameDesc, gameTitle, outputFolderPath);
 		
-        System.out.println("Playing game..");
+//        System.out.println("Playing game..");
         
-        System.out.println(gameDesc);
-        System.out.println();
+//        System.out.println(gameDesc);
+//        System.out.println();
         
         long tim = System.currentTimeMillis();
-		playGame(gameTitle, levelFolder);
-		System.out.println("Finished playing game - calculating fitness..");
-		GameFitness gf = getGameData();
-        System.out.println("Fitness: " + gf.fitness + ", time: " + (System.currentTimeMillis()-tim));
-        System.out.println(FitnessCalculator.getFitnessTopString(", "));
-        System.out.println(Arrays.toString(gf.fitnessVals));
-        System.out.println(Arrays.toString(gf.fitnessValsString));
-        System.out.println();
+		playGame(gameTitle, levelPath, outputFolderPath);
+//		System.out.println("Finished playing game - calculating fitness..");
+		GameFitness gf = getGameData(outputFolderPath);
+//        System.out.println("Fitness: " + gf.fitness + ", time: " + (System.currentTimeMillis()-tim));
+//        System.out.println(FitnessCalculator.getFitnessTopString(", "));
+//        System.out.println(Arrays.toString(gf.fitnessVals));
+//        System.out.println(Arrays.toString(gf.fitnessValsString));
+//        System.out.println();
         
-
+		System.out.println("Finished playing game.. Fitness: " + gf.fitness + ", time: " + (System.currentTimeMillis()-tim));
 		
 		
 		return new EvolveGameData(gf, gameDesc);
 	}
 	
-	private static GameFitness getGameData() {
-		Controller[] controllers = ControllerHelper.getMainFourControllers();
-		ControllerHelper.setControllerDataFolders(controllers, gameDataFolder, "game_gen_test");
+	private static GameFitness getGameData(String outputFolderPath) {
+		Controller[] controllers = ControllerHelper.getTheTwoControllers();
+		ControllerHelper.setControllerDataFolders(controllers, outputFolderPath + gameDataFolder, "game_gen_test");
+		
+//		gda.analyzeEachGameDifference(controllers, false, false);
 		
 		return fa.getFitnessForSingleGame(controllers);
 	}
 
 
-	private static void playGame(String gameTitle, String levelFolder){
+	private static void playGame(String gameTitle, String levelPath, String outputFolderPath){
 
 		
-		int seed = new Random().nextInt();
 		
 //        String[] controllers = new String[]{"controllers.sampleMCTS.Agent", "controllers.dontDie.Agent", "controllers.sampleGA.Agent", 
 //        		"controllers.randomOneStep.Agent", "controllers.sampleonesteplookahead.Agent", "controllers.random.Agent",
 //        		"controllers.doNothing.Agent"};
         
-        String[] controllers = new String[]{"controllers.dontDie.Agent","controllers.randomOneStep.Agent","controllers.random.Agent","controllers.doNothing.Agent"};
+        String[] controllers = new String[]{"controllers.MCTSish.Agent","controllers.doNothing.Agent"};
 		
         int N = 1, L = 1, M = 6;
         boolean saveActions = true;
@@ -219,7 +249,7 @@ public class GameGenerator {
         PrintStream origStream = System.out;
         
         for (int c = 0; c < controllers.length; c++) {
-        	String foldername = gameDataFolder + controllers[c].split("\\.")[1] + "game_gen_test";
+        	String foldername = outputFolderPath + gameDataFolder + controllers[c].split("\\.")[1] + "game_gen_test";
 	        try {
 				File dir = new File(foldername);
 				dir.mkdir();
@@ -229,9 +259,9 @@ public class GameGenerator {
 	 		}
        	
             int actionIdx = 0;
-            String game = gameFolder + gameTitle + ".txt";
+            String game = outputFolderPath + gameDescFolder + gameTitle + ".txt";
             for(int j = 0; j < L; ++j){
-                levels[j] = levelFolder +gameTitle + "_lvl" + j +".txt";
+                levels[j] = levelPath; //gameTitle + "_lvl" + j +".txt";
                 if(saveActions) for(int k = 0; k < M; ++k)
                     actionFiles[actionIdx++] = foldername + "/" + "actions_game_" + 0 + "_level_" + j + "_" + k + ".txt";
             }
@@ -243,10 +273,10 @@ public class GameGenerator {
 	}
 
 
-	private static void storeGameDesc(String gameDesc, String gameTitle) {
+	private static void storeGameDesc(String gameDesc, String gameTitle, String outputFolderPath) {
 		
 		PrintWriter writer;
-		String path = gameFolder + gameTitle + ".txt";
+		String path = outputFolderPath + gameDescFolder + gameTitle + ".txt";
 		try {
 			writer = new PrintWriter(path, "UTF-8");
 			writer.println(gameDesc);
@@ -258,10 +288,10 @@ public class GameGenerator {
 		}
 	}
 
-	private static void storeLvlDesc(String lvlDesc, String gameTitle) {
+	private static void storeLvlDesc(String lvlDesc, String gameTitle, String outputFolderPath) {
 		
 		PrintWriter writer;
-		String path = gameFolder + gameTitle + "_lvl0" + ".txt";
+		String path = outputFolderPath + gameDescFolder + gameTitle + "_lvl0" + ".txt";
 		try {
 			writer = new PrintWriter(path, "UTF-8");
 			writer.println(lvlDesc);

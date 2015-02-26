@@ -64,4 +64,22 @@ public class ControllerHelper {
 		
 		return new Controller[]{dontDieController, mctsController, gaController, rosController, onestepController, randomController, doNothingController};
 	}
+
+	public static Controller[] getOtherFourControllers() {
+		Controller rosController = new Controller("Onestep-S", "randomOneStep", ControllerType.SEMI_INTELLIGENT);
+		Controller randomController = new Controller("Random", "random", ControllerType.RANDOM);
+		Controller doNothingController = new Controller("Do Nothing", "doNothing", ControllerType.DO_NOTHING);
+		
+		Controller mctsishController = new Controller("DeepSearch", "MCTSish", ControllerType.INTELLIGENT);
+		
+		return new Controller[]{mctsishController, rosController, randomController, doNothingController};
+
+	}
+
+	public static Controller[] getTheTwoControllers() {
+		Controller mctsishController = new Controller("DeepSearch", "MCTSish", ControllerType.INTELLIGENT);
+		Controller doNothingController = new Controller("Do Nothing", "doNothing", ControllerType.DO_NOTHING);
+
+		return new Controller[]{mctsishController, doNothingController};
+	}
 }

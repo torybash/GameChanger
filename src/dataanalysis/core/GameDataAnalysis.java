@@ -61,7 +61,7 @@ public class GameDataAnalysis {
 	}
 	
 		
-	public void analyzeGameDifference(Controller[] controllers, boolean readActionFiles, boolean acceptAll){
+	public void analyzeEachGameDifference(Controller[] controllers, boolean readActionFiles, boolean acceptAll){
 		int n = controllers.length;
 		//Extract data from data folders
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, readActionFiles);		
@@ -84,7 +84,7 @@ public class GameDataAnalysis {
 	}
 	
 
-	public void analyzeMutationDifference(Controller[] controllers, int numberMutations, boolean readActionFiles, boolean acceptAll){
+	public void analyzeEachMutationDifference(Controller[] controllers, int numberMutations, boolean readActionFiles, boolean acceptAll){
 		int n = controllers.length;
 		//Extract data from data folders
 		ArrayList<GameData[]> gameDatas = ExtractGameData.extractMutatedGameDatas(controllers, numberMutations, readActionFiles);
@@ -145,12 +145,12 @@ public class GameDataAnalysis {
 		valShow.put(DataTypes.ACTEN, 	true);
 		valShow.put(DataTypes.ACTSE, 	true);
 		
-		valShow.put(DataTypes.NINT, 	false);
-		valShow.put(DataTypes.NAINT, 	false);
-		valShow.put(DataTypes.NSPR, 	false);
-		valShow.put(DataTypes.NSPRA, 	false);
-		valShow.put(DataTypes.NSPRK, 	false);
-		valShow.put(DataTypes.NWALS, 	false);
+		valShow.put(DataTypes.NINT, 	true);
+		valShow.put(DataTypes.NAINT, 	true);
+		valShow.put(DataTypes.NSPR, 	true);
+		valShow.put(DataTypes.NSPRA, 	true);
+		valShow.put(DataTypes.NSPRK, 	true);
+		valShow.put(DataTypes.NWALS, 	true);
 
 		
 		int nrValuesToShow = 1;
@@ -276,10 +276,14 @@ public class GameDataAnalysis {
 	public float getAveragedRelativeDifference(Controller[] controllers, ArrayList<GameData[]> gameAverages, String dataTyp, int ctrl1Id, int ctrl2Id) {
 		float fitness = 0;
 		for (GameData[] gds : gameAverages) { // fore game
+
 			float ctrl1Val = gds[ctrl1Id].gameValues.get(dataTyp);
 			float ctrl2Val = gds[ctrl2Id].gameValues.get(dataTyp);
 
-
+			if (dataTyp.equals(DataTypes.ACTEN) && (ctrl1Val <= 0 || ctrl1Val >= 1 || ctrl2Val <= 0 || ctrl2Val >= 1)){
+				int ddads = 0;
+				if (ddads == 0) ddads--;
+			}
 			fitness += Utility.relDiff(ctrl1Val, ctrl2Val);
 		}
 		
@@ -294,11 +298,11 @@ public class GameDataAnalysis {
 //		String result = "datatype,count1,aveRelDiff1,count2,aveRelDiff2,count3,aveRelDiff3\n";
 		String result = "datatype,count1,aveRelDiff1,count2,aveRelDiff2,count3,aveRelDiff3,desGenDiff\n";
 		
-		ArrayList<GameData[]> designedGameDatas = ExtractGameData.extractGameDatas(designedDataControllers, false);
+		ArrayList<GameData[]> designedGameDatas = ExtractGameData.extractGameDatas(designedDataControllers, true);
 		designedGameDatas = GameDataCalculator.getAcceptedGames(designedGameDatas);
-		ArrayList<GameData[]> mutatedGameDatas = ExtractGameData.extractMutatedGameDatas(mutatedDataControllers, 10, false);
+		ArrayList<GameData[]> mutatedGameDatas = ExtractGameData.extractMutatedGameDatas(mutatedDataControllers, 10, true);
 		mutatedGameDatas = GameDataCalculator.getAcceptedGames(mutatedGameDatas);
-		ArrayList<GameData[]> generatedGameDatas = ExtractGameData.extractGameDatas(generatedDataControllers, false);
+		ArrayList<GameData[]> generatedGameDatas = ExtractGameData.extractGameDatas(generatedDataControllers, true);
 		generatedGameDatas = GameDataCalculator.getAcceptedGames(generatedGameDatas);
 
 		ArrayList<GameData[]> designedGameAverages = GameDataCalculator.getAverageForEachGame(designedGameDatas);
@@ -306,10 +310,10 @@ public class GameDataAnalysis {
 		ArrayList<GameData[]> generatedGameAverages = GameDataCalculator.getAverageForEachGame(generatedGameDatas);
 		
 		
-		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.AVTIC};
+		String[] datTyps = new String[]{DataTypes.AVE, DataTypes.WRATE, DataTypes.AVTIC, DataTypes.ACTEN};
 		
-		int[] ctrl1s = new int[]{0,1};
-		int[] ctrl2s = new int[]{3,4,5};
+		int[] ctrl1s = new int[]{0};
+		int[] ctrl2s = new int[]{1,2,3};
 		
 		int totDesCount = designedGameAverages.size();
 		int totMutCount = mutatedGameAverages.size();

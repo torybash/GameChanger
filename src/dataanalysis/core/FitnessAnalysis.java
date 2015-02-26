@@ -45,7 +45,7 @@ public class FitnessAnalysis {
 
     
     public GameFitness getFitnessForSingleGame(Controller[] controllers){
-    	ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, true);
+    	ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, false);
     	 gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 
     	if (gameDatas.size() == 0) return new GameFitness("", -1);
@@ -53,15 +53,15 @@ public class FitnessAnalysis {
 		FitnessCalculator.setWeights(null);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);	
 		
-		GameDataAnalysis.printGameDatas(gameDatasAverages.get(0), controllers);
+//		GameDataAnalysis.printGameDatas(gameDatasAverages.get(0), controllers);
 		
 		ArrayList<GameFitness> fitnessValues = FitnessCalculator.getFitnessForEachGame(gameDatasAverages, controllers, null);
     	
     	return fitnessValues.get(0);
     }
     
-	public void analyzeFitness(Controller[] controllers, boolean acceptAllGames) {
-		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, true);
+	public void analyzeFitness(Controller[] controllers, boolean acceptAllGames, boolean readActionFiles) {
+		ArrayList<GameData[]> gameDatas = ExtractGameData.extractGameDatas(controllers, readActionFiles);
 		if (!acceptAllGames) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameDatasAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		
@@ -84,8 +84,8 @@ public class FitnessAnalysis {
 
 
 
-	public void analyzeMutationsFitness(Controller[] controllers, int numberMutations, boolean acceptAllGames) {
-		ArrayList<GameData[]> gameDatas = ExtractGameData.extractMutatedGameDatas(controllers, numberMutations, true);
+	public void analyzeMutationsFitness(Controller[] controllers, int numberMutations, boolean acceptAllGames, boolean readActionFiles) {
+		ArrayList<GameData[]> gameDatas = ExtractGameData.extractMutatedGameDatas(controllers, numberMutations, readActionFiles);
 		if (!acceptAllGames) gameDatas = GameDataCalculator.getAcceptedGames(gameDatas);
 		ArrayList<GameData[]> gameAverages = GameDataCalculator.getAverageForEachGame(gameDatas);
 		

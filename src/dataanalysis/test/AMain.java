@@ -59,23 +59,26 @@ public class AMain {
 		//*********************************
 		//******10 P.T./2000 TICKS TEST*****
 		//*********************************
-		controllers = ControllerHelper.getMainFourControllers();
+		controllers = ControllerHelper.getMainControllers();
+//		controllers = ControllerHelper.getOtherFourControllers();
+//		controllers = ControllerHelper.getTheTwoControllers();
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_designed");
 //		gda.countGamesHaveCondition(controllers, true);
-//		gda.analyzeGameDifference(controllers, false, false);
-//		gda.analyzeAllGamesAverage(controllers, false);
-		fa.analyzeFitness(controllers, false);
+		gda.analyzeEachGameDifference(controllers, true, false);
+//		gda.analyzeAllGamesAverage(controllers, true);
+//		fa.analyzeFitness(controllers, false, false);
 		
 		
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "2000ticks_mutation_");
 //		gda.analyzeAllMutationsAverage(controllers, 10, true);
-		fa.analyzeMutationsFitness(controllers, 10, false);
+//		gda.analyzeEachMutationDifference(controllers, 10, false, false);
+//		fa.analyzeMutationsFitness(controllers, 10, false, false);
 
 		ControllerHelper.setControllerDataFolders(controllers, dataFolder + "2000ticks,10pt test/", "_2000ticks_rndgen");
 //		gda.countGamesHaveCondition(controllers, true);
 //		gda.analyzeGameDifference(controllers, false, false);
-//		gda.analyzeAllGamesAverage(controllers, false);
-		fa.analyzeFitness(controllers, false);
+		gda.analyzeAllGamesAverage(controllers, true);
+//		fa.analyzeFitness(controllers, false, false);
 		
         Controller[] designedDataControllers = ControllerHelper.copyControllers(controllers);
         Controller[] mutatedDataControllers = ControllerHelper.copyControllers(controllers);

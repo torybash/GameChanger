@@ -175,8 +175,8 @@ public class GameDataCalculator {
 					sumsqtic += lp.timesteps * lp.timesteps;
 					winsum += lp.won;
 					
-					nint += lp.numInteractions / (float)lp.timesteps;
-					naint += lp.numAvatarInteractions / (float)lp.timesteps;
+					nint += lp.numInteractions; // / (float)lp.timesteps;
+					naint += lp.numAvatarInteractions; // (float)lp.timesteps;
 					nspr += lp.numSprites;
 					nspra += lp.numSpritesAdded;
 					nsprk += lp.numSpritesKilled;
@@ -214,10 +214,12 @@ public class GameDataCalculator {
 		        
 				float H = 0;
 //				System.out.println("Probs for game: " + gd.gameTitle);
-				for (String string : actcounter.keySet()) {
-					float actionProb = actcounter.get(string) / (float)amountOfActions;
-					H += actionProb == 0 ? 0 : actionProb * Utility.logOfBase(Utility.getAmountOfActionsInGame(gd.gameTitle), actionProb);
-//					System.out.println("Probability of " + string + ": " + actionProb);
+				if (amountOfActions > 0){
+					for (String string : actcounter.keySet()) {
+						float actionProb = actcounter.get(string) / (float)amountOfActions;
+						H += actionProb == 0 ? 0 : actionProb * Utility.logOfBase(Utility.getAmountOfActionsInGame(gd.gameTitle), actionProb);
+	//					System.out.println("Probability of " + string + ": " + actionProb);
+					}
 				}
 				actensum += -H;
 //				System.out.println("amount of actions: " + amountOfActions);

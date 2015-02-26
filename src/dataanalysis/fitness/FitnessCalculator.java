@@ -32,7 +32,7 @@ public class FitnessCalculator {
 		GameFitness gf = new GameFitness(gds[0].gameTitle);
 		
 		
-		boolean hasLowTicksWin = false;
+		boolean hasLowTicksWin = false, hasWRSDOverZero = false;
 		
 		int maxDataTypeCount = FeatureDataType.class.getEnumConstants().length;
 		int ctrlTypeCount = ControllerType.class.getEnumConstants().length;
@@ -63,6 +63,8 @@ public class FitnessCalculator {
 			for (LevelPlay lp: gds[c].levelsPlayed) {
 				if (lp.won == 1 && lp.timesteps < 50) hasLowTicksWin = true;
 			}
+			if (gds[c].gameValues.get(DataTypes.WRSE) > 0) hasWRSDOverZero = true;
+			
 		}
 		
 		if (VERBOSE) System.out.println(gds[0].gameTitle);
@@ -114,16 +116,21 @@ public class FitnessCalculator {
 			}else{ //just use value as fitness (or special cases)
 				if (typ == FeatureDataType.HAS_LOW_TICKS){
 					val = hasLowTicksWin ? -1 : 1;
+					fitnessValsString[cnt] = "hasLowTicksWin = " + val;
+				}else if (typ == FeatureDataType.HAS_WR_OVER_ZERO){
+					val = hasWRSDOverZero ? 1 : -1;
+					fitnessValsString[cnt] = "hasWRSDOverZero = " + val;
 				}else if (typ.dataType == DataTypes.AVTIC){
 					val = (highestValues[t][ControllerType.INTELLIGENT.id()] > 50) ? 1 : -1;
+					fitnessValsString[cnt] = "valueOf(" + String.format("%.3f", highestValues[t][typ.ctrlTyp().id()]) + ") = " + val;
 				}else{
 					val = highestValues[t][typ.ctrlTyp().id()];
+					fitnessValsString[cnt] = "valueOf(" + String.format("%.3f", highestValues[t][typ.ctrlTyp().id()]) + ") = " + val;
 				}
 				
 				
 				fitness += val * feature_weights[cnt];
 				fitnessVals[cnt] = val;
-				fitnessValsString[cnt] = "valueOf(" + String.format("%.3f", highestValues[t][typ.ctrlTyp().id()]) + ") = " + val;
 				cnt++;
 			}			
 		}
@@ -218,13 +225,14 @@ public class FitnessCalculator {
 //		REL_MAX(DataTypes.MAX, true, null),
 		
 //		REL_SCORE_SD(DataTypes.SD, true, ControllerType.DO_NOTHING),
-		REL_WR_SD(DataTypes.WRSE, true, ControllerType.DO_NOTHING),     //<-- compares first controller with doNothing
+//		REL_WR_SD(DataTypes.WRSE, true, ControllerType.DO_NOTHING),     //<-- compares first controller with doNothing
 		
-		REL_ACTEN(DataTypes.ACTEN, true, ControllerType.RANDOM),
+//		REL_ACTEN(DataTypes.ACTEN, true, ControllerType.RANDOM),
 		
 //		TICKS(DataTypes.AVTIC, false, ControllerType.INTELLIGENT),
 		
 		HAS_LOW_TICKS(null, false, ControllerType.INTELLIGENT),
+		HAS_WR_OVER_ZERO(null, false, ControllerType.INTELLIGENT),
 
 		
 

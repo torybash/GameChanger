@@ -93,7 +93,7 @@ public class ExtractGameData {
 		int n = controllers.length;
 		ArrayList<GameData>[] gameDatas = new ArrayList[n];
 		for (int c = 0; c < n; c++) {
-			System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name);
+//			System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name);
 			gameDatas[c] = extractData(controllers[c].dataFolder +"/", readActionFiles);
 		}
 		ArrayList<GameData[]> result = new ArrayList<GameData[]>();
@@ -113,7 +113,7 @@ public class ExtractGameData {
 		for (int m = 0; m < numberMutations; m++) { //for each mutation
 			ArrayList<GameData>[] gameDatas = new ArrayList[controllers.length];
 			for (int c = 0; c < controllers.length; c++) {	//for each controller
-				System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name + " - MUTATION: " + m);
+//				System.out.println("-------EXTRACTING FOR CONTROLLER: " + controllers[c].name + " - MUTATION: " + m);
 				gameDatas[c] = extractData(controllers[c].dataFolder + m +"/", readActionFiles);
 			}
 			datas[m] = gameDatas;
