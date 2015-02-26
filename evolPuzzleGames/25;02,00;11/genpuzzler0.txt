@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Resource limit=7 singleton=TRUE value=3 img=monster
+		gen2 > Passive img=log
+	InteractionSet
+		avatar wall > killIfHasLess limit=1 resource=gen1 scoreChange=1
+		gen2 wall > killSprite
+		avatar gen1 > transformTo stype=avatar
+		avatar gen2 > changeResource value=5 resource=gen1 scoreChange=7
+		gen2 gen2 > undoAll
+		gen1 gen2 > undoAll
+		gen1 gen1 > killIfOtherHasMore limit=1 resource=gen1
+		gen2 gen1 > changeResource value=1 resource=gen1
+		gen1 avatar > changeResource value=1 resource=gen1
+		gen1 wall > killIfHasLess limit=13 resource=gen1
+		gen2 gen2 > killIfHasMore limit=7 resource=gen1
+		gen1 wall > transformTo stype=gen1
+		gen2 gen1 > stepBack
+		gen2 avatar > bounceForward
+		gen2 wall > killIfHasLess limit=13 resource=gen1
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

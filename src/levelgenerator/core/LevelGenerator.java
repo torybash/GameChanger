@@ -37,9 +37,9 @@ public class LevelGenerator {
 	
 	
 	
-	final int iterations = 50;
-	final int mutations = 50;
-	final int mutationsSurvive = 25;
+	final int iterations = 100;
+	final int mutations = 100;
+	final int mutationsSurvive = 50;
 	
 	public LevelGenerator(String gameTitle){
 		this.gameTitle = gameTitle;
@@ -99,14 +99,16 @@ public class LevelGenerator {
 					LevelMap newMap = new LevelMap();
 					
 					if (m > mutationsSurvive){
-                                            if (r.nextFloat() > 0.25){
+						float rnd = r.nextFloat();
+                                            if (rnd < 0.66){
 						int idx = r.nextInt(mutationsSurvive);
 						newMap.map = mutateLevel(lastGameInfos[idx].levelMap, mappings);	
-                                            }else if (r.nextFloat() > 0.65){
+                                            }else if (rnd < 0.90){
                                                 int idx1 = r.nextInt(mutationsSurvive);
-                                                int idx2 = r.nextInt(mutations);
+                                                int idx2 = r.nextInt(mutationsSurvive);
                                                 while (idx2 == idx1) idx2 = r.nextInt(mutations);
                                                 newMap.map = crossOverLevel(lastGameInfos[idx1].levelMap, lastGameInfos[idx2].levelMap, mappings);
+                                                newMap.map = mutateLevel(lastGameInfos[idx1].levelMap, mappings);	
                                             }else{
                                                 newMap.map = makeLevel(mappings, width, height);	//new level
 
@@ -175,12 +177,22 @@ public class LevelGenerator {
 			System.out.println("---------------------------");
 			System.out.println("---------------------------");
 			
+			boolean isInteresting = true;
+			if (lastGameInfos[0].results.actions <= 1) isInteresting = false;
+			for (int j = 0; j < lastGameInfos.length; j++) {
+				if (lastGameInfos[j].results.numberSpritesMoved > 0){
+					isInteresting = true;
+					break;
+				}else{
+					isInteresting = false;
+				}
+			}
+			if (!isInteresting) return null;
 			
-			if (lastGameInfos[0].results.numberSpritesMoved < 1 || lastGameInfos[0].results.actions <= 1) return null;
-			
-			if (i > 5 && lastGameInfos[0].results.actions == lastGameInfos[mutationsSurvive-1].results.actions){
-				System.out.println("Returning early because best act count == worst act count");
-				return lastGameInfos[0];
+			if (i > 10 && (lastGameInfos[0].results.actions == lastGameInfos[mutations-1].results.actions || lastGameInfos[0].results.actions < 25)){
+				System.out.println("Returning early beca" +
+						"+use best act count == worst act count || act count too low");
+				return null;
 			}
 		}
 		

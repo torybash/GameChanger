@@ -1,0 +1,33 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Resource limit=4 value=2 img=spaceship
+		gen2 > Passive img=portal
+	InteractionSet
+		gen1 gen1 > killIfOtherHasMore limit=13 resource=gen1 scoreChange=8
+		gen1 gen2 > collectResource
+		avatar gen2 > killIfHasMore limit=7 resource=gen1
+		gen1 wall > killIfOtherHasMore limit=12 resource=gen1
+		gen2 gen1 > killIfOtherHasMore limit=3 resource=gen1
+		gen1 gen2 > killSprite
+		gen2 wall > transformTo stype=gen2
+		gen1 wall > bounceForward scoreChange=-3
+		gen2 gen1 > undoAll
+		gen2 avatar > killIfOtherHasMore limit=10 resource=gen1
+		gen2 gen1 > stepBack
+		gen2 avatar > bounceForward
+		gen1 wall > killSprite
+		gen1 gen1 > transformTo stype=gen1
+		gen2 gen2 > undoAll scoreChange=-1
+		avatar wall > killIfHasLess limit=12 resource=gen1
+		avatar wall > stepBack
+		gen2 gen1 > killIfHasMore limit=8 resource=gen1
+		gen2 wall > bounceForward
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=null win=TRUE 

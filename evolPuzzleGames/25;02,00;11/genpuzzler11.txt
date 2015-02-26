@@ -1,0 +1,29 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar speed=0.5041 img=avatar
+		gen1 > Passive img=monster
+		gen2 > Passive img=butterfly
+	InteractionSet
+		gen1 avatar > bounceForward
+		gen2 gen1 > bounceForward scoreChange=-1
+		gen1 wall > transformTo stype=gen2
+		gen1 avatar > undoAll
+		avatar gen1 > undoAll scoreChange=4
+		gen2 gen2 > bounceForward
+		gen1 gen1 > undoAll
+		gen2 avatar > stepBack
+		avatar gen1 > undoAll scoreChange=6
+		gen1 avatar > undoAll
+		gen2 gen1 > undoAll
+		gen2 gen2 > killSprite scoreChange=6
+		avatar wall > bounceForward
+		avatar wall > bounceForward
+		avatar wall > undoAll scoreChange=3
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=null win=TRUE 

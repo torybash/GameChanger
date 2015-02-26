@@ -48,8 +48,8 @@ public class Writer {
     
     
     
-    public static void storeString(String game_desc, String folderPath, String title){
-        String[] lines = game_desc.split("\\n");
+    public static void storeString(String string, String folderPath, String title){
+        String[] lines = string.split("\\n");
         PrintWriter writer;
         String path = folderPath + title + ".txt";
         try {

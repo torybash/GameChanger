@@ -1,0 +1,32 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Portal stype=gen2 img=camel
+		gen2 > Portal stype=gen1 img=diamond
+	InteractionSet
+		gen2 avatar > undoAll
+		gen2 wall > stepBack scoreChange=2
+		gen2 gen2 > killSprite
+		gen1 gen2 > stepBack
+		gen1 avatar > bounceForward
+		gen2 wall > stepBack scoreChange=4
+		avatar gen1 > teleportToExit
+		avatar wall > transformTo stype=avatar scoreChange=-3
+		gen1 gen1 > undoAll scoreChange=1
+		gen2 wall > transformTo stype=gen1 scoreChange=9
+		gen1 gen2 > bounceForward
+		avatar wall > killSprite
+		avatar wall > transformTo stype=avatar
+		avatar wall > transformTo stype=avatar
+		gen2 gen1 > teleportToExit scoreChange=-5
+		gen2 wall > killSprite
+		avatar wall > killSprite
+		avatar gen2 > undoAll
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen2 stype2=null win=TRUE 

@@ -1,0 +1,30 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Passive img=butterfly
+		gen2 > Portal stype=avatar img=pellet
+	InteractionSet
+		gen2 wall > undoAll
+		gen2 gen2 > stepBack
+		gen1 wall > transformTo stype=gen2
+		gen2 gen1 > undoAll
+		gen2 gen2 > transformTo stype=gen1
+		avatar wall > killSprite
+		avatar wall > undoAll
+		gen2 avatar > bounceForward scoreChange=3
+		avatar wall > transformTo stype=avatar
+		gen2 gen1 > bounceForward scoreChange=-1
+		gen1 gen2 > stepBack
+		avatar gen2 > teleportToExit
+		gen1 gen2 > stepBack
+		gen1 avatar > stepBack scoreChange=-4
+		gen2 gen1 > killSprite
+		gen1 gen2 > bounceForward
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

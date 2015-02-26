@@ -1,0 +1,28 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Passive img=marsh
+		gen2 > Resource limit=17 value=5 img=bullet
+		gen3 > Passive img=base
+	InteractionSet
+		gen2 gen3 > undoAll scoreChange=10
+		avatar wall > bounceForward scoreChange=5
+		gen2 avatar > bounceForward
+		gen2 gen2 > killIfOtherHasMore limit=7 resource=gen2 scoreChange=6
+		gen3 gen1 > bounceForward scoreChange=-4
+		avatar gen1 > bounceForward scoreChange=5
+		avatar gen2 > killIfHasLess limit=0 resource=gen2
+		gen3 wall > undoAll scoreChange=3
+		avatar wall > transformTo stype=avatar
+		gen2 gen1 > killIfHasLess limit=4 resource=gen2
+		avatar wall > transformTo stype=avatar scoreChange=10
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen2 win=TRUE 

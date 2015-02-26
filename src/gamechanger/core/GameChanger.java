@@ -179,7 +179,7 @@ public class GameChanger {
         InteractionsChanger.setFunctions(true);
         
 		int amountSprites = range(3,4);
-		int amountInteractions = range(8,14);
+		int amountInteractions = range(15,20);
 		int amountTerminations = range(1,1);
 		ArrayList[] elements = makeGame(amountSprites, amountInteractions, amountTerminations);
         InteractionsChanger.makeWallStepBacks(elements[0], elements[1]);

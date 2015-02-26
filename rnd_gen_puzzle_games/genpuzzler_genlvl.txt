@@ -1,9 +1,8 @@
-wwwwwwwww
-w       w
-w%   w$ w
-w Aw w  w
-w w % w w
-w    $$ww
-w  &&w$ww
-w  $&ww w
-wwwwwwwww
+wwwwwwww
+w% w  Aw
+ww  $$ w
+w  $   w
+w  w w w
+w $  w w
+w      w
+wwwwwwww

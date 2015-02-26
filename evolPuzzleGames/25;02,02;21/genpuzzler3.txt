@@ -1,0 +1,34 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Portal stype=gen2 img=butterfly
+		gen2 > Resource limit=2 value=2 img=missile
+		gen3 > Resource limit=9 value=2 img=key
+	InteractionSet
+		avatar gen3 > bounceForward scoreChange=8
+		avatar wall > killIfOtherHasMore limit=12 resource=gen3 scoreChange=3
+		gen1 wall > undoAll
+		gen1 gen2 > changeResource value=-2 resource=gen2
+		gen2 gen3 > changeResource value=1 resource=gen2 scoreChange=-5
+		gen1 gen1 > changeResource value=-3 resource=gen3
+		gen1 gen3 > undoAll
+		gen1 gen2 > changeResource value=-2 resource=gen3
+		gen2 wall > transformTo stype=gen3
+		gen1 avatar > killIfHasMore limit=0 resource=gen3 scoreChange=2
+		gen3 avatar > bounceForward scoreChange=2
+		gen2 wall > killIfOtherHasMore limit=14 resource=gen2
+		gen2 wall > killSprite
+		gen2 wall > transformTo stype=gen2 scoreChange=-1
+		gen3 wall > transformTo stype=gen2
+		gen3 gen2 > undoAll
+		gen2 gen2 > collectResource
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		SpriteCounter limit=0 stype=gen3 win=TRUE 

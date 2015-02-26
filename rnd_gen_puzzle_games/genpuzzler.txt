@@ -1,30 +1,31 @@
 BasicGame
 	SpriteSet
 		avatar > MovingAvatar img=avatar
-		gen1 > Passive img=hole
-		gen2 > Portal stype=gen3 img=camel
-		gen3 > Passive img=fire
+		gen1 > Portal stype=avatar img=virus
+		gen2 > Portal stype=avatar img=goal
 	InteractionSet
-		avatar gen3 > transformTo stype=avatar
-		gen1 avatar > bounceForward
-		avatar gen1 > transformTo stype=avatar scoreChange=-1
-		gen2 avatar > bounceForward
-		avatar gen3 > stepBack
-		gen2 avatar > bounceForward
-		gen1 gen3 > killSprite scoreChange=5
-		gen1 gen3 > undoAll
-		gen1 wall > stepBack
-		gen1 gen1 > undoAll scoreChange=5
-		gen2 gen2 > undoAll
-		gen1 avatar > killSprite
-		avatar gen2 > bounceForward scoreChange=10
+		avatar gen2 > undoAll
+		avatar wall > transformTo stype=avatar scoreChange=6
+		gen2 gen1 > stepBack scoreChange=-5
+		avatar gen2 > teleportToExit scoreChange=2
+		gen2 avatar > transformTo stype=gen1
+		gen2 avatar > killSprite
+		gen2 wall > undoAll
+		gen1 avatar > bounceForward scoreChange=4
+		avatar gen2 > stepBack
+		gen2 gen2 > teleportToExit
+		gen2 gen2 > transformTo stype=gen1
+		avatar gen2 > transformTo stype=avatar
+		gen1 avatar > transformTo stype=gen1
+		gen1 wall > undoAll
+		gen1 gen2 > killSprite
+		avatar wall > undoAll
+		gen1 wall > bounceForward
 		avatar wall > stepBack
 		gen1 wall > stepBack
 		gen2 wall > stepBack
-		gen3 wall > stepBack
 	LevelMapping
 		$ > gen1 
 		% > gen2 
-		& > gen3 
 	TerminationSet
-		SpriteCounter limit=0 stype=gen1 win=TRUE 
+		MultiSpriteCounter limit=1 stype1=gen1 stype2=null win=TRUE 

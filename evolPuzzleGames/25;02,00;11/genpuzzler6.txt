@@ -1,0 +1,34 @@
+BasicGame
+	SpriteSet
+		avatar > MovingAvatar img=avatar
+		gen1 > Passive img=ghost
+		gen2 > Portal stype=gen3 img=alien
+		gen3 > Portal stype=gen1 img=key
+	InteractionSet
+		gen2 gen1 > transformTo stype=gen1
+		gen2 gen3 > undoAll
+		gen1 gen2 > transformTo stype=gen3
+		gen2 wall > undoAll
+		gen1 wall > killSprite
+		gen3 wall > transformTo stype=gen1
+		gen2 avatar > bounceForward
+		gen3 gen3 > killSprite scoreChange=-4
+		avatar gen1 > undoAll
+		gen3 gen2 > teleportToExit
+		gen2 gen2 > stepBack scoreChange=-1
+		gen2 gen3 > killSprite
+		gen3 avatar > stepBack
+		gen3 gen1 > killSprite
+		avatar gen1 > undoAll
+		avatar gen2 > stepBack
+		gen3 avatar > stepBack
+		avatar wall > stepBack
+		gen1 wall > stepBack
+		gen2 wall > stepBack
+		gen3 wall > stepBack
+	LevelMapping
+		$ > gen1 
+		% > gen2 
+		& > gen3 
+	TerminationSet
+		MultiSpriteCounter limit=1 stype1=gen3 stype2=null win=TRUE 
